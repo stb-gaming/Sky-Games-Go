@@ -1,0 +1,30 @@
+.epgHeader {
+    background-color: green;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.epgHeaderItem {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    
+    justify-content: flex-end;
+    align-content: flex-start;
+    flex-wrap: nowrap;
+
+    width: 128px;
+    
+    padding-right: 20px;
+
+    font-family: "ZurichTV";
+    font-size: 22.5px;
+
+    img {
+        width: 100px;
+        background-color: purple;
+    }
+
+}

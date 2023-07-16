@@ -1,0 +1,20 @@
+@use '../fonts/fonts.scss';
+
+.epgContainer {
+    background:
+        /* left cloud thing*/ radial-gradient(circle at 0px 25%, #b0bfde 0%, transparent 20%) 0px 25%,
+        /* right cloud thing*/ radial-gradient(circle at 110% 50%, #b0bfde 0%, transparent 30%) 100% 50%,
+        /*lower cloud thing*/ radial-gradient(circle at 25% 120%, #b0bfde 0%, transparent 40%) 25% 100%,
+        /*background*/ radial-gradient(circle at bottom left, #659df2 70%, #2973fa 95%);
+
+
+    width: 720px;
+    height: 576px;
+
+    position:absolute;
+    left: 0;
+    top: 0;
+
+    padding: 0;
+    margin: 0;
+}

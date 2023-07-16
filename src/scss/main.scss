@@ -1,0 +1,26 @@
+body {
+    background-color: black;
+    font-family: Zurich;
+    margin:0;
+    padding: 0;
+}
+
+/* application container */
+.appContainer {
+    color: red;
+    background-color: white;
+    
+    /* PAL 4:3 resolution. */
+    width: 720px;
+    height: 576px;
+
+    /* https://stackoverflow.com/questions/14123999/center-a-div-horizontally-and-vertically */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    margin: 0;
+    padding: 0;
+}

@@ -1,0 +1,43 @@
+@use '../fonts/fonts.scss';
+
+.fyiMessage {
+    /* https://stackoverflow.com/questions/14123999/center-a-div-horizontally-and-vertically */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    font-family: Zurich;
+
+    font-size: 22px;
+   
+    width: 90%;
+
+    height: 135px;
+}
+
+.fyiMessageHeader {
+    background-color: #fcda15;
+    color: #0036b2;
+
+    width: 100%;
+}
+
+.fyiMessageHeaderErrorCode {
+    position: absolute;
+    right: 0;
+    padding-right: 8px;
+}
+
+.fyiMessageBody {
+    background-color: #0036b2;
+    color: white;
+    width: 100%;
+    height: 100%;
+}
