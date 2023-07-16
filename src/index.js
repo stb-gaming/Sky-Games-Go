@@ -6,6 +6,7 @@ import './scss/main.scss'
 import Layout from "./pages/Layout";
 import TestPage from './pages/opentv_epg/TestPage'
 import NotFound from './pages/errors/NotFound'
+import TestPageMore from "./pages/opentv_epg/TestPageMore";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<TestPage />} />
+          <Route path="more" element={<TestPageMore />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

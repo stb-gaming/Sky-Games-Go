@@ -1,0 +1,63 @@
+.epgMenuContainer {
+    position: absolute;
+
+    left: 26px;
+    top: 14px;
+
+    user-select: none;
+
+    .itemSelected {
+        background-color: #fcda15;
+        cursor: pointer;
+    }
+
+    li {
+
+        background-color: #002db6;
+
+       
+
+        list-style-type: none;
+
+        width: 477px;
+
+        height: 28px;
+
+        margin-bottom: 4.5px;
+
+
+        .title {
+            color: white;
+            position: absolute;
+            left: 119px;
+            font-size: 24px;
+        }
+
+        .titleSelected {
+            color: #0000b3;
+        }
+
+        .menuNumber {
+            background-color: #00137d;
+            color: #758ae5;
+
+            height: 28px;;
+            width: 64px;
+
+
+            position: absolute;
+            left: 50px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 24px;
+        }
+
+        .menuNumberSelected {
+            color: #0000b3;
+            background-color: #fec200;
+        }
+    }
+}

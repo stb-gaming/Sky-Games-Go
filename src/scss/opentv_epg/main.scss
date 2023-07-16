@@ -17,4 +17,43 @@
 
     padding: 0;
     margin: 0;
+
+
+    /*background-image: url('../../../public/assets/img/sharing-image.png');
+    background-size: contain;*/
+}
+
+.epgContentContainer {
+    position: absolute;
+    top: 120px;
+    left: 52px;
+
+    height: 390px;
+    width: 610px;
+
+    /* https://stackoverflow.com/questions/14123999/center-a-div-horizontally-and-vertically */
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translate(-50%, 0%);
+    transform: translate(-50%, -0%);
+
+    
+}
+
+.epgArrowDown {
+    width: 20px;
+
+    position: absolute;
+    bottom: 25px;
+    right: 72px;;
+}
+
+.epgArrowUp {
+    width: 20px;
+
+    position: absolute;
+    top: 16px;
+    right: 72px;
+
+    transform: rotate(180deg);
 }

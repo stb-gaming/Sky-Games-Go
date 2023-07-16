@@ -10,7 +10,7 @@ import EPGMenuContainer from './components/EPGMenuContainer';
 import EPGMenuItem from './components/EPGMenuItem';
 import FYIMessage from './components/FYIMessage';
 
-const TestPage = () => {
+const TestPageMore = () => {
     return <>
       <EPGContainer>
         <EPGHeader>
@@ -22,26 +22,24 @@ const TestPage = () => {
         </EPGHeader>
         <div className="epgContentContainer">
           <EPGMenuContainer>
-              <EPGMenuItem number="1" title="ALL CHANNELS" selected={true} />
-              <EPGMenuItem number="2" title="HD CHANNELS" />
-              <EPGMenuItem number="3" title="ENTERTAINMENT" />
-              <EPGMenuItem number="4" title="LIFESTYLE & CULTURE" />
-              <EPGMenuItem number="5" title="MOVIES" />
-              <EPGMenuItem number="6" title="SPORTS"/>
-              <EPGMenuItem number="7" title="NEWS" />
-              <EPGMenuItem number="8" title="DOCUMENTARIES" />
-              <EPGMenuItem number="9" title="KIDS" />
-              <Link to="/more">
-                <EPGMenuItem number="0" title="MORE..." />
+              <EPGMenuItem number="1" title="RADIO" selected={true} />
+              <EPGMenuItem number="2" title="SHOPPING" />
+              <EPGMenuItem number="3" title="RELIGION" />
+              <EPGMenuItem number="4" title="INTERNATIONAL" />
+              <EPGMenuItem number="5" title="GAMING & DATING" />
+              <EPGMenuItem number="6" title="SPECIALIST"/>
+              <EPGMenuItem number="7" title="ADULT" />
+              <Link to="/">
+                <EPGMenuItem number="8" title="BACK..." />
               </Link>
           </EPGMenuContainer>
 
-          <img src="/assets/img/arrow.svg" className="epgArrowDown"/>
+          <img src="/assets/img/arrow.svg" className="epgArrowUp"/>
         </div>
         
       </EPGContainer>
     </>;
   };
   
-export default TestPage;
+export default TestPageMore;
   
