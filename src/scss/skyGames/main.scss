@@ -1,0 +1,53 @@
+@use "../fonts/fonts.scss";
+
+$skyGamesPink: #f42f64;
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: $skyGamesPink;
+}
+.skyGames {
+	font-family: "SkyGames";
+	background-color: white;
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+a {
+	&,
+	&:focus,
+	&:visited {
+		color: $skyGamesPink;
+	}
+}
+
+.skyGamesHeader {
+	padding: 1em;
+	display: grid;
+	grid-template-rows: auto;
+	grid-template-columns: 30% 70%;
+	img {
+		height: 3em;
+	}
+	&::after {
+		content: "";
+	}
+
+	.skyGamesTabs {
+		padding-top: 24px;
+		display: flex;
+		height: 50%;
+
+		.skyGamesTab {
+			padding: 5px 10px;
+			border: solid grey 2px;
+			border-bottom: none;
+			border-top-right-radius: 25%;
+			border-top-left-radius: 25%;
+		}
+	}
+}

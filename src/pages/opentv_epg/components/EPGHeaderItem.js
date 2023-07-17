@@ -1,11 +1,11 @@
-import '../../../scss/main.scss'
-import '../../../scss/opentv_epg/epg_header.scss'
+import '../../../scss/main.scss';
+import '../../../scss/opentv_epg/epg_header.scss';
 
-const EPGHeaderItem = (props) => {
-    return <div className={props.selected ? "epgHeaderItem headerSelect" : "epgHeaderItem"}>
-        <img src={props.src} />
-        <span>{props.title}</span>
-    </div>
-}
+const EPGHeaderItem = ({ selected, src, title, href = "#" }) => {
+	return <a className={selected ? "epgHeaderItem headerSelect" : "epgHeaderItem"} href={href}>
+		<img src={src} alt="" />
+		<span>{title}</span>
+	</a>;
+};
 
 export default EPGHeaderItem;

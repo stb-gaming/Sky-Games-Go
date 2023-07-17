@@ -1,26 +1,42 @@
 body {
-    background-color: black;
-    font-family: Zurich;
-    margin:0;
-    padding: 0;
+	background-color: black;
+	font-family: Zurich;
+	margin: 0;
+	padding: 0;
 }
 
 /* application container */
 .appContainer {
-    color: red;
-    background-color: white;
-    
-    /* PAL 4:3 resolution. */
-    width: 720px;
-    height: 576px;
+	color: red;
+	background-color: white;
 
-    /* https://stackoverflow.com/questions/14123999/center-a-div-horizontally-and-vertically */
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+	/* PAL 4:3 resolution. */
+	width: 720px;
+	height: 576px;
 
-    margin: 0;
-    padding: 0;
+	/* https://stackoverflow.com/questions/14123999/center-a-div-horizontally-and-vertically */
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+
+	margin: 0;
+	padding: 0;
+
+	&::before {
+		content: "";
+		background-image: url(https://images.unsplash.com/photo-1574974409771-cebec54deb00?ixlib=rb-4.0.3);
+		width: 1974px;
+		height: 1507px;
+		z-index: -1;
+		left: 50%;
+		top: 50%;
+		background-size: cover;
+		transform: translate(-50%, -50%);
+		position: absolute;
+		display: block;
+		background-position-x: 22px;
+		background-position-y: -20px;
+	}
 }

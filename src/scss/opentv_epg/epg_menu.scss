@@ -1,63 +1,59 @@
 .epgMenuContainer {
-    position: absolute;
+	position: absolute;
 
-    left: 26px;
-    top: 14px;
+	left: 26px;
+	top: 14px;
 
-    user-select: none;
+	user-select: none;
 
-    .itemSelected {
-        background-color: #fcda15;
-        cursor: pointer;
-    }
+	.itemSelected {
+		background-color: #fcda15;
+		cursor: pointer;
+	}
 
-    li {
+	li {
+		background-color: #002db6;
 
-        background-color: #002db6;
+		list-style-type: none;
 
-       
+		width: 477px;
 
-        list-style-type: none;
+		height: 28px;
 
-        width: 477px;
+		margin-bottom: 4.5px;
 
-        height: 28px;
+		.title {
+			color: white;
+			position: absolute;
+			left: 119px;
+			font-size: 24px;
+		}
 
-        margin-bottom: 4.5px;
+		.titleSelected {
+			color: #0000b3;
+		}
 
+		.menuNumber {
+			background-color: #00137d;
+			color: #758ae5;
+			text-decoration: none;
 
-        .title {
-            color: white;
-            position: absolute;
-            left: 119px;
-            font-size: 24px;
-        }
+			height: 28px;
+			width: 64px;
 
-        .titleSelected {
-            color: #0000b3;
-        }
+			position: absolute;
+			left: 50px;
 
-        .menuNumber {
-            background-color: #00137d;
-            color: #758ae5;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 
-            height: 28px;;
-            width: 64px;
+			font-size: 24px;
+		}
 
-
-            position: absolute;
-            left: 50px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            font-size: 24px;
-        }
-
-        .menuNumberSelected {
-            color: #0000b3;
-            background-color: #fec200;
-        }
-    }
+		.menuNumberSelected {
+			color: #0000b3;
+			background-color: #fec200;
+		}
+	}
 }

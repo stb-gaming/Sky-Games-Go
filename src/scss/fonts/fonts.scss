@@ -1,16 +1,20 @@
 @font-face {
-font-family:"Zurich";
-src:url('./Zurich Bold Extended.woff') format("woff");
-    font-weight:normal;
-    font-style:normal
-   }
-   @font-face {
-    font-family:"ZurichTV";
-    src:url('./Zurich Bold Condensed.woff') format("woff");
-    font-weight:normal;
-    font-style:normal
-   }
-   @font-face {
-    font-family:"SkyLogo";
-    src:url('./SKYfontThick.ttf') format("truetype")
-   }
+	font-family: "Zurich";
+	src: url("./Zurich Bold Extended.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: "ZurichTV";
+	src: url("./Zurich Bold Condensed.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: "SkyLogo";
+	src: url("./SKYfontThick.ttf") format("truetype");
+}
+@font-face {
+	font-family: "SkyGames";
+	src: url("./rimouski.otf") format("opentype");
+}

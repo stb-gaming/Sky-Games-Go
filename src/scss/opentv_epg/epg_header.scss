@@ -1,75 +1,74 @@
 .epgHeader {
-    /*background-color: green;*/
-    display: flex;
-    flex-direction: row;
+	/*background-color: green;*/
+	display: flex;
+	flex-direction: row;
 
-    position: absolute;
-    top: 34px;
-    left: 47px;
+	position: absolute;
+	top: 34px;
+	left: 47px;
 }
 
-
 .epgHeaderItem {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
+	text-decoration: none;
 
-    align-items: center;
-    
-    justify-content: flex-end;
-    align-content: flex-start;
-    flex-wrap: nowrap;
+	align-items: center;
 
-    width: 110px;
-    
-    padding-right: 5px;
+	justify-content: flex-end;
+	align-content: flex-start;
+	flex-wrap: nowrap;
 
-    font-family: "ZurichTV";
-    font-size: 22.5px;
+	width: 110px;
 
-    img {
-        width: 72.5px;
-        /*background-color: purple;*/
-    }
+	padding-right: 5px;
 
-    span {
-        color: white;
-    }
+	font-family: "ZurichTV";
+	font-size: 22.5px;
+
+	img {
+		width: 72.5px;
+		/*background-color: purple;*/
+	}
+
+	span {
+		color: white;
+	}
 }
 
 .headerSelect {
-    span {
-        color: #2a66e2;
-    }
+	span {
+		color: #2a66e2;
+	}
 
-    img {
-        filter: invert(54%) sepia(80%) saturate(6475%) hue-rotate(212deg) brightness(92%) contrast(91%);
-    }
+	img {
+		filter: invert(54%) sepia(80%) saturate(6475%) hue-rotate(212deg) brightness(92%) contrast(91%);
+	}
 }
 
 .epgHeaderLogo {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 
-    align-items: center;
-    
-    justify-content: flex-end;
-    align-content: flex-start;
-    flex-wrap: nowrap;
+	align-items: center;
 
-    width: 90px;
-    
-    padding-right: 0px;
+	justify-content: flex-end;
+	align-content: flex-start;
+	flex-wrap: nowrap;
 
-    font-family: "SkyLogo";
-    font-size: 26px;
+	width: 90px;
 
-    img {
-        width: 75px;;
-        /*background-color: purple;*/
-    }
+	padding-right: 0px;
 
-    span {
-        color: white;
-    }
+	font-family: "SkyLogo";
+	font-size: 26px;
 
+	img {
+		width: 75px;
+		/*background-color: purple;*/
+	}
+
+	span {
+		color: white;
+	}
 }
