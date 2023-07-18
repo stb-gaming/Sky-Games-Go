@@ -9,7 +9,7 @@ function SkyGamesTab({ label, href, selected }) {
 }
 
 function SkyGamesGame({ img, href = "#" }) {
-
+	return <Link to={href} className="skyGames_game"><img src={img}></img></Link>
 }
 
 const SkyGames = () => {
@@ -26,6 +26,15 @@ const SkyGames = () => {
 		<div className="skyGamesMain">
 			<div className="skyGames_gamesList">
 				<img src="/assets/img/skyGames/arrow.svg" className="skyGamesArrowLeft" />
+				<SkyGamesGame img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8XFqF5rPgYotiGkYSpe7wji541p38z7OCRw&usqp=CAU" href="#"></SkyGamesGame>
+				<SkyGamesGame img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8XFqF5rPgYotiGkYSpe7wji541p38z7OCRw&usqp=CAU" href="#"></SkyGamesGame>
+				<SkyGamesGame img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8XFqF5rPgYotiGkYSpe7wji541p38z7OCRw&usqp=CAU" href="#"></SkyGamesGame>
+				<SkyGamesGame img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8XFqF5rPgYotiGkYSpe7wji541p38z7OCRw&usqp=CAU" href="#"></SkyGamesGame>
+				<SkyGamesGame img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8XFqF5rPgYotiGkYSpe7wji541p38z7OCRw&usqp=CAU" href="#"></SkyGamesGame>
+				<SkyGamesGame img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8XFqF5rPgYotiGkYSpe7wji541p38z7OCRw&usqp=CAU" href="#"></SkyGamesGame>
+				<SkyGamesGame img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8XFqF5rPgYotiGkYSpe7wji541p38z7OCRw&usqp=CAU" href="#"></SkyGamesGame>
+				<SkyGamesGame img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8XFqF5rPgYotiGkYSpe7wji541p38z7OCRw&usqp=CAU" href="#"></SkyGamesGame>
+				<SkyGamesGame img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8XFqF5rPgYotiGkYSpe7wji541p38z7OCRw&usqp=CAU" href="#"></SkyGamesGame>
 				<img src="/assets/img/skyGames/arrow.svg" className="skyGamesArrowRight" />
 			</div>
 			<div className="skyGames_gameInfo">

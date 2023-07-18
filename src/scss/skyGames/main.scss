@@ -103,6 +103,19 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 	flex: 1 0 66%;
 	position: relative;
 	height: 300px;
+
+	display: grid;
+	grid-template-columns: 130px 130px 130px;
+	grid-template-rows: 104px 104px 104px;
+	gap: 20px;
+
+	padding-top: 10px;
+
+	img {
+		width: 130px;
+		height: 104px;
+		border-radius: 1em;
+	}
 }
 
 @keyframes arrowMovement {
