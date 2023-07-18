@@ -106,14 +106,14 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 }
 
 @keyframes arrowMovement {
-	0% {
+	0%,
+	12.5%,
+	25% {
 		transform: translateX(0);
 	}
-	50% {
+	6%,
+	18.5% {
 		transform: translateX(-10px);
-	}
-	100% {
-		transform: translateX(0);
 	}
 }
 
@@ -121,16 +121,17 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 	position: absolute;
 	top: 50%;
 	translate: 0% -50%;
-	animation: arrowMovement 0.4s infinite;
 }
 
 .skyGamesArrowLeft {
 	right: 100%;
+	animation: arrowMovement 3s infinite;
 }
 
 .skyGamesArrowRight {
 	rotate: 180deg;
 	left: 100%;
+	animation: arrowMovement 3s infinite;
 }
 
 .skyGames_gameInfo {
