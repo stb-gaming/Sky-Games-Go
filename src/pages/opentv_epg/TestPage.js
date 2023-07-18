@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Music } from '../../components/Music';
 import '../../scss/main.scss';
 import '../../scss/opentv_epg/main.scss';
 

@@ -96,25 +96,27 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 .skyGamesMain {
 	margin-left: 72px;
 	margin-right: 72px;
-	height: 300px;
 	display: flex;
+	padding-top: 0.3em;
 }
+
 .skyGames_gamesList {
 	flex: 1 0 66%;
 	position: relative;
-	height: 300px;
+}
 
+.skyGames_gameGrid {
 	display: grid;
-	grid-template-columns: 130px 130px 130px;
-	grid-template-rows: 104px 104px 104px;
-	gap: 20px;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
 
-	padding-top: 10px;
+	.skyGames_game {
+		margin: 6px;
+	}
 
 	img {
-		width: 130px;
-		height: 104px;
-		border-radius: 1em;
+		max-width: 100%;
+		border-radius: 24px;
 	}
 }
 
