@@ -104,11 +104,26 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 	position: relative;
 	height: 300px;
 }
+
+@keyframes arrowMovement {
+	0% {
+		transform: translateX(0);
+	}
+	50% {
+		transform: translateX(-10px);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
 [class^="skyGamesArrow"] {
 	position: absolute;
 	top: 50%;
 	translate: 0% -50%;
+	animation: arrowMovement 0.4s infinite;
 }
+
 .skyGamesArrowLeft {
 	right: 100%;
 }
