@@ -1,0 +1,23 @@
+name: Run Tests and a test build
+on: [push, pull-request]
+
+
+jobs:
+  test-tests:
+    runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 18
+    - run: npm ci
+    - run: npm test
+  test-build:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+      node-version: 18
+    - run: npm ci
+    - run: npm rstart

@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 const MusicContext = createContext();
 
-function MusicProvider({ children }) {
+function MusicProvider({ children, value = {} }) {
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [currentTrack, setCurrentTrack] = useState("");
 	const [volume, setVolume] = useState(1);
@@ -47,7 +47,7 @@ function MusicProvider({ children }) {
 				document.removeEventListener(event, play);
 			});
 			if (audioRef.current) {
-				audioRef.current.pause();
+				if (audioRef.current.pause) audioRef.current.pause();
 				audioRef.current.currentTime = 0;
 			}
 		});
@@ -68,15 +68,17 @@ function MusicProvider({ children }) {
 	};
 
 	const changeVolume = vol => {
-		setVolume(vol);
 		audioRef.current.volume = vol;
+		setVolume(vol);
 	};
+
+	Object.assign(value, { isPlaying, setIsPlaying, changeTrack, currentTrack, changeVolume });
 
 
 	return (
-		<MusicContext.Provider value={{ isPlaying, setIsPlaying, changeTrack, currentTrack, changeVolume }}>
+		<MusicContext.Provider value={value}>
 			{children}
-			<audio ref={audioRef} src={currentTrack} autoPlay={false} loop={true} />
+			<audio data-testid="page-music-audio" ref={audioRef} src={currentTrack} autoPlay={false} loop={true} />
 		</MusicContext.Provider>
 	);
 };

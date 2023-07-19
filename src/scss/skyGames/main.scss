@@ -34,7 +34,7 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 	position: absolute;
 	top: 0;
 	left: -10%;
-	width: 105%;
+	width: 120%;
 	height: 100%;
 	background-color: white;
 	pointer-events: none; /* Disable mouse events on the overlay */
@@ -114,11 +114,17 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 }
 
 .skyGamesMain {
-	margin-left: 72px;
-	margin-right: 72px;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
 	display: flex;
 	position: relative;
 	padding-top: 0.3em;
+
+	$width: 576px;
+	width: $width;
+	display: grid;
+	grid-template-columns: 576px * 0.5987 576px * 0.4013;
 }
 
 .skyGames_gamesList {
@@ -172,4 +178,34 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 
 .skyGames_gameInfo {
 	flex: 1 0 33%;
+
+	.gameInfo_container {
+		border: 1px solid gainsboro;
+		border-radius: 1em;
+
+		padding: 20px;
+		padding-bottom: 27.5 px;
+		margin-left: 10px;
+	}
+
+	.gameInfo_infoEntry {
+		background-color: #c7d4ec;
+
+		.skyGames_infoImage {
+			width: 100%;
+		}
+
+		.infoEntry_gameText {
+			.gameText_title {
+				color: #254c9e;
+				font-size: 130%;
+			}
+
+			.gameText_blurb {
+				color: black;
+				font-size: 85%;
+				padding-bottom: 10px;
+			}
+		}
+	}
 }
