@@ -31,10 +31,10 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 
 #skyGames_fade {
 	z-index: 100;
-	position: fixed;
+	position: absolute;
 	top: 0;
-	left: 0;
-	width: 100%;
+	left: -10%;
+	width: 105%;
 	height: 100%;
 	background-color: white;
 	pointer-events: none; /* Disable mouse events on the overlay */
@@ -117,6 +117,7 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 	margin-left: 72px;
 	margin-right: 72px;
 	display: flex;
+	position: relative;
 	padding-top: 0.3em;
 }
 

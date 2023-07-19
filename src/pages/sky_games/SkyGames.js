@@ -168,7 +168,6 @@ const SkyGames = () => {
 	}, [location]);
 
 	return <div className="skyGames">
-		<div id="skyGames_fade" className={`${isPageLoaded ? "done" : ""}`} ref={whiteFade} />
 		<Music src="/assets/music/sky-games.mp3" />
 		<div className="skyGamesHeader">
 			<SkyGamesLogo />
@@ -183,6 +182,7 @@ const SkyGames = () => {
 
 		</div>
 		<div className="skyGamesMain">
+		<div id="skyGames_fade" className={`${isPageLoaded ? "done" : ""}`} ref={whiteFade} />
 			<SkyGamesGamesList list={list} sort={sort} games={games} />
 
 			<div className="skyGames_gameInfo">
