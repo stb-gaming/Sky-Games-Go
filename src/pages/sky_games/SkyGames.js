@@ -125,6 +125,16 @@ function SkyGamesGamesList({ list = "1", sort, games }) {
 
 }
 
+function SkyGamesGameInfo({ game }) {
+	return <div className="gameInfo_infoEntry">
+		<img src={game.gameplay || game.menu || game.splash || game.image || "https://static.wikia.nocookie.net/sky-gamestar/images/7/74/Sky_Games_05-2012.png"} className="skyGames_infoImage" />
+		<div className="infoEntry_gameText">
+			<p className="gameText_title">{game.name || "Sky Game"}</p>
+			<p className="gameText_blurb">{game.description || "New to Sky Games!"}</p>
+		</div>
+	</div>;
+}
+
 
 const SkyGames = () => {
 	const games = require("../../data/games.json");
@@ -182,12 +192,12 @@ const SkyGames = () => {
 
 		</div>
 		<div className="skyGamesMain">
-		<div id="skyGames_fade" className={`${isPageLoaded ? "done" : ""}`} ref={whiteFade} />
+			<div id="skyGames_fade" className={`${isPageLoaded ? "done" : ""}`} ref={whiteFade} />
 			<SkyGamesGamesList list={list} sort={sort} games={games} />
 
 			<div className="skyGames_gameInfo">
 				<div className="gameInfo_container">
-					<img src="lorem" alt="" />
+					<SkyGamesGameInfo game="Denki Blocks!" />
 				</div>
 			</div>
 		</div>
