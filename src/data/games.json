@@ -1,7 +1,7 @@
 [
   {
     "title": "Denki Blocks!",
-    "description": null,
+    "description": "Join together gumblocks and create shapes to solve puzzles!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/db/app.html",
     "brand": "Denki",
@@ -14,7 +14,7 @@
   },
   {
     "title": "Super Breakout",
-    "description": null,
+    "description": "Use the bat and ball to destroy bricks and collect powerups!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/breakout/app.html",
     "brand": "Atari",
@@ -27,7 +27,7 @@
   },
   {
     "title": "Bust-a-Move",
-    "description": null,
+    "description": "Match coloured bubbles to clear levels!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/bam/app.html",
     "brand": "Taito",
@@ -40,7 +40,7 @@
   },
   {
     "title": "Pac-Man",
-    "description": null,
+    "description": "Gobble pills, avoid ghosts",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/pacman/app.html",
     "brand": "Namco",
@@ -66,7 +66,7 @@
   },
   {
     "title": "Beehive Bedlam",
-    "description": null,
+    "description": "Here's a fun fact - this version of the game was never released to Sky in its current state!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/beehive/app.html",
     "brand": null,
@@ -79,7 +79,7 @@
   },
   {
     "title": "Caterpillar Crunch",
-    "description": null,
+    "description": "Guide your hungry caterpillar around the garden!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/cc/app.html",
     "brand": "Denki",
@@ -92,7 +92,7 @@
   },
   {
     "title": "Hulk",
-    "description": null,
+    "description": "Help the incredible Hulk fend for himself against the military",
     "developer": "Denki",
     "url": "http://denki.co.uk/sky/hulk/app.html",
     "brand": "Universal Studios",
@@ -105,7 +105,7 @@
   },
   {
     "title": "Courage the Cowardly Dog: Katz Kidnap",
-    "description": null,
+    "description": "Save Eustace and Muriel from the evil Katz!",
     "developer": "Denki",
     "url": "http://www.denki.co.uk/sky/courage/app.html",
     "brand": "Cartoon Network",
@@ -118,7 +118,7 @@
   },
   {
     "title": "Courage the Cowardly Dog: Katz Komeback",
-    "description": null,
+    "description": "Katz is back, and wanting more!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/courage2/app.html",
     "brand": "Cartoon Network",
@@ -131,7 +131,7 @@
   },
   {
     "title": "Courage the Cowardly Dog: Le Quack Attack",
-    "description": null,
+    "description": "Eustace and Muriel have been kidnapped again - but not by who you think!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/courage3/app.html",
     "brand": "Cartoon Network",
@@ -144,7 +144,7 @@
   },
   {
     "title": "Darts",
-    "description": null,
+    "description": "A re-imagining of the classic sport!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/darts/app.html",
     "brand": "Sky Sports",
@@ -157,7 +157,7 @@
   },
   {
     "title": "Duopolis",
-    "description": null,
+    "description": "Match the falling blocks and create chains to rack up points",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/duo/app.html",
     "brand": "Denki",
@@ -170,7 +170,7 @@
   },
   {
     "title": "Looney Tunes: Back in Action",
-    "description": null,
+    "description": "Bugs and Daffy need your help!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/lt/app.html",
     "brand": "Warner Bros",
@@ -183,7 +183,7 @@
   },
   {
     "title": "Letter Box",
-    "description": null,
+    "description": "Create words in a grid of letters to score!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/lb/app.html",
     "brand": "SKY Games",
@@ -196,7 +196,7 @@
   },
   {
     "title": "Tom and Jerry: Mouse Party",
-    "description": null,
+    "description": "Rescue orphan mice while avoiding cats!",
     "developer": "Denki",
     "url": "http://denki.co.uk/sky/tj/app.html",
     "brand": "Cartoon Network",
@@ -209,7 +209,7 @@
   },
   {
     "title": "Codename Kids Next Door: Operation B.I.T.T.E.R.S.W.E.E.T",
-    "description": null,
+    "description": "Stop the evil Stickybeard in his tracks!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/cknd/app.html",
     "brand": "Cartoon Network",
@@ -222,7 +222,7 @@
   },
   {
     "title": "Scooby-Doo: The Mystery of Eerie Isle",
-    "description": null,
+    "description": "Help the Mystery gang track down the ghosts of Eerie Isle!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/sd/app.html",
     "brand": "Cartoon Network",
@@ -235,7 +235,7 @@
   },
   {
     "title": "Thunderbirds: Flashpoint Earth",
-    "description": null,
+    "description": "International Rescue is under high demand!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/tbirds/app.html",
     "brand": "Universal Studios",
@@ -248,7 +248,7 @@
   },
   {
     "title": "Genie's Cave",
-    "description": null,
+    "description": "Solve the genie's cunning puzzles to uncover secrets!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/gc/app.html",
     "brand": "SKY Games",
@@ -261,7 +261,7 @@
   },
   {
     "title": "Tetris",
-    "description": null,
+    "description": "A fan favourite!",
     "developer": "Denki",
     "url": "http://denki.co.uk/sky/tetris/app.html",
     "brand": "The Tetris Company",
@@ -274,7 +274,7 @@
   },
   {
     "title": "Boggle",
-    "description": null,
+    "description": "The classic pen and paper word game, now on Sky!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/boggle/app.html",
     "brand": "Hasbro",
@@ -287,7 +287,7 @@
   },
   {
     "title": "Shrek: Fiona's Rescue",
-    "description": null,
+    "description": "Shrek's pals need help!",
     "developer": "Denki",
     "url": "http://denki.co.uk/sky/shrek/app.html",
     "brand": "Dreamworks",
@@ -300,7 +300,7 @@
   },
   {
     "title": "Dexter's Laboratory: Dexter vs. Mandark",
-    "description": null,
+    "description": "A battle of wits between two evil geniuses!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/dl/app.html",
     "brand": "Cartoon Network",
@@ -313,7 +313,7 @@
   },
   {
     "title": "Foster's Home for Imaginary Friends: Tick Tock Terror",
-    "description": null,
+    "description": "Reset clocks to fix the timeline",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/fosters/app.html",
     "brand": "Cartoon Network",
@@ -326,7 +326,7 @@
   },
   {
     "title": "Jumble Fever",
-    "description": null,
+    "description": "Fruity addicting fun!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/jf/app.html",
     "brand": "SKY Games",
@@ -339,7 +339,7 @@
   },
   {
     "title": "Shrek: Disarming Charming",
-    "description": null,
+    "description": "Prince Charming gone bad!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/shrek2/app.html",
     "brand": "Dreamworks",
@@ -352,7 +352,7 @@
   },
   {
     "title": "Ed, Edd, n Eddy: Night of the Living Ed",
-    "description": null,
+    "description": "Sibling rivalry with a monstrous twist!",
     "developer": "Denki",
     "url": "http://denki.co.uk/sky/eddy/app.html",
     "brand": "Cartoon Network",
@@ -365,7 +365,7 @@
   },
   {
     "title": "Star Trek: The Next Generation: STRANDED",
-    "description": null,
+    "description": "Return to the Enterprise before it's too late!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/st/app.html",
     "brand": "Paramount",
@@ -378,7 +378,7 @@
   },
   {
     "title": "Wallace and Gromit: The Curse of the Were-Rabbit",
-    "description": null,
+    "description": "ANTI-PESTO's biggest job yet!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/wg/app.html",
     "brand": "Aardman",
@@ -391,7 +391,7 @@
   },
   {
     "title": "Shrek: Fairy Godmother's Revenge",
-    "description": null,
+    "description": "Help Fiona rescue her beloved Shrek and Donkey!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/shrek3/app.html",
     "brand": "Dreamworks",
@@ -404,7 +404,7 @@
   },
   {
     "title": "Word Crunch Deluxe",
-    "description": null,
+    "description": "The fast and furious words game that puts your verbal dexterity to the test!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/wcd/app.html",
     "brand": "SKY Games",
@@ -417,7 +417,7 @@
   },
   {
     "title": "SpongeBob SquarePants: Bikini Bottom Bother",
-    "description": null,
+    "description": "Evade Neptune and bring justice to longtime rival Plankton!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/sb/app.html",
     "brand": "Nickelodeon",
@@ -430,7 +430,7 @@
   },
   {
     "title": "The Grim Adventures of Billy and Mandy",
-    "description": null,
+    "description": "Use magic spells to escape the haunted house!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/grim/app.html",
     "brand": "Cartoon Network",
@@ -443,7 +443,7 @@
   },
   {
     "title": "Codename Kids Next Door: Operation T.E.E.N.A.G.E.R.",
-    "description": null,
+    "description": "Kids versus grown-ups, the ultimate battle of wits!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/cknd2/app.html",
     "brand": "Cartoon Network",
@@ -456,7 +456,7 @@
   },
   {
     "title": "Scooby-Doo Mysteries: The Case of the Creepy Cowboy",
-    "description": null,
+    "description": "Wild West meets ghostly ghouls...",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/sdm/app.html",
     "brand": "Cartoon Network",
@@ -469,7 +469,7 @@
   },
   {
     "title": "Shrek: Double Trouble",
-    "description": null,
+    "description": "Help Shrek on his most important mission yet!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/shrek4/app.html",
     "brand": "Dreamworks",
@@ -482,7 +482,7 @@
   },
   {
     "title": "Scooby-Doo: Tomb It May Concern",
-    "description": null,
+    "description": "Solve the curse of Ankhanamon!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/sd4/app.html",
     "brand": "Cartoon Network",
@@ -495,7 +495,7 @@
   },
   {
     "title": "Shrek: Imperial Peril",
-    "description": null,
+    "description": "The evil Fairy Godmother has returned!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/shrek5/app.html",
     "brand": "Dreamworks",
@@ -508,7 +508,7 @@
   },
   {
     "title": "Number Crunch",
-    "description": null,
+    "description": "Create expressions to make target numbers and score points!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/nc/app.html",
     "brand": "Denki",
@@ -534,7 +534,7 @@
   },
   {
     "title": "Kingpin Bowling",
-    "description": null,
+    "description": "A bowling alley on your screen?",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/bowling/app.html",
     "brand": "SKY Games",
@@ -547,7 +547,7 @@
   },
   {
     "title": "Jumble Quest: The Lost Pyramids",
-    "description": null,
+    "description": "Match gems to uncover the Lost Pyramids!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/jq/app.html",
     "brand": "SKY Games",
@@ -560,7 +560,7 @@
   },
   {
     "title": "Shrek the Third",
-    "description": null,
+    "description": "The royal bloodline is in need of a heir!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/shrekthird/app.html",
     "brand": "Dreamworks",
@@ -573,7 +573,7 @@
   },
   {
     "title": "Bugz",
-    "description": null,
+    "description": "The fate of the bug world rests on your shell!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/bugz/app.html",
     "brand": "SKY Games",
@@ -586,7 +586,7 @@
   },
   {
     "title": "Tom and Jerry in Dynamice",
-    "description": null,
+    "description": "Bombs away!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/dynamice/app.html",
     "brand": "Cartoon Network",
@@ -599,7 +599,7 @@
   },
   {
     "title": "Lego Castle: The Sword of Virtue",
-    "description": null,
+    "description": "Save the West from siege!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/lego/app.html",
     "brand": "LEGO",
@@ -612,7 +612,7 @@
   },
   {
     "title": "Ben 10: Vilgax Venom",
-    "description": null,
+    "description": "Fight off robots in an alien assault!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/ben10/app.html",
     "brand": "Cartoon Network",
@@ -625,7 +625,7 @@
   },
   {
     "title": "The Muppet Show: Backstage Rampage",
-    "description": null,
+    "description": "Rescue the famous troupe from incapacitated security guards!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/muppets/app.html",
     "brand": "Disney",
@@ -638,7 +638,7 @@
   },
   {
     "title": "Robotboy: Tag Team Trouble",
-    "description": null,
+    "description": "Double trouble for Robotboy and friends!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/robotboy/app.html",
     "brand": "Cartoon Network",
@@ -651,7 +651,7 @@
   },
   {
     "title": "Wall-E",
-    "description": null,
+    "description": "On a mission that determines the fate of humanity on Earth!",
     "developer": "Denki",
     "url": "https://denki.co.uk/sky/walle/app.html",
     "brand": "Disney",
