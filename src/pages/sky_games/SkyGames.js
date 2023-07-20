@@ -1,6 +1,6 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Music, MusicContext } from '../../components/Music';
+import { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Music } from '../../components/Music';
 import '../../scss/skyGames/main.scss';
 
 function SkyGamesLink({ children, to, ...rest }) {
@@ -41,48 +41,80 @@ function SkyGamesTab({ label, href = "#", selected }) {
 	return <SkyGamesLink to={href} className={(selected ? "active " : "") + "skyGamesTab"}>{label}</SkyGamesLink>;
 }
 
-function SkyGamesGame({ game, img = game.image || game.splash || game.menu || game.gameplay, href = game.url || "#", alt = game.title || href }) {
-	return <SkyGamesLink to={href} className="skyGames_game"><img src={"/assets/img/games/" + img} alt={alt}></img></SkyGamesLink>;
+function SkyGamesGame({ game, img = game.image || game.splash || game.menu || game.gameplay || "SKY Games/nogame.png", href = game.url || "#", alt = game.title || href, onHover }) {
+	return <SkyGamesLink to={href} className="skyGames_game" onMouseEnter={onHover}><img src={"/assets/img/games/" + img} alt={alt}></img></SkyGamesLink>;
+}
+
+function sortObjArr(arr, prop, reverse) {
+	let xor = (foo, bar) => (foo && !bar) || (!foo && bar);
+	return arr.sort((a, b) => {
+		let sorted = [a[prop], b[prop]].sort();
+		if (xor(sorted[0] === b[prop], typeof a[prop] == "boolean" || typeof b[prop] == "boolean")) {
+			return reverse ? -1 : 1;
+		} else {
+			return reverse ? 1 : -1;
+		}
+	});
 }
 
 
 function SkyGamesGamesList({ list = "1", sort, games }) {
-
+	const [selectedGame, setSelectedGame] = useState({ title: "Choose a game", description: "Hover over a game to see details", image: "SKY Games/nogame.png" });
 	const GRID_PAGE_LENGTH = 9;
 
 	list = Number(list) || list;
-	let allGames = games;
+	const [sortedGames, setSortedGames] = useState([]);
+	const [filteredGames, setFilteredGames] = useState([]);
 
-	if (sort) {
-		let xor = (foo, bar) => (foo && !bar) || (!foo && bar);
-		games = games.sort((a, b) => {
-			let sorted = [a[sort], b[sort]].sort();
-			if (xor(sorted[0] === b[sort], typeof a[sort] == "boolean" || typeof b[sort] == "boolean")) {
-				return 1;
-			} else {
-				return -1;
+	useEffect(() => {
+		if (sort) {
+			let sorted = sortObjArr(games, sort);
+			console.log(sorted);
+			setSortedGames(sorted);
+		} else {
+			setSortedGames(games);
+		}
+	}, [sort, games]);
+
+	useEffect(() => {
+		if (typeof list == "number") {
+			//list is page number
+			// All Games
+			let offset = (list - 1) * GRID_PAGE_LENGTH;
+			let filtered = sortedGames.slice(offset, offset + GRID_PAGE_LENGTH);
+			setFilteredGames(filtered);
+		} else {
+			// named list
+			let filtered = sortedGames.filter(game => game.list === list);
+
+			if (list === "new") {
+				let newGameIndexes = sortObjArr(games, "archived", true).map((g, i) => i);
+				filtered = sortedGames.filter((game, i) => newGameIndexes.includes(i));
 			}
-		});
-	}
+			filtered = filtered.slice(0, GRID_PAGE_LENGTH);
 
-	console.log(list);
+			if (list === "family") {
+				filtered.splice(7, 1, {
+					title: "All Games",
+					description: "Yes all games",
+					url: "/sky-games/1"
+				});
+			}
+			setFilteredGames(filtered);
+		}
 
-	if (typeof list == "number") {
-		//list is page number
-		// All Games
-		let offset = (list - 1) * GRID_PAGE_LENGTH;
-		games = allGames.slice(offset, offset + GRID_PAGE_LENGTH);
-	} else {
-		// named list
-		//there is a named list to switch case (sort,new,classics,family)
-		// and yes i think i will make the tabs be new, classics and family
-		games = [];
-	}
+	}, [sortedGames, list]);
 
-	if (!games.length) {
+
+
+	useEffect(() => {
+		if (filteredGames.length) setSelectedGame(filteredGames[Math.floor(Math.random() * filteredGames.length)]);
+	}, [filteredGames]);
+
+	if (!filteredGames.length) {
 		let name = String(list).charAt(0).toUpperCase() + String(list).slice(1);
 		if (!list || list === "0") {
-			return <h1>There was an error when trying to {sort ? ` sorting nothing by ${sort}` : 'list nothing'}.</h1>;
+			return <h1>There was an error when trying to {sort ? ` sort nothing by ${sort}` : 'list nothing'}.</h1>;
 		}
 		if (typeof list == "number") {
 			name = "page " + name;
@@ -91,7 +123,8 @@ function SkyGamesGamesList({ list = "1", sort, games }) {
 		}
 		; return <h1>There are no games in {name}{sort ? ` when sorted by ${sort}` : ''}. </h1>;
 	}
-	if (games.length <= GRID_PAGE_LENGTH) {
+
+	if (filteredGames.length <= GRID_PAGE_LENGTH) {
 		let tabs = ["new", "classics", "family"];
 		let last = 0;
 		let next = 0;
@@ -101,14 +134,15 @@ function SkyGamesGamesList({ list = "1", sort, games }) {
 			last = tabs[(currentTab - 1) % tabs.length];
 			next = tabs[(currentTab + 1) % tabs.length];
 		} else if (typeof list == "number") {
-			let pageCount = Math.ceil(allGames.length / GRID_PAGE_LENGTH);
+			let pageCount = Math.ceil(games.length / GRID_PAGE_LENGTH);
 			const mod1 = (a, b) => ((a - 1 + b) % b) + 1;
 
 			last = mod1(list - 1, pageCount);
 			next = mod1(list + 1, pageCount);
 		}
 
-		return <div className="skyGames_gamesList">
+
+		return <> <div className="skyGames_gamesList">
 			<SkyGamesLink to={"/sky-games/" + last + (sort ? "/" + sort : "")} className="skyGamesArrowLeft" >
 				<img src="/assets/img/skyGames/arrow.svg" alt="last page" />
 			</SkyGamesLink>
@@ -118,19 +152,32 @@ function SkyGamesGamesList({ list = "1", sort, games }) {
 				<img src="/assets/img/skyGames/arrow.svg" alt="next page" />
 			</SkyGamesLink>
 			<div className="skyGames_gameGrid">
-				{games.map(game => <SkyGamesGame game={game} />)}
+				{filteredGames.map((game, i) => <SkyGamesGame key={"game_" + i} onHover={() => {
+					setSelectedGame(game);
+				}} game={game} />)}
 			</div>
-		</div>;
+		</div>
+			<div className="skyGames_gameInfo">
+				<div className="gameInfo_container">
+					<SkyGamesGameInfo game={selectedGame} />
+				</div>
+			</div>
+		</>;
+	}
+	else {
+		return <h1>Cannot show more than {GRID_PAGE_LENGTH} games at a time yet.</h1>;
 	}
 
 }
 
 function SkyGamesGameInfo({ game }) {
+	//HERE
+	let img = game.gameplay || game.image || game.splash || "SKY Games/nogame.png";
 	return <div className="gameInfo_infoEntry">
-		<img src={game.gameplay || game.menu || game.splash || game.image || "https://static.wikia.nocookie.net/sky-gamestar/images/7/74/Sky_Games_05-2012.png"} className="skyGames_infoImage" />
+		<img src={"/assets/img/games/" + img} className="skyGames_infoImage" alt={game.title} />
 		<div className="infoEntry_gameText">
-			<p className="gameText_title">{game.name || "Sky Game"}</p>
-			<p className="gameText_blurb">{game.description || "New to Sky Games!"}</p>
+			<p className="gameText_title">{game.title}</p>
+			<p className="gameText_blurb">{game.description}</p>
 		</div>
 	</div>;
 }
@@ -153,6 +200,7 @@ const SkyGames = () => {
 		return () => clearTimeout(fakePageLoadTimeout);
 	}, []);
 
+
 	// This effect will run whenever the "isPageLoaded" state changes
 	useEffect(() => {
 		if (isPageLoaded) {
@@ -171,7 +219,7 @@ const SkyGames = () => {
 		// Fade the white background back in after a short delay (50ms in this case)
 		const fadeInTimeout = setTimeout(() => {
 			whiteFade.current.classList.add("done");
-		}, 50);
+		}, 500);
 
 		// Cleanup the timeout on unmount to avoid memory leaks
 		return () => clearTimeout(fadeInTimeout);
@@ -184,7 +232,7 @@ const SkyGames = () => {
 			<SkyGamesLogo />
 			{["new", "classics", "family"].includes(list) ?
 				<div className="skyGamesTabs">
-					<SkyGamesTab label="Hot Games" selected={list === undefined || list === "new"} href="/sky-games/new" />
+					<SkyGamesTab label="New Games" selected={list === undefined || list === "new"} href="/sky-games/new" />
 					<SkyGamesTab label="Classics" selected={list === "classics"} href="/sky-games/classics" />
 					<SkyGamesTab label="Family Fun" selected={list === "family"} href="/sky-games/family" />
 					{/* <SkyGamesTab label="All" selected={list === "1"} href="/sky-games/1" /> */}
@@ -198,11 +246,7 @@ const SkyGames = () => {
 
 				<SkyGamesGamesList list={list} sort={sort} games={games} />
 
-				<div className="skyGames_gameInfo">
-					<div className="gameInfo_container">
-						<SkyGamesGameInfo game="Denki Blocks!" />
-					</div>
-				</div>
+
 			</div>
 		</div>
 		<div className="skyGames_footer"></div>

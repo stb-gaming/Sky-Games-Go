@@ -28,6 +28,8 @@ h6 {
 	height: auto;
 	z-index: 9999;
 	opacity: 0.7;
+
+	pointer-events: none;
 }
 a {
 	&,
@@ -74,7 +76,7 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 	padding: 52px 62px;
 	padding-bottom: 0px;
 	display: grid;
-	grid-template-rows: auto;
+	grid-template-rows: 40px;
 	grid-template-columns: calc(140px + $tab-overlap) auto;
 	img {
 		width: 88px;
@@ -142,16 +144,14 @@ $gameInfo_width: d;
 
 .skyGamesMainContainer {
 	margin-top: 6px;
-	margin-left: $leftMargin_width - $divider_width / 2;
-	margin-right: 720-$gameGrid_width - $divider_width -$gameInfo_width - $divider_width - ($leftMargin_width -
-				$divider_width / 2);
+	margin-left: $leftMargin_width - calc($divider_width / 2);
+	margin-right: 720px - ($leftMargin_width + $gameGrid_width + (3 * calc($divider_width/2)) + $gameInfo_width);
 
 	display: grid;
 	grid-template-columns: ($gameGrid_width + $divider_width) ($gameInfo_width + $divider_width);
 }
 
 .skyGames_game {
-
 	position: relative;
 	display: flex;
 	justify-content: space-around;
@@ -273,7 +273,6 @@ $arrow_x: -20px;
 	position: absolute;
 	top: 50%;
 	translate: 0% -50%;
-	z-index: 10000;
 }
 
 .skyGamesArrowLeft {
@@ -300,7 +299,7 @@ $arrow_x: -20px;
 
 		border-radius: 13px;
 
-		margin: $divider_width / 2;
+		margin: calc($divider_width / 2);
 
 		// padding: 0.1px;
 	}
@@ -312,25 +311,42 @@ $arrow_x: -20px;
 		grid-template-rows: 140px auto 25px;
 
 		.skyGames_infoImage {
-			margin: 8px 6px;
+			//margin: 8px 6px;
 			width: 160px;
 			height: 126px;
+
+			$border_hor: 8px;
+			$border_vir: 6px;
+
+			border: solid rgb(190, 190, 190);
+			border-bottom-width: $border_hor;
+			border-top-width: $border_hor;
+			border-left-width: $border_vir;
+			border-right-width: $border_vir;
 		}
 
 		.infoEntry_gameText {
 			margin: 8px 6px;
+			position: relative;
+
+			display: flex;
+			flex-flow: column;
+
 			p {
 				margin: 0;
 			}
 			.gameText_title {
 				color: #254c9e;
 				font-size: 130%;
+				flex: 1;
 			}
 
 			.gameText_blurb {
 				color: black;
 				font-size: 85%;
-				padding-bottom: 10px;
+				//position: absolute;
+				//bottom: 0;
+				//left: 0;
 			}
 		}
 	}
