@@ -12,10 +12,22 @@ h6 {
 }
 .skyGames {
 	font-family: "SkyGames";
+	//background-image: url("https://static.wikia.nocookie.net/sky-gamestar/images/7/74/Sky_Games_05-2012.png");
 	background-color: white;
 	width: 100%;
 	height: 100%;
-	display: block;
+	display: grid;
+	grid-template-rows: 92px auto 120px;
+}
+
+.skyGames_reference {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: auto;
+	z-index: 9999;
+	opacity: 0.7;
 }
 a {
 	&,
@@ -27,14 +39,15 @@ a {
 }
 $pageBorderWidth: 2px;
 $pageBorderColour: #dbdbdb;
+// $pageBorderColour: magenta;
 $pageBorder: solid $pageBorderColour $pageBorderWidth;
 
 #skyGames_fade {
 	z-index: 100;
 	position: absolute;
 	top: 0;
-	left: -10%;
-	width: 120%;
+	left: 0;
+	width: 100%;
 	height: 100%;
 	background-color: white;
 	pointer-events: none; /* Disable mouse events on the overlay */
@@ -47,16 +60,24 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 		visibility: hidden;
 	}
 }
+:root {
+	--tab-overlap: 17px;
+}
+
+%shadow {
+	box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
+}
 
 .skyGamesHeader {
+	$tab-overlap: var(--tab-overlap);
 	position: relative;
-	padding: 24px 72px;
+	padding: 52px 62px;
 	padding-bottom: 0px;
 	display: grid;
 	grid-template-rows: auto;
-	grid-template-columns: 30% 70%;
+	grid-template-columns: calc(140px + $tab-overlap) auto;
 	img {
-		height: 1.7em;
+		width: 88px;
 	}
 	&::after {
 		content: "";
@@ -64,10 +85,12 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 
 	.skyGamesTabs {
 		display: flex;
-		width: 250px;
 
 		.skyGamesTab {
-			font-size: 17px;
+			// background-color: yellow !important;
+			// color: green !important;
+
+			font-size: 20px;
 			border: $pageBorder;
 			text-decoration: none;
 			$border-radius: 15px;
@@ -75,10 +98,8 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 			border-top-left-radius: $border-radius;
 			border-bottom: none;
 
-			flex: 1 0 auto;
-			$overlap: 10px;
-			margin: 0px (-$overlap);
-			padding: 7px $overlap;
+			margin: 0px calc(0px - $tab-overlap);
+			padding: 8px $tab-overlap;
 			text-align: center;
 			z-index: 0;
 			background-color: rgb(231, 231, 231);
@@ -86,10 +107,10 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 			z-index: 1;
 
 			&.active {
+				@extend %shadow;
 				color: $skyGamesPink;
 				z-index: 1;
 				background-color: white;
-				box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
 
 				z-index: 3;
 
@@ -99,32 +120,34 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 			}
 		}
 	}
-
-	&::after {
-		content: "";
-		position: absolute;
-		bottom: -$pageBorderWidth - 0.4px;
-		left: 0;
-		width: 100%;
-		height: $pageBorderWidth;
-		//background-color: $pageBorderColour;
-		z-index: 0;
-		box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
-	}
 }
 
-.skyGamesMain {
-	position: relative;
-	margin-left: auto;
-	margin-right: auto;
-	display: flex;
-	position: relative;
-	padding-top: 0.3em;
+$leftMargin_width: 60px;
+$gameGrid_width: 334px;
+$divider_width: 16px;
+$gameInfo_width: 233px;
 
-	$width: 576px;
-	width: $width;
+.skyGamesMain {
+	@extend %shadow;
+	position: relative;
+}
+/*
+$leftMargin_width: a;
+$gameGrid_width: b;
+$divider_width: c;
+$gameInfo_width: d;
+
+720-(b+3c/2+d+a)
+*/
+
+.skyGamesMainContainer {
+	margin-top: 6px;
+	margin-left: $leftMargin_width - $divider_width / 2;
+	margin-right: 720-$gameGrid_width - $divider_width -$gameInfo_width - $divider_width - ($leftMargin_width -
+				$divider_width / 2);
+
 	display: grid;
-	grid-template-columns: 576px * 0.5987 576px * 0.4013;
+	grid-template-columns: ($gameGrid_width + $divider_width) ($gameInfo_width + $divider_width);
 }
 
 .skyGames_gamesList {
@@ -134,15 +157,18 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 
 .skyGames_gameGrid {
 	display: grid;
+	height: 100%;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr 1fr;
 
-	.skyGames_game {
+	> a {
+		position: relative;
 		margin: 6px;
 	}
 
 	img {
-		max-width: 100%;
+		height: 100%;
+		width: 100%;
 		border-radius: 24px;
 	}
 }
@@ -159,43 +185,61 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 	}
 }
 
+$arrow_x: -20px;
+
 [class^="skyGamesArrow"] {
 	position: absolute;
 	top: 50%;
 	translate: 0% -50%;
+	z-index: 10000;
 }
 
 .skyGamesArrowLeft {
-	right: 100%;
+	left: $arrow_x;
 	animation: arrowMovement 3s infinite;
 }
 
 .skyGamesArrowRight {
 	rotate: 180deg;
-	left: 100%;
+	right: $arrow_x;
 	animation: arrowMovement 3s infinite;
 }
 
 .skyGames_gameInfo {
-	flex: 1 0 33%;
-
 	.gameInfo_container {
-		border: 1px solid gainsboro;
-		border-radius: 1em;
+		@extend %shadow;
+		// height: 332px;
+		// width: 233px;
 
-		padding: 20px;
-		padding-bottom: 27.5 px;
-		margin-left: 10px;
+		width: 172px;
+		height: 280px;
+
+		padding: 30px 34px;
+
+		border-radius: 13px;
+
+		margin: $divider_width / 2;
+
+		// padding: 0.1px;
 	}
 
 	.gameInfo_infoEntry {
 		background-color: #c7d4ec;
+		height: 100%;
+		display: grid;
+		grid-template-rows: 140px auto 25px;
 
 		.skyGames_infoImage {
-			width: 100%;
+			margin: 8px 6px;
+			width: 160px;
+			height: 126px;
 		}
 
 		.infoEntry_gameText {
+			margin: 8px 6px;
+			p {
+				margin: 0;
+			}
 			.gameText_title {
 				color: #254c9e;
 				font-size: 130%;
@@ -208,4 +252,7 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 			}
 		}
 	}
+}
+
+.skyGames_footer {
 }

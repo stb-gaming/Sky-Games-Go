@@ -109,13 +109,13 @@ function SkyGamesGamesList({ list = "1", sort, games }) {
 		}
 
 		return <div className="skyGames_gamesList">
-			<SkyGamesLink to={"/sky-games/" + last + (sort ? "/" + sort : "")}>
-				<img src="/assets/img/skyGames/arrow.svg" className="skyGamesArrowLeft" alt="last page" />
+			<SkyGamesLink to={"/sky-games/" + last + (sort ? "/" + sort : "")} className="skyGamesArrowLeft" >
+				<img src="/assets/img/skyGames/arrow.svg" alt="last page" />
 			</SkyGamesLink>
 
 
-			<SkyGamesLink to={"/sky-games/" + next + (sort ? "/" + sort : "")}>
-				<img src="/assets/img/skyGames/arrow.svg" className="skyGamesArrowRight" alt="next page" />
+			<SkyGamesLink to={"/sky-games/" + next + (sort ? "/" + sort : "")} className="skyGamesArrowRight">
+				<img src="/assets/img/skyGames/arrow.svg" alt="next page" />
 			</SkyGamesLink>
 			<div className="skyGames_gameGrid">
 				{games.map(game => <SkyGamesGame game={game} />)}
@@ -178,29 +178,34 @@ const SkyGames = () => {
 	}, [location]);
 
 	return <div className="skyGames">
+		{/* <img src="/assets/img/reference.jpg" alt="reference" className="skyGames_reference" /> */}
 		<Music src="/assets/music/sky-games.mp3" />
 		<div className="skyGamesHeader">
 			<SkyGamesLogo />
 			{["new", "classics", "family"].includes(list) ?
 				<div className="skyGamesTabs">
-					<SkyGamesTab label="New Games" selected={list === undefined || list === "new"} href="/sky-games/new" />
+					<SkyGamesTab label="Hot Games" selected={list === undefined || list === "new"} href="/sky-games/new" />
 					<SkyGamesTab label="Classics" selected={list === "classics"} href="/sky-games/classics" />
 					<SkyGamesTab label="Family Fun" selected={list === "family"} href="/sky-games/family" />
-					<SkyGamesTab label="All" selected={list === "1"} href="/sky-games/1" />
+					{/* <SkyGamesTab label="All" selected={list === "1"} href="/sky-games/1" /> */}
 				</div>
 				: null}
 
 		</div>
 		<div className="skyGamesMain">
 			<div id="skyGames_fade" className={`${isPageLoaded ? "done" : ""}`} ref={whiteFade} />
-			<SkyGamesGamesList list={list} sort={sort} games={games} />
+			<div className="skyGamesMainContainer">
 
-			<div className="skyGames_gameInfo">
-				<div className="gameInfo_container">
-					<SkyGamesGameInfo game="Denki Blocks!" />
+				<SkyGamesGamesList list={list} sort={sort} games={games} />
+
+				<div className="skyGames_gameInfo">
+					<div className="gameInfo_container">
+						<SkyGamesGameInfo game="Denki Blocks!" />
+					</div>
 				</div>
 			</div>
 		</div>
+		<div className="skyGames_footer"></div>
 	</div>;
 };
 
