@@ -371,7 +371,7 @@ back to start
 		transform: translateX(0);
 	}
 	50% {
-		transform: translateX(-10px);
+		transform: translateX(-15px);
 	}
 }
 @keyframes waitForABit {
@@ -492,35 +492,23 @@ $arrow_x: -20px;
 		height: 37px;
 		margin: 21px 55px;
 		border-radius: 10px;
-		border: rgba(93, 93, 93, 0.17) solid;
+		border: #cbcbcb solid;
 		border-width: 2px;
-		background-image: linear-gradient(
-			0deg,
-			#afafaf 0%,
-			#d2d3cc 20%,
-			#e5e5e5 40%,
-			#fff 60%,
-			#ebece7 86%,
-			#afafaf 100%
-		);
+		background-image: linear-gradient(180deg, #e8e8e8 40%, #d0d1d5 50%, #d0d1d5 80%, #b6b6b6 90%);
 
-		.skyGames_color {
-			&Red {
-				grid-column: 2;
-				&::before {
-					background-color: #e42a41;
-				}
-			}
-			&Green::before {
-				background-color: #45bc4c;
-			}
-			&Yellow::before {
-				background-color: #eebf47;
-			}
-			&Blue::before {
-				background-color: #45b7fd;
-			}
+		&::after {
+			content: "";
+			position: absolute;
+			bottom: -120%;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			transform: scaleY(-1); /* Flip the reflection vertically */
+			opacity: 0.3; /* Adjust the opacity of the reflection */
+			border-radius: 10px; /* Match the border radius of the original content */
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* Create the reflection effect with a shadow */
 		}
+
 		[class^="skyGames_color"] {
 			width: 100%;
 			height: 30px;
@@ -538,6 +526,32 @@ $arrow_x: -20px;
 				color: black;
 				margin-top: 4px;
 				border-radius: 7px;
+				box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
+				background: linear-gradient(
+					180deg,
+					rgb(255 255 255 / 49%) 35%,
+					rgb(255 255 255 / 12%) 45%,
+					rgb(255 255 255 / 12%) 75%,
+					rgb(255 255 255 / 0%) 100%
+				);
+			}
+		}
+
+		.skyGames_color {
+			&Red {
+				grid-column: 2;
+				&::before {
+					background-color: #e0011e;
+				}
+			}
+			&Green::before {
+				background-color: #21a626;
+			}
+			&Yellow::before {
+				background-color: #f4af14;
+			}
+			&Blue::before {
+				background-color: #1bacfd;
 			}
 		}
 	}

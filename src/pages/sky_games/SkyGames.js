@@ -286,10 +286,10 @@ const SkyGames = () => {
 		</div>
 		<div className="skyGames_footer">
 			<div className="skyGames_footerContainer">
-				<a href="" className="skyGames_colorRed">Win Prizes</a>
-				<a href="" className="skyGames_colorGreen">All Games</a>
-				<a href="" className="skyGames_colorYellow">Game Pass</a>
-				<a href="" className="skyGames_colorBlue">Enter Code</a>
+				<a href="#" className="skyGames_colorRed">Win Prizes</a>
+				<a href="1" className="skyGames_colorGreen">All Games</a>
+				<a href="#" className="skyGames_colorYellow">Game Pass</a>
+				<a href="#" className="skyGames_colorBlue">Enter Code</a>
 			</div>
 		</div>
 	</div>;
