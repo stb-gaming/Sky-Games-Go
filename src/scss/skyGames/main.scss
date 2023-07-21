@@ -496,19 +496,6 @@ $arrow_x: -20px;
 		border-width: 2px;
 		background-image: linear-gradient(180deg, #e8e8e8 40%, #d0d1d5 50%, #d0d1d5 80%, #b6b6b6 90%);
 
-		&::after {
-			content: "";
-			position: absolute;
-			bottom: -120%;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			transform: scaleY(-1); /* Flip the reflection vertically */
-			opacity: 0.3; /* Adjust the opacity of the reflection */
-			border-radius: 10px; /* Match the border radius of the original content */
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* Create the reflection effect with a shadow */
-		}
-
 		[class^="skyGames_color"] {
 			width: 100%;
 			height: 30px;
