@@ -2,7 +2,7 @@
 
 describe("Tests te sky games page", () => {
 
-	jest.mock("../data/games.json", () => [
+	jest.mock("../../data/games.json", () => [
 		{
 			name: "Game 1",
 			image: "game1.png",

@@ -57,8 +57,37 @@ function sortObjArr(arr, prop, reverse) {
 	});
 }
 
+function MovingArrows({ last, next, sort }) {
+	const arrows = [useRef(), useRef()];
 
-function SkyGamesGamesList({ list = "1", sort, games }) {
+	const animationEnd = e => {
+		e.target.style.animation = "none";
+		setTimeout(() => {
+			e.target.style.animation = "arrowMovement 0.5s 5";
+		}, 10000);
+	};
+
+	useEffect(() => {
+		let arrows = Array.from(document.querySelectorAll("[class^='skyGamesArrow']"));
+		console.log(arrows);
+		for (let arrow of arrows) {
+			arrow.addEventListener("animationend", animationEnd);
+		}
+	}, []);
+
+	return <>
+		<SkyGamesLink to={"/sky-games/" + last + (sort ? "/" + sort : "")} className="skyGamesArrowLeft" >
+			<img src="/assets/img/skyGames/arrow.svg" alt="last page" />
+		</SkyGamesLink>
+
+
+		<SkyGamesLink to={"/sky-games/" + next + (sort ? "/" + sort : "")} className="skyGamesArrowRight">
+			<img src="/assets/img/skyGames/arrow.svg" alt="next page" />
+		</SkyGamesLink></>;
+}
+
+
+function SkyGamesGamesList({ list = "0", sort, games }) {
 	const [selectedGame, setSelectedGame] = useState({ title: "Choose a game", description: "Hover over a game to see details", image: "SKY Games/nogame.png" });
 	const GRID_PAGE_LENGTH = 9;
 
@@ -116,7 +145,7 @@ function SkyGamesGamesList({ list = "1", sort, games }) {
 		if (!list || list === "0") {
 			return <h1>There was an error when trying to {sort ? ` sort nothing by ${sort}` : 'list nothing'}.</h1>;
 		}
-		if (typeof list == "number") {
+		if (Number(list)) {
 			name = "page " + name;
 		} else {
 			name = "the " + name + " list";
@@ -143,14 +172,7 @@ function SkyGamesGamesList({ list = "1", sort, games }) {
 
 
 		return <> <div className="skyGames_gamesList">
-			<SkyGamesLink to={"/sky-games/" + last + (sort ? "/" + sort : "")} className="skyGamesArrowLeft" >
-				<img src="/assets/img/skyGames/arrow.svg" alt="last page" />
-			</SkyGamesLink>
-
-
-			<SkyGamesLink to={"/sky-games/" + next + (sort ? "/" + sort : "")} className="skyGamesArrowRight">
-				<img src="/assets/img/skyGames/arrow.svg" alt="next page" />
-			</SkyGamesLink>
+			<MovingArrows last={last} next={next} sort={sort} />
 			<div className="skyGames_gameGrid">
 				{filteredGames.map((game, i) => <SkyGamesGame key={"game_" + i} onHover={() => {
 					setSelectedGame(game);
@@ -186,9 +208,10 @@ function SkyGamesGameInfo({ game }) {
 const SkyGames = () => {
 	const games = require("../../data/games.json");
 	const whiteFade = useRef();
-	const { list, sort } = useParams();
+	let { list, sort } = useParams();
 	const [isPageLoaded, setIsPageLoaded] = useState(false);
 	const location = useLocation();
+	if (!list) list = "new";
 
 	useEffect(() => {
 		// Simulating the page loading process
@@ -225,6 +248,18 @@ const SkyGames = () => {
 		return () => clearTimeout(fadeInTimeout);
 	}, [location]);
 
+
+	let name = String(list).charAt(0).toUpperCase() + String(list).slice(1),
+		pageTitle = "";
+	if (!list || list === "0") {
+		pageTitle = "The nothing list" + (sort ? `, sorted by ${sort}` : '');
+	}
+	if (Number(list)) {
+		pageTitle = sort ? `Games sorted by ${sort}` : 'All games, page ' + list;
+	} else {
+		pageTitle = name + (sort ? `, sorted by ${sort}` : '');
+	}
+
 	return <div className="skyGames">
 		{/* <img src="/assets/img/reference.jpg" alt="reference" className="skyGames_reference" /> */}
 		<Music src="/assets/music/sky-games.mp3" />
@@ -237,19 +272,26 @@ const SkyGames = () => {
 					<SkyGamesTab label="Family Fun" selected={list === "family"} href="/sky-games/family" />
 					{/* <SkyGamesTab label="All" selected={list === "1"} href="/sky-games/1" /> */}
 				</div>
-				: null}
-
+				: <h1>{pageTitle}</h1>}
 		</div>
 		<div className="skyGamesMain">
 			<div id="skyGames_fade" className={`${isPageLoaded ? "done" : ""}`} ref={whiteFade} />
 			<div className="skyGamesMainContainer">
 
 				<SkyGamesGamesList list={list} sort={sort} games={games} />
+				{/* <div className="test"></div> */}
 
 
 			</div>
 		</div>
-		<div className="skyGames_footer"></div>
+		<div className="skyGames_footer">
+			<div className="skyGames_footerContainer">
+				<a href="" className="skyGames_colorRed">Win Prizes</a>
+				<a href="" className="skyGames_colorGreen">All Games</a>
+				<a href="" className="skyGames_colorYellow">Game Pass</a>
+				<a href="" className="skyGames_colorBlue">Enter Code</a>
+			</div>
+		</div>
 	</div>;
 };
 

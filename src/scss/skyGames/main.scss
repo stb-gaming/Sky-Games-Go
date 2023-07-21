@@ -24,9 +24,10 @@ h6 {
 	position: absolute;
 	left: 0;
 	top: 0;
+	top: 37px;
 	width: 100%;
 	height: auto;
-	z-index: 9999;
+	z-index: 999;
 	opacity: 0.7;
 
 	pointer-events: none;
@@ -78,6 +79,9 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 	display: grid;
 	grid-template-rows: 40px;
 	grid-template-columns: calc(140px + $tab-overlap) auto;
+	h1 {
+		margin: 0;
+	}
 	img {
 		width: 88px;
 	}
@@ -105,7 +109,7 @@ $pageBorder: solid $pageBorderColour $pageBorderWidth;
 			text-align: center;
 			z-index: 0;
 			background-color: rgb(231, 231, 231);
-			color: rgb(103, 103, 226);
+			color: #254c9e;
 			z-index: 1;
 
 			&.active {
@@ -151,23 +155,96 @@ $gameInfo_width: d;
 	grid-template-columns: ($gameGrid_width + $divider_width) ($gameInfo_width + $divider_width);
 }
 
+@mixin gameArrows($top, $right, $bottom, $left) {
+	$arrow-size: 20.8%;
+
+	/*
+		P   O   N   M
+		    E   F
+		QD         GL
+
+		RC         HK
+
+		A   B   I   J
+
+		*/
+
+	//Arrow Sizing
+	$point_C: 0% (100% - $arrow-size);
+	$point_D: 0% $arrow-size;
+	$point_E: $arrow-size 0%;
+	$point_F: (100% - $arrow-size) 0%;
+	$point_G: 100% $arrow-size;
+	$point_H: 100% (100% - $arrow-size);
+
+	$arrow_remover: calc($arrow-size / 2);
+
+	// Arrow Removal
+	$point_P: 0% 0%;
+	@if not $top {
+		$point_P: $arrow_remover $arrow_remover;
+	}
+	$point_M: 100% 0%;
+	@if not $right {
+		$point_M: (100% - $arrow_remover) $arrow_remover;
+	}
+	$point_A: 0% 100%;
+	@if not $left {
+		$point_A: $arrow_remover (100% - $arrow_remover);
+	}
+	$point_J: 100% 100%;
+	@if not $bottom {
+		$point_J: (100% - $arrow_remover) (100% - $arrow_remover);
+	}
+
+	clip-path: polygon(
+		/*A*/ $point_A,
+		/*B*/ $arrow-size 100%,
+		/*C*/ $point_C,
+		/*D*/ $point_D,
+		/*E*/ $point_E,
+		/*F*/ $point_F,
+		/*G*/ $point_G,
+		/*H*/ $point_H,
+		/*I*/ (100% - $arrow-size) 100%,
+		/*J*/ $point_J,
+		/*K*/ $point_H,
+		/*L*/ $point_G,
+		/*M*/ $point_M,
+		/*N*/ $point_F,
+		/*O*/ $point_E,
+		/*P*/ $point_P,
+		/*Q*/ $point_D,
+		/*R*/ $point_C
+	);
+}
+
 .skyGames_game {
 	position: relative;
 	display: flex;
 	justify-content: space-around;
 	margin: 5%;
 
-	&::before {
-		content: "";
-		border-radius: 24%;
+	@for $row from 1 through 3 {
+		@for $col from 1 through 3 {
+			$n: ($row - 1) * 3 + $col;
+			&:nth-child(#{$n}) {
+				&::after {
+					// Apply the mixin with the calculated values to the ::after pseudo-element
+					/*
+					#{$col $row}
+					*/
+					@include gameArrows($top: $row != 0, $right: $col != 3, $bottom: $row != 3, $left: $col != 1);
+				}
+			}
+		}
+	}
+
+	img {
 		position: absolute;
-		$out: 2%;
-		top: -$out;
-		left: -$out;
-		right: -$out;
-		bottom: -$out;
-		border: 0.5em solid transparent;
-		z-index: 1;
+
+		outline: transparent 5px solid;
+		border: transparent 3px solid;
 	}
 
 	&::after {
@@ -195,6 +272,8 @@ $gameInfo_width: d;
 	&.down {
 		&::before,
 		&::after {
+			width: 84%;
+			height: 84%;
 			transform: translateY(-100%);
 		}
 	}
@@ -202,13 +281,33 @@ $gameInfo_width: d;
 	&:focus,
 	&:hover,
 	&:focus-visible {
-		outline: none;
+		img {
+			outline-color: $skyGamesPink;
+			border-color: white;
+		}
 
+		&::after,
 		&::before {
-			border-color: #f42f64;
+			content: "";
 		}
 
 		&::after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50.007455%;
+
+			z-index: 1;
+			transform: translate(-50%, -46%) rotate(45deg);
+			background-color: white;
+			border: solid $skyGamesPink 5px;
+
+			//clip-path: inset(0 0 0 $arrow-size);
+		}
+
+		&::before {
+			transform: translate(0, 0);
+			transition: transform 0.5s;
 			content: "SELECT";
 			padding: 0 10px;
 			font-size: 15px;
@@ -223,11 +322,6 @@ $gameInfo_width: d;
 
 			outline: white solid;
 			z-index: 2;
-		}
-		&::before,
-		&::after {
-			transform: translate(0, 0);
-			transition: transform 0.5s;
 		}
 	}
 }
@@ -255,16 +349,41 @@ $gameInfo_width: d;
 	}
 }
 
+/*
+(jumps 5 times)
+waits 10s
+
+3s
+
+0s in
+0.18s out
+0.375s in
+0.555s out
+0.75s in
+
+back to start
+
+*/
+
 @keyframes arrowMovement {
 	0%,
-	12.5%,
-	25% {
+	100% {
 		transform: translateX(0);
 	}
-	6%,
-	18.5% {
+	50% {
 		transform: translateX(-10px);
 	}
+}
+@keyframes waitForABit {
+	0%,
+	50%,
+	100% {
+		transform: none;
+	}
+}
+
+%animatedArrows {
+	animation: arrowMovement 0.5s 5;
 }
 
 $arrow_x: -20px;
@@ -277,13 +396,13 @@ $arrow_x: -20px;
 
 .skyGamesArrowLeft {
 	left: $arrow_x;
-	animation: arrowMovement 3s infinite;
+	@extend %animatedArrows;
 }
 
 .skyGamesArrowRight {
 	rotate: 180deg;
 	right: $arrow_x;
-	animation: arrowMovement 3s infinite;
+	@extend %animatedArrows;
 }
 
 .skyGames_gameInfo {
@@ -353,4 +472,79 @@ $arrow_x: -20px;
 }
 
 .skyGames_footer {
+	//Temp code so i can see it
+	position: relative;
+	//-------------------------
+	&Container {
+		//Temp code so i can see it
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 1000;
+		//-------------------------
+
+		display: grid;
+
+		grid-template-columns: 31px repeat(4, 142px);
+
+		@extend %shadow;
+		width: 592px;
+		height: 37px;
+		margin: 21px 55px;
+		border-radius: 10px;
+		border: rgba(93, 93, 93, 0.17) solid;
+		border-width: 2px;
+		background-image: linear-gradient(
+			0deg,
+			#afafaf 0%,
+			#d2d3cc 20%,
+			#e5e5e5 40%,
+			#fff 60%,
+			#ebece7 86%,
+			#afafaf 100%
+		);
+
+		.skyGames_color {
+			&Red {
+				grid-column: 2;
+				&::before {
+					background-color: #e42a41;
+				}
+			}
+			&Green::before {
+				background-color: #45bc4c;
+			}
+			&Yellow::before {
+				background-color: #eebf47;
+			}
+			&Blue::before {
+				background-color: #45b7fd;
+			}
+		}
+		[class^="skyGames_color"] {
+			width: 100%;
+			height: 30px;
+			display: flex;
+			/* justify-content: center; */
+			align-items: center;
+			text-decoration: none;
+			color: black;
+			gap: 8px;
+			&::before {
+				content: "";
+				display: block;
+				width: 26px;
+				height: 26px;
+				color: black;
+				margin-top: 4px;
+				border-radius: 7px;
+			}
+		}
+	}
+}
+
+.test {
+	position: relative;
+	width: 100px;
+	height: 100px;
 }

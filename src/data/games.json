@@ -68,7 +68,7 @@
 	},
 	{
 		"title": "Beehive Bedlam",
-		"description": "Here's a fun fact - this version of the game was never released to Sky in its current state!",
+		"description": "Beta!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/beehive/app.html",
 		"brand": null,
@@ -106,7 +106,7 @@
 		"menu": null
 	},
 	{
-		"title": "Courage the Cowardly Dog: Katz Kidnap",
+		"title": "Courage the Cowardly Dog 1",
 		"description": "Save Eustace and Muriel from the evil Katz!",
 		"developer": "Denki",
 		"url": "http://www.denki.co.uk/sky/courage/app.html",
@@ -119,7 +119,7 @@
 		"menu": null
 	},
 	{
-		"title": "Courage the Cowardly Dog: Katz Komeback",
+		"title": "Courage the Cowardly Dog 2",
 		"description": "Katz is back, and wanting more!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/courage2/app.html",
@@ -132,7 +132,7 @@
 		"menu": null
 	},
 	{
-		"title": "Courage the Cowardly Dog: Le Quack Attack",
+		"title": "Courage the Cowardly Dog 3",
 		"description": "Eustace and Muriel have been kidnapped again - but not by who you think!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/courage3/app.html",
@@ -210,7 +210,7 @@
 		"menu": null
 	},
 	{
-		"title": "Codename Kids Next Door: Operation B.I.T.T.E.R.S.W.E.E.T",
+		"title": "Codename Kids Next Door: BITTERSWEET",
 		"description": "Stop the evil Stickybeard in his tracks!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/cknd/app.html",
@@ -301,7 +301,7 @@
 		"menu": null
 	},
 	{
-		"title": "Dexter's Laboratory: Dexter vs. Mandark",
+		"title": "Dexter vs. Mandark",
 		"description": "A battle of wits between two evil geniuses!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/dl/app.html",
@@ -314,7 +314,7 @@
 		"menu": null
 	},
 	{
-		"title": "Foster's Home for Imaginary Friends: Tick Tock Terror",
+		"title": "Foster's Home for Imaginary Friends",
 		"description": "Reset clocks to fix the timeline",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/fosters/app.html",
@@ -379,7 +379,7 @@
 		"menu": null
 	},
 	{
-		"title": "Wallace and Gromit: The Curse of the Were-Rabbit",
+		"title": "Wallace and Gromit",
 		"description": "ANTI-PESTO's biggest job yet!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/wg/app.html",
@@ -418,7 +418,7 @@
 		"menu": null
 	},
 	{
-		"title": "SpongeBob SquarePants: Bikini Bottom Bother",
+		"title": "SpongeBob SquarePants 1",
 		"description": "Evade Neptune and bring justice to longtime rival Plankton!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/sb/app.html",
@@ -428,10 +428,11 @@
 		"date": "2006-02-16",
 		"archived": "2023-04-16",
 		"image": "Nickelodeon/SpongeBob SquarePants/SpongeBob SquarePants/Poster.jpg",
-		"menu": null
+		"menu": null,
+		"list": "forest of fear"
 	},
 	{
-		"title": "The Grim Adventures of Billy and Mandy",
+		"title": "Grim Adventures",
 		"description": "Use magic spells to escape the haunted house!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/grim/app.html",
@@ -444,7 +445,7 @@
 		"menu": null
 	},
 	{
-		"title": "Codename Kids Next Door: Operation T.E.E.N.A.G.E.R.",
+		"title": "Codename Kids Next Door: TEENAGER",
 		"description": "Kids versus grown-ups, the ultimate battle of wits!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/cknd2/app.html",
@@ -457,7 +458,7 @@
 		"menu": null
 	},
 	{
-		"title": "Scooby-Doo Mysteries: The Case of the Creepy Cowboy",
+		"title": "Scooby-Doo Mysteries: Creepy Cowboy",
 		"description": "Wild West meets ghostly ghouls...",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/sdm/app.html",
@@ -548,7 +549,7 @@
 		"menu": null
 	},
 	{
-		"title": "Jumble Quest: The Lost Pyramids",
+		"title": "Jumble Quest",
 		"description": "Match gems to uncover the Lost Pyramids!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/jq/app.html",
@@ -587,7 +588,7 @@
 		"menu": "SKY Games/Bugz/ModeSelect.jpg"
 	},
 	{
-		"title": "Tom and Jerry in Dynamice",
+		"title": "Tom and Jerry: Dynamice",
 		"description": "Bombs away!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/dynamice/app.html",
