@@ -69,7 +69,7 @@
 	},
 	{
 		"title": "Beehive Bedlam",
-		"description": "Beta!",
+		"description": "Never released!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/beehive/app.html",
 		"brand": null,
@@ -228,7 +228,7 @@
 		"menu": null
 	},
 	{
-		"title": "Scooby-Doo:                        Eerie Isle",
+		"title": "Scooby-Doo: Eerie Isle",
 		"description": "Help the Mystery gang track down the ghosts of Eerie Isle!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/sd/app.html",
@@ -294,7 +294,7 @@
 		"menu": null
 	},
 	{
-		"title": "Shrek: Fiona's Rescue",
+		"title": "Shrek Episode 1",
 		"description": "Shrek's pals need help!",
 		"developer": "Denki",
 		"url": "http://denki.co.uk/sky/shrek/app.html",
@@ -347,13 +347,13 @@
 		"list": "classics"
 	},
 	{
-		"title": "Shrek: Disarming Charming",
+		"title": "Shrek Episode 2",
 		"description": "Prince Charming gone bad!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/shrek2/app.html",
 		"brand": "Dreamworks",
 		"splash": "Dreamworks/Shrek/Shrek Episode 2/Splash.jpg",
-		"gameplay": "Dreamworks/Shrek/Shrek Episode 2/Swamp_Night.jpg",
+		"gameplay": "Dreamworks/Shrek/Shrek Episode 2/Swamp_night.jpg",
 		"date": "2005-07-14",
 		"archived": "2023-05-13",
 		"image": null,
@@ -361,7 +361,7 @@
 		"list": "classics"
 	},
 	{
-		"title": "Ed, Edd, n Eddy: Night of the Living Ed",
+		"title": "Ed, Edd, n Eddy 1",
 		"description": "Sibling rivalry with a monstrous twist!",
 		"developer": "Denki",
 		"url": "http://denki.co.uk/sky/eddy/app.html",
@@ -374,7 +374,7 @@
 		"menu": null
 	},
 	{
-		"title": "Star Trek: The Next Generation: STRANDED",
+		"title": "Star Trek: STRANDED",
 		"description": "Return to the Enterprise before it's too late!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/st/app.html",
@@ -400,7 +400,7 @@
 		"menu": null
 	},
 	{
-		"title": "Shrek: Fairy Godmother's Revenge",
+		"title": "Shrek Episode 3",
 		"description": "Help Fiona rescue her beloved Shrek and Donkey!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/shrek3/app.html",
@@ -466,7 +466,7 @@
 		"menu": null
 	},
 	{
-		"title": "Scooby-Doo Mysteries: Creepy Cowboy",
+		"title": "Scooby-Doo: Creepy Cowboy",
 		"description": "Wild West meets ghostly ghouls...",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/sdm/app.html",
@@ -479,7 +479,7 @@
 		"menu": null
 	},
 	{
-		"title": "Shrek: Double Trouble",
+		"title": "Shrek Episode 4",
 		"description": "Help Shrek on his most important mission yet!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/shrek4/app.html",
@@ -505,7 +505,7 @@
 		"menu": null
 	},
 	{
-		"title": "Shrek: Imperial Peril",
+		"title": "Shrek Episode 5",
 		"description": "The evil Fairy Godmother has returned!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/shrek5/app.html",
@@ -635,7 +635,7 @@
 		"menu": null
 	},
 	{
-		"title": "The Muppet Show: Backstage Rampage",
+		"title": "The Muppet Show",
 		"description": "Rescue the famous troupe from incapacitated security guards!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/muppets/app.html",
