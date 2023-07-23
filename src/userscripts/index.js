@@ -1,4 +1,5 @@
 export default [
+	require('./GM_addStyle'),
 	require('./check-userscript'),
 	require('./sky-remote.user'),
 	//require('./beehive-bedlam.user'),

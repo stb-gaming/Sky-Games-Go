@@ -16,9 +16,22 @@ import { useEffect } from "react";
 export default function App() {
 	useEffect(() => {
 		//let context = Object.assign({ unsafeWindow: window }, window);
+
+
+		let context = { ...window };
+		context.window = context;
+		context.unsafeWindow = context;
+
+
+
 		userscripts.forEach(us => {
-			if (us.init) us.init.call(window);
+			if (us.init) us.init.call(context);
 		});
+		for (const key in context) {
+			if (!key.startsWith("GM_") && key != "init" && !Object.keys(window).includes(key)) {
+				window[key] = context[key];
+			}
+		}
 	}, []);
 
 	return (
