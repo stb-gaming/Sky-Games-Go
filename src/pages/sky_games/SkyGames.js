@@ -1,41 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Music } from '../../components/Music';
+import { Music, MusicContext } from '../../components/Music';
 import '../../scss/skyGames/main.scss';
+import SkyGamesLink from './components/SkyGamesLink.js';
+import SkyGamesLogo from './components/SkyGamesLogo';
 
-function SkyGamesLink({ children, to, ...rest }) {
-	const navigate = useNavigate();
-
-	const handleLinkClick = e => {
-		e.preventDefault();
-		const whiteFade = document.getElementById("skyGames_fade");
-
-		if (whiteFade) {
-			whiteFade.classList.remove("done");
-			setTimeout(() => {
-				// Check if the link is internal or external
-				if (to.startsWith('/')) {
-					// Internal link, use navigate
-					navigate(to);
-				} else {
-					// External link, open in a new tab/window
-					//window.open(to, '_blank');
-					window.location.href = to;
-				}
-			}, 500);
-		}
-	};
-
-	return (
-		<a onClick={handleLinkClick} href={to} {...rest}>
-			{children}
-		</a>
-	);
-}
-
-function SkyGamesLogo() {
-	return <div className="skyGamesLogo"><img src="/assets/img/skyGames/skygames_logo.jpg" alt="Sky Games" /></div>;
-}
 
 function SkyGamesTab({ label, href = "#", selected }) {
 	return <SkyGamesLink to={href} className={(selected ? "active " : "") + "skyGamesTab"}>{label}</SkyGamesLink>;
@@ -58,7 +27,6 @@ function sortObjArr(arr, prop, reverse) {
 }
 
 function MovingArrows({ last, next, sort }) {
-	const arrows = [useRef(), useRef()];
 
 	const animationEnd = e => {
 		e.target.style.animation = "none";
@@ -132,7 +100,7 @@ function SkyGamesGamesList({ list = "0", sort, games }) {
 			setFilteredGames(filtered);
 		}
 
-	}, [sortedGames, list]);
+	}, [sortedGames, list, games]);
 
 
 
@@ -208,10 +176,12 @@ function SkyGamesGameInfo({ game }) {
 const SkyGames = () => {
 	const games = require("../../data/games.json");
 	const whiteFade = useRef();
-	let { list, sort } = useParams();
+	const params = useParams();
+	const { sort } = params;
 	const [isPageLoaded, setIsPageLoaded] = useState(false);
 	const location = useLocation();
-	if (!list) list = "new";
+	const { toggleMute } = useContext(MusicContext);
+	let list = params.list ? params.list : "new";
 
 	useEffect(() => {
 		// Simulating the page loading process
@@ -286,10 +256,10 @@ const SkyGames = () => {
 		</div>
 		<div className="skyGames_footer">
 			<div className="skyGames_footerContainer">
-				<a href="#" className="skyGames_colorRed">Win Prizes</a>
-				<a href="1" className="skyGames_colorGreen">All Games</a>
-				<a href="#" className="skyGames_colorYellow">Game Pass</a>
-				<a href="#" className="skyGames_colorBlue">Enter Code</a>
+				<SkyGamesLink to="/sky-games/controls" className="skyGames_colorRed">Controls</SkyGamesLink>
+				<SkyGamesLink to="/sky-games/1" className="skyGames_colorGreen">All Games</SkyGamesLink>
+				<SkyGamesLink to="#" onClick={toggleMute} className="skyGames_colorYellow">Toggle Music</SkyGamesLink>
+				<SkyGamesLink to="#" className="skyGames_colorBlue">Enter Code</SkyGamesLink>
 			</div>
 		</div>
 	</div>;
