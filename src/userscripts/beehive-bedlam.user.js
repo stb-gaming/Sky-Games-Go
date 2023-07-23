@@ -13,7 +13,7 @@
 // ==/UserScript==
 
 
-const init = function () {
+let init = function () {
 	'use strict';
 
 

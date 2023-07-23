@@ -14,7 +14,7 @@
 
 
 
-const init = function () {
+let init = function () {
 	'use strict';
 
 	// eslint-disable-next-line no-undef

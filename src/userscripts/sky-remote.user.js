@@ -17,13 +17,13 @@
 
 
 
-const init = function () {
+let init = function () {
 	'use strict';
 
 	// eslint-disable-next-line no-undef
 	const uWindow = typeof unsafeWindow != 'undefined' ? unsafeWindow : window;
 
-	const VERSION = [1, 3, 5];
+	const VERSION = [1, 3, 7];
 	const { IS_THIS_USERSCRIPT, IS_THIS_USERSCRIPT_DEV, IS_USERSCRIPT, IS_COMMONJS, GET_STARTED } = uWindow.checkUserscript("STBG Sky Remote API", VERSION, "SkyRemote");
 	if (!GET_STARTED) return;
 

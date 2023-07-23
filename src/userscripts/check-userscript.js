@@ -1,4 +1,4 @@
-const init = function () {
+let init = function () {
 	'use strict';
 
 	// eslint-disable-next-line no-undef
@@ -49,7 +49,7 @@ const init = function () {
 		};
 	}
 
-	const VERSION = [0, 1, 0],
+	const VERSION = [0, 1, 1],
 		{ GET_STARTED } = checkUserscript("STBG Check Userscript", VERSION, "checkUserscript");
 
 

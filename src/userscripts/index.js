@@ -4,5 +4,5 @@ export default [
 	require('./sky-remote.user'),
 	//require('./beehive-bedlam.user'),
 	//require('./sky-remote-mobile.user'),
-	require('./gamepad-support.user')
+	//require('./gamepad-support.user')
 ];
