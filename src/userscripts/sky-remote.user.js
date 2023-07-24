@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         STBG Sky Remote API
 // @namespace    https://stb-gaming.github.io
-// @version      1.3.6
+// @version      1.3.7
 // @description  The ultimate Sky Remote API (hopefully) containing everything to simulate a sky remote in your browser
 // @author       Tumble
 // @run-at       document-start
@@ -38,13 +38,19 @@
 	} else
 		module.exports.init = init;
 })(function ({ checkUserscript, exports }) {
-	const VERSION = [1, 3, 6];
+	const VERSION = [1, 3, 7];
 
 	const { IS_THIS_USERSCRIPT, IS_THIS_USERSCRIPT_DEV, IS_USERSCRIPT, IS_COMMONJS, GET_STARTED } = checkUserscript("STBG Sky Remote API", VERSION, "SkyRemote");
 	if (!GET_STARTED) return;
 
 
-	function SkyRemote(bindings) {
+	/**
+ * Initializes the SkyRemote object with the given bindings.
+ *
+ * @param {Object[]} bindings - An array of button bindings, each containing button name, keys, and keyCodes.
+ * @constructor
+ */
+	function SkyRemoteAPI(bindings) {
 		if (!new.target) return console.error("Use 'new' with this function");
 		if (!bindings || !bindings.length) {
 			throw "[SKY REMOTE] No bindings were provided";
@@ -63,16 +69,23 @@
 	}
 
 
-
-	SkyRemote.buttons = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'sky', 'tv-guide', 'box-office', 'services', 'interactive', 'i', 'up', 'left', 'down', 'right', 'select', 'channel-up', 'channel-down', 'backup', 'help', 'red', 'green', 'yellow', 'blue'];
-	SkyRemote.createBindings = function () {
+	/**
+	 * List of available buttons on the Sky Remote.
+	 * @type {string[]}
+	 */
+	SkyRemoteAPI.buttons = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'sky', 'tv-guide', 'box-office', 'services', 'interactive', 'i', 'up', 'left', 'down', 'right', 'select', 'channel-up', 'channel-down', 'backup', 'help', 'red', 'green', 'yellow', 'blue'];
+	/**
+ * Creates an array of button bindings.
+ * @returns {Object[]} - An array of button bindings.
+ */
+	SkyRemoteAPI.createBindings = function () {
 		let bindings = [];
 		let b = 0;
 
-		console.log("[SKY REMOTE] First button:", SkyRemote.buttons[b]);
+		console.log("[SKY REMOTE] First button:", SkyRemoteAPI.buttons[b]);
 
 		document.addEventListener("keyup", e => {
-			let button = SkyRemote.buttons[b];
+			let button = SkyRemoteAPI.buttons[b];
 			let binding = bindings.find(b => b.button == button);
 			if (!binding) {
 				console.log("[SKY REMOTE] Setting up new button");
@@ -86,9 +99,9 @@
 			}
 			if (e.key == "End") {
 				b++;
-				b %= SkyRemote.buttons.length;
+				b %= SkyRemoteAPI.buttons.length;
 				console.log("[SKY REMOTE] Progress:", bindings);
-				console.log("[SKY REMOTE] Next Button:", SkyRemote.buttons[b]);
+				console.log("[SKY REMOTE] Next Button:", SkyRemoteAPI.buttons[b]);
 
 			} else {
 				console.log("[SKY REMOTE] Adding new binding for " + button + ":", e.key, e.keyCode);
@@ -98,7 +111,14 @@
 		});
 	};
 
-	SkyRemote.triggerEvent = function (event, key, element = document) {
+	/**
+	 * Triggers a keyboard event with the given key code.
+	 *
+	 * @param {string} event - The type of the keyboard event (e.g., "keydown", "keyup", etc.).
+	 * @param {number} key - The key code to be triggered.
+	 * @param {HTMLElement} [element=document] - The element on which the event should be triggered (default is document).
+	 */
+	SkyRemoteAPI.triggerEvent = function (event, key, element = document) {
 		if (!event) {
 			console.error("[SKY REMOTE] No event was provided");
 			return;
@@ -115,20 +135,38 @@
 		}));
 	};
 
-	SkyRemote.prototype.version = VERSION;
+	/**
+	 * Returns the version of the SkyRemote API.
+	 *
+	 * @returns {number[]} - The version as an array of three numbers [major, minor, patch].
+	 */
+	SkyRemoteAPI.prototype.version = VERSION;
 
-	SkyRemote.prototype.printVersionInfo = function () {
+	/**
+	 * Prints version information about the SkyRemote API to the console.
+	 */
+	SkyRemoteAPI.prototype.printVersionInfo = function () {
 		console.log(`[STB Gaming Sky Remote API]
 Created by: Tumble
 Version: ${VERSION.join(".")} (${IS_THIS_USERSCRIPT_DEV ? "Development" : IS_THIS_USERSCRIPT ? "Userscript" : IS_USERSCRIPT ? "Userscript @require" : IS_COMMONJS ? "CommonsJS/Nodejs" : "Website <script>"})`);
 	};
 
-	SkyRemote.prototype.listButtons = function () {
-		return SkyRemote.buttons;
+	/**
+	 * Returns the list of available buttons on the Sky Remote.
+	 *
+	 * @returns {string[]} - An array of button names.
+	 */
+	SkyRemoteAPI.prototype.listButtons = function () {
+		return SkyRemoteAPI.buttons;
 	};
 
-
-	SkyRemote.prototype.getBinding = function (btn) {
+	/**
+	 * Returns the binding for the specified button.
+	 *
+	 * @param {string} btn - The name of the button.
+	 * @returns {Object} - The binding object for the specified button.
+	 */
+	SkyRemoteAPI.prototype.getBinding = function (btn) {
 		if (!btn) {
 			console.error("[SKY REMOTE] No button was provided");
 			return;
@@ -136,8 +174,13 @@ Version: ${VERSION.join(".")} (${IS_THIS_USERSCRIPT_DEV ? "Development" : IS_THI
 		return this.bindings.find(b => b.button == btn);
 	};
 
-
-	SkyRemote.prototype.holdButton = function (btn, element = document) {
+	/**
+	 * Holds the specified button.
+	 *
+	 * @param {string} btn - The name of the button to be held.
+	 * @param {HTMLElement} [element=document] - The element on which the button should be held (default is document).
+	 */
+	SkyRemoteAPI.prototype.holdButton = function (btn, element = document) {
 		if (!btn) {
 			console.error("[SKY REMOTE] No button was provided");
 			return;
@@ -145,11 +188,19 @@ Version: ${VERSION.join(".")} (${IS_THIS_USERSCRIPT_DEV ? "Development" : IS_THI
 		if (this.listButtons().includes(btn)) {
 			let keyCode = this.remote[btn];
 			this.heldButtons[keyCode] = true;
-			SkyRemote.triggerEvent("keydown", keyCode, element);
+			SkyRemoteAPI.triggerEvent("keydown", keyCode, element);
 		}
 	};
 
-	SkyRemote.prototype.onHoldButton = function (btn, func, element = document) {
+
+	/**
+	 * Adds an event listener for when a button is held.
+	 *
+	 * @param {string} btn - The name of the button to listen for.
+	 * @param {Function} func - The function to be called when the button is held.
+	 * @param {HTMLElement} [element=document] - The element on which the event should be listened to (default is document).
+	 */
+	SkyRemoteAPI.prototype.onHoldButton = function (btn, func, element = document) {
 		if (!btn) {
 			console.error("[SKY REMOTE] No button was provided");
 			return;
@@ -166,20 +217,32 @@ Version: ${VERSION.join(".")} (${IS_THIS_USERSCRIPT_DEV ? "Development" : IS_THI
 		});
 	};
 
-	SkyRemote.prototype.releaseButton = function (btn, element = document) {
+	/**
+	 * Releases the specified button.
+	 *
+	 * @param {string} btn - The name of the button to be released.
+	 * @param {HTMLElement} [element=document] - The element on which the button should be released (default is document).
+	 */
+	SkyRemoteAPI.prototype.releaseButton = function (btn, element = document) {
 		if (!btn) {
 			console.error("[SKY REMOTE] No button was provided");
 			return;
 		}
 		let keyCode = this.remote[btn];
 		if (this.heldButtons[keyCode]) {
-			SkyRemote.triggerEvent("keyup", keyCode, element);
+			SkyRemoteAPI.triggerEvent("keyup", keyCode, element);
 			this.heldButtons[keyCode] = false;
 		}
 	};
 
-
-	SkyRemote.prototype.onReleaseButton = function (btn, func, element = document) {
+	/**
+	 * Adds an event listener for when a button is released.
+	 *
+	 * @param {string} btn - The name of the button to listen for.
+	 * @param {Function} func - The function to be called when the button is released.
+	 * @param {HTMLElement} [element=document] - The element on which the event should be listened to (default is document).
+	 */
+	SkyRemoteAPI.prototype.onReleaseButton = function (btn, func, element = document) {
 		if (!btn) {
 			console.error("[SKY REMOTE] No button was provided");
 			return;
@@ -196,7 +259,13 @@ Version: ${VERSION.join(".")} (${IS_THIS_USERSCRIPT_DEV ? "Development" : IS_THI
 		});
 	};
 
-	SkyRemote.prototype.pressButton = function (btn, element = document) {
+	/**
+	 * Presses the specified button (holds and then releases).
+	 *
+	 * @param {string} btn - The name of the button to be pressed.
+	 * @param {HTMLElement} [element=document] - The element on which the button should be pressed (default is document).
+	 */
+	SkyRemoteAPI.prototype.pressButton = function (btn, element = document) {
 		if (!btn) {
 			console.error("[SKY REMOTE] No button was provided");
 			return;
@@ -205,7 +274,14 @@ Version: ${VERSION.join(".")} (${IS_THIS_USERSCRIPT_DEV ? "Development" : IS_THI
 		setTimeout(() => this.releaseButton(btn, element), 500);
 	};
 
-	SkyRemote.prototype.onPressButton = function (btn, func, element = document) {
+	/**
+	 * Adds an event listener for when a button is pressed (holds and then releases).
+	 *
+	 * @param {string} btn - The name of the button to listen for.
+	 * @param {Function} func - The function to be called when the button is pressed.
+	 * @param {HTMLElement} [element=document] - The element on which the event should be listened to (default is document).
+	 */
+	SkyRemoteAPI.prototype.onPressButton = function (btn, func, element = document) {
 		if (!btn) {
 			console.error("[SKY REMOTE] No button was provided");
 			return;
@@ -216,6 +292,10 @@ Version: ${VERSION.join(".")} (${IS_THIS_USERSCRIPT_DEV ? "Development" : IS_THI
 		}
 		let binding = this.getBinding(btn);
 
+		/**
+		 * Event handler for the keyup event.
+		 * @param {KeyboardEvent} event - The keyup event object.
+		 */
 		let handler = e => {
 			if (binding.keys.includes(e.key) || binding.keyCodes.includes(e.keyCode)) {
 				func.call(this, e);
@@ -229,8 +309,15 @@ Version: ${VERSION.join(".")} (${IS_THIS_USERSCRIPT_DEV ? "Development" : IS_THI
 		element.addEventListener("keypress", handler);
 	};
 
-
-	SkyRemote.prototype.createSkyRemote = function (funcs) {
+	/**
+	 * Registers a set of functions for different remote buttons.
+	 * @method
+	 * @memberof SkyRemoteAPI
+	 * @deprecated This method will be deprecated, use `onPressButton`, `onHoldButton`, and `onReleaseButton` instead.
+	 * @param {Object} funcs - An object with legacy button press event functions.
+	 *                         Example: { pressRed: function(event) { ... }, pressUp: function(event) { ... } }
+	 */
+	SkyRemoteAPI.prototype.createSkyRemote = function (funcs) {
 		console.warn(`[SKY REMOTE] SkyRemote.createSkyRemote will be deprecated for;
 - SkyRemote.onHoldButton(btn,function(event){
 
@@ -258,11 +345,13 @@ Please contact the website owner of this change if you can.`);
 	};
 
 	/**
-	 * Creates a string for the name of the legacy button press event functions (e.g. pressRed, pressUp, etc.)
-	 * @param {string} btn
-	 * @returns
+	 * Converts a button name to the corresponding legacy function name (e.g., "pressRed" for "red").
+	 * @method
+	 * @memberof SkyRemoteAPI
+	 * @param {string} btn - The name of the button.
+	 * @returns {string} - The legacy function name.
 	 */
-	SkyRemote.prototype.toLegacyFunction = function (btn) {
+	SkyRemoteAPI.prototype.toLegacyFunction = function (btn) {
 		if (!btn) {
 			console.error("[SKY REMOTE] No button was provided");
 			return;
@@ -270,7 +359,11 @@ Please contact the website owner of this change if you can.`);
 		return "press" + btn.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join("");
 	};
 
-	exports.SkyRemote = new SkyRemote([
+	/**
+	 * The SkyRemote API object containing all the available functions.
+	 * @type {SkyRemoteAPI}
+	 */
+	exports.SkyRemote = new SkyRemoteAPI([
 		{
 			"button": "0",
 			"keys": [
