@@ -7,6 +7,7 @@ function MusicProvider({ children, value = {} }) {
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [currentTrack, setCurrentTrack] = useState("");
 	const [volume, setVolume] = useState(1);
+	const [muted, setMuted] = useState(false);
 	const audioRef = React.createRef();
 
 	useEffect(() => {
@@ -14,6 +15,7 @@ function MusicProvider({ children, value = {} }) {
 			if (audioRef.current.src !== currentTrack)
 				audioRef.current.src = currentTrack;
 			audioRef.current.volume = volume;
+			audioRef.current.muted = muted;
 			if (isPlaying)
 				audioRef.current.play().catch(error => {
 					console.error("error");
@@ -24,7 +26,7 @@ function MusicProvider({ children, value = {} }) {
 			audioRef.current.pause();
 			setIsPlaying(false);
 		}
-	}, [currentTrack, isPlaying, volume]);
+	}, [currentTrack, isPlaying, volume, muted, audioRef]);
 
 	useEffect(() => {
 		const play = () => {
@@ -71,8 +73,11 @@ function MusicProvider({ children, value = {} }) {
 		audioRef.current.volume = vol;
 		setVolume(vol);
 	};
+	const toggleMute = () => {
+		setMuted(!muted);
+	};
 
-	Object.assign(value, { isPlaying, setIsPlaying, changeTrack, currentTrack, changeVolume });
+	Object.assign(value, { isPlaying, setIsPlaying, changeTrack, currentTrack, changeVolume, volume, toggleMute, muted });
 
 
 	return (

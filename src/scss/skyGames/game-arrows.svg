@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="134.672" height="136.672">
+
+
+	<!-- <rect x="0" y="0" width="134.672" height="136.672" fill="#0" /> -->
+	<!-- <rect x="10" y="10" width="114.672" height="116.672" fill="#00ff00" /> -->
+
+	<g transform="translate(67.336, 68.336)">
+		<g transform="translate(0, -58.336)">
+			<g id="triangle">
+				<polyline points="-5,0 0,-2.5 5,0" fill="none" stroke="#f42f64"
+					stroke-width="5" stroke-linejoin="arcs" stroke-linecap="butt" />
+				<polygon points="0,-1.25 7.5,5 -7.5,5" fill="#fff" />
+			</g>
+		</g>
+
+		<g transform="translate(0, 58.336)">
+			<use href="#triangle" transform="rotate(180)" />
+		</g>
+
+
+		<g transform="translate(-57.336)">
+			<use href="#triangle" transform="rotate(-90)" />
+		</g>
+		<g transform="translate(57.336)">
+			<use href="#triangle" transform="rotate(90)" />
+		</g>
+	</g>
+</svg>
+
+
+<!--
+
+	image
+	104.672+30 = 134.672
+	106.672+30 = 136.672
+
+	square
+	104.672+10 = 114.672
+	106.672+10 = 116.672
+
+	arrow
+	5 from base to point
+	say 7.5 across
+	up <polygon points="3.75,0 7.5,5 0,5" fill="#fff" />
+	down <polygon points="3.75,5 7.5,0 0,0" fill="#fff" />
+	left <polygon points="5,0 5,7.5 0,3.75" fill="#fff" />
+	rigth <polygon points="0,0 0,7.5 5,3.75" fill="#fff" />
+
+	middles
+	middleX (134.672/2) = 67.336
+	middleY (136.672/2) = 68.336
+
+	up arrow
+	startx c
+	starty 5
+
+
+
+
+-->
