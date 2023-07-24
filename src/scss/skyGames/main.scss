@@ -324,6 +324,7 @@ $gameInfo_width: d;
 	&:focus,
 	&:hover,
 	&:focus-visible {
+		outline: none;
 		img {
 			outline-color: $skyGamesPink;
 			border-color: white;

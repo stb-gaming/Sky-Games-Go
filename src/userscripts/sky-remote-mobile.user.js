@@ -1,26 +1,43 @@
 // ==UserScript==
 // @name         STBG Mobile Interface
 // @namespace    https://stb-gaming.github.io
-// @version      0.1.9
+// @version      0.1.7
 // @description  A userscript that adds a button layout based on the Sky Gamepad to mobile browsers, adding touch support for mobile devices
 // @author       tumble1999
 // @run-at       document-start
 // @match        https://denki.co.uk/sky/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=denki.co.uk
-// @require      https://github.com/STB-Gaming/Sky-Games-X/raw/master/src/userscripts/sky-remote.user.js
+// @require      https://github.com/STB-Gaming/userscripts/raw/master/sky-remote.user.js
 // @grant        GM_addStyle
 // ==/UserScript==
 
 
 
 
-let init = function () {
-	'use strict';
+(function (userscript) {
+	const init = global => {
+		const context = {
+			...global,
+			get global() { return global; },
+			get unsafeWindow() { return global; },
+			get uWindow() { return global.window; },
+			exports: {}
+		};
+		userscript.call(context, context);
+		return context.exports;
+	};
 
-	// eslint-disable-next-line no-undef
-	const uWindow = typeof unsafeWindow != 'undefined' ? unsafeWindow : window || this;
-	// eslint-disable-next-line no-undef
-	GM_addStyle = GM_addStyle || this.GM_addStyle || uWindow.GM_addStyle;
+	if (typeof module === 'undefined') {
+		// eslint-disable-next-line no-undef
+		const uWindow = typeof unsafeWindow === 'undefined' ? window : unsafeWindow,
+			exports = init(uWindow);
+
+		for (const key in exports)
+			if (!uWindow.hasOwnProperty(key))
+				uWindow[key] = exports[key];
+	} else
+		module.exports.init = init;
+})(function ({ uWindow, SkyRemote, GM_addStyle, exports }) {
 
 	let css = `
 html,body {
@@ -292,7 +309,7 @@ justify-content: flex-start;
 `;
 
 	let log = (function () {
-		let { log, info, warn, error } = uWindow.console;
+		let { log, info, warn, error } = window.console;
 		return { log, info, warn, error };
 	})(),
 		queuedLogs = [];
@@ -308,13 +325,13 @@ justify-content: flex-start;
 		}
 	}
 
-	uWindow.getQueuedLogs = function () {
+	exports.getQueuedLogs = function () {
 		console.log(queuedLogs.map(l => l.classList.toString() + ": " + l.innerText).join(`
 		`));
 	};
 
 	Object.keys(log).forEach(type => {
-		uWindow.console[type] = logLog.bind(null, type);
+		window.console[type] = logLog.bind(null, type);
 	});
 
 	function setupControls() {
@@ -352,10 +369,10 @@ justify-content: flex-start;
 			}
 		].forEach(b => {
 			b.element.addEventListener("touchstart", () => {
-				uWindow.SkyRemote.holdButton(b.button);
+				SkyRemote.holdButton(b.button);
 			});
 			b.element.addEventListener("touchend", () => {
-				uWindow.SkyRemote.releaseButton(b.button);
+				SkyRemote.releaseButton(b.button);
 			});
 		});
 		let toggleLog = () => {
@@ -380,20 +397,20 @@ justify-content: flex-start;
 			if (Math.abs(y) < deadZone) y = 0;
 			console.log({ x, y });
 			if (Math.sign(x) < 0) {
-				uWindow.SkyRemote.releaseButton("right");
-				uWindow.SkyRemote.holdButton("left");
+				SkyRemote.releaseButton("right");
+				SkyRemote.holdButton("left");
 			}
 			if (Math.sign(x) > 0) {
-				uWindow.SkyRemote.releaseButton("left");
-				uWindow.SkyRemote.holdButton("right");
+				SkyRemote.releaseButton("left");
+				SkyRemote.holdButton("right");
 			}
 			if (Math.sign(y) < 0) {
-				uWindow.SkyRemote.releaseButton("down");
-				uWindow.SkyRemote.holdButton("up");
+				SkyRemote.releaseButton("down");
+				SkyRemote.holdButton("up");
 			}
 			if (Math.sign(y) > 0) {
-				uWindow.SkyRemote.releaseButton("up");
-				uWindow.SkyRemote.holdButton("down");
+				SkyRemote.releaseButton("up");
+				SkyRemote.holdButton("down");
 			}
 		}
 
@@ -401,7 +418,7 @@ justify-content: flex-start;
 		dpad.addEventListener("touchmove", touchEvent);
 		dpad.addEventListener("touchend", e => {
 			["up", "down", "left", "right"].forEach(d =>
-				uWindow.SkyRemote.releaseButton(d));
+				SkyRemote.releaseButton(d));
 		});
 	}
 
@@ -413,8 +430,7 @@ justify-content: flex-start;
 
 	//document.body.innerHTML += html;
 
-	// eslint-disable-next-line no-undef
-	if (GM_addStyle) GM_addStyle(css);
+	GM_addStyle(css);
 
 
 	uWindow.addEventListener("load", () => {
@@ -427,10 +443,4 @@ justify-content: flex-start;
 
 
 	});
-};
-if (typeof module == "undefined") {
-	init();
-	init = undefined;
-} else {
-	module.exports.init = init;
-}
+});

@@ -4,6 +4,7 @@ import { Music, MusicContext } from '../../components/Music';
 import '../../scss/skyGames/main.scss';
 import SkyGamesLink from './components/SkyGamesLink.js';
 import SkyGamesLogo from './components/SkyGamesLogo';
+import createMenu from './utils/createMenu';
 
 
 function SkyGamesTab({ label, href = "#", selected }) {
@@ -55,13 +56,15 @@ function MovingArrows({ last, next, sort }) {
 }
 
 
-function SkyGamesGamesList({ list = "0", sort, games }) {
+function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 	const [selectedGame, setSelectedGame] = useState({ title: "Choose a game", description: "Hover over a game to see details", image: "SKY Games/nogame.png" });
 	const GRID_PAGE_LENGTH = 9;
 
 	list = Number(list) || list;
 	const [sortedGames, setSortedGames] = useState([]);
 	const [filteredGames, setFilteredGames] = useState([]);
+	const [menu] = useState(createMenu({ itemSelector: ".skyGames_game" }));
+	const [bindsSetup, setBindsSetup] = useState(false);
 
 	useEffect(() => {
 		if (sort) {
@@ -106,7 +109,34 @@ function SkyGamesGamesList({ list = "0", sort, games }) {
 
 	useEffect(() => {
 		if (filteredGames.length) setSelectedGame(filteredGames[Math.floor(Math.random() * filteredGames.length)]);
+
+		let gameGrid = document.querySelector(".skyGames_gameGrid");
+		if (!gameGrid) return;
+		menu.setPages([gameGrid]);
+		console.log("updated menu");
 	}, [filteredGames]);
+
+	useEffect(() => {
+		if (!isPageLoaded || bindsSetup || !window.SkyRemote) return;
+		setBindsSetup(true);
+		const { SkyRemote } = window;
+
+		SkyRemote.onReleaseButton("up", () => {
+			menu.up();
+		});
+		SkyRemote.onReleaseButton("down", () => {
+			menu.down();
+		});
+		SkyRemote.onReleaseButton("left", () => {
+			menu.left();
+		});
+		SkyRemote.onReleaseButton("right", () => {
+			menu.right();
+		});
+
+
+	});
+
 
 	if (!filteredGames.length) {
 		let name = String(list).charAt(0).toUpperCase() + String(list).slice(1);
@@ -128,7 +158,7 @@ function SkyGamesGamesList({ list = "0", sort, games }) {
 
 		if (tabs.includes(list)) {
 			let currentTab = tabs.indexOf(list);
-			last = tabs[(currentTab - 1) % tabs.length];
+			last = tabs[(currentTab - 1 + tabs.length) % tabs.length];
 			next = tabs[(currentTab + 1) % tabs.length];
 		} else if (typeof list == "number") {
 			let pageCount = Math.ceil(games.length / GRID_PAGE_LENGTH);
@@ -137,6 +167,15 @@ function SkyGamesGamesList({ list = "0", sort, games }) {
 			last = mod1(list - 1, pageCount);
 			next = mod1(list + 1, pageCount);
 		}
+
+		menu.setOnPageChange(({ dp, pos }) => {
+			if (dp < 0) {//left
+				document.querySelector(".skyGamesArrowLeft").click();
+			}
+			if (dp > 0) {//right
+				document.querySelector(".skyGamesArrowRight").click();
+			}
+		});
 
 
 		return <> <div className="skyGames_gamesList">
@@ -179,17 +218,16 @@ const SkyGames = () => {
 	const params = useParams();
 	const { sort } = params;
 	const [isPageLoaded, setIsPageLoaded] = useState(false);
+	const [bindsSetup, setBindsSetup] = useState(false);
 	const location = useLocation();
 	const { toggleMute } = useContext(MusicContext);
 	let list = params.list ? params.list : "new";
 
 	useEffect(() => {
-		// Simulating the page loading process
 		const fakePageLoadTimeout = setTimeout(() => {
 			setIsPageLoaded(true);
-		}, 500); // Adjust the duration to simulate the page load time (in milliseconds)
+		}, 500);
 
-		// Cleanup the timeout on unmount to avoid memory leaks
 		return () => clearTimeout(fakePageLoadTimeout);
 	}, []);
 
@@ -217,6 +255,28 @@ const SkyGames = () => {
 		// Cleanup the timeout on unmount to avoid memory leaks
 		return () => clearTimeout(fadeInTimeout);
 	}, [location]);
+
+	useEffect(() => {
+		if (!isPageLoaded || bindsSetup || !window.SkyRemote) return;
+		setBindsSetup(true);
+		const { SkyRemote } = window;
+
+		SkyRemote.onReleaseButton("red", () => {
+			document.querySelector(".skyGames_colorRed").click();
+		});
+		SkyRemote.onReleaseButton("green", () => {
+			document.querySelector(".skyGames_colorGreen").click();
+		});
+		SkyRemote.onReleaseButton("yellow", () => {
+			document.querySelector(".skyGames_colorYellow").click();
+		});
+		SkyRemote.onReleaseButton("blue", () => {
+			document.querySelector(".skyGames_colorBlue").click();
+		});
+
+
+	});
+
 
 
 	let name = String(list).charAt(0).toUpperCase() + String(list).slice(1),
@@ -248,7 +308,7 @@ const SkyGames = () => {
 			<div id="skyGames_fade" className={`${isPageLoaded ? "done" : ""}`} ref={whiteFade} />
 			<div className="skyGamesMainContainer">
 
-				<SkyGamesGamesList list={list} sort={sort} games={games} />
+				<SkyGamesGamesList list={list} sort={sort} games={games} isPageLoaded={isPageLoaded} />
 				{/* <div className="test"></div> */}
 
 

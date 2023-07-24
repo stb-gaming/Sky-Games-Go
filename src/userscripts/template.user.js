@@ -1,7 +1,19 @@
+// ==UserScript==
+// @name         STBG User Script Template
+// @namespace    https://stb-gaming.github.io
+// @version      0.0.1
+// @description  A template for creating user scripts
+// @author       You
+// @run-at       document-start
+// @match        https://denki.co.uk/sky/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=denki.co.uk
+// ==/UserScript==
+
 (function (userscript) {
 	const init = global => {
 		const context = {
 			...global,
+			get window() { return global; },
 			get global() { return global; },
 			get unsafeWindow() { return global; },
 			get uWindow() { return global; },
@@ -22,13 +34,7 @@
 	} else
 		module.exports.init = init;
 })(function ({ exports }) {
-
-	function GM_addStyle(css) {
-		const style = document.createElement('style');
-		style.textContent = css;
-		document.head.appendChild(style);
-	}
-
-	exports.GM_addStyle = GM_addStyle;
-
+	exports.test = function () {
+		console.log("works");
+	};
 });

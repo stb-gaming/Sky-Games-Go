@@ -1,9 +1,27 @@
-let init = function () {
-	'use strict';
+(function (userscript) {
+	const init = global => {
+		const context = {
+			...global,
+			get global() { return global; },
+			get unsafeWindow() { return global; },
+			get uWindow() { return global; },
+			exports: {}
+		};
+		userscript.call(context, context);
+		return context.exports;
+	};
 
-	// eslint-disable-next-line no-undef
-	const uWindow = typeof unsafeWindow != 'undefined' ? unsafeWindow : window;
+	if (typeof module === 'undefined') {
+		// eslint-disable-next-line no-undef
+		const uWindow = typeof unsafeWindow === 'undefined' ? window : unsafeWindow,
+			exports = init(uWindow);
 
+		for (const key in exports)
+			if (!uWindow.hasOwnProperty(key))
+				uWindow[key] = exports[key];
+	} else
+		module.exports.init = init;
+})(function ({ uWindow, exports }) {
 
 	function checkUserscript(name, VERSION, windowObjectName = name) {
 		const IS_COMMONJS = typeof module != 'undefined',
@@ -37,7 +55,7 @@ let init = function () {
 					break;
 			}
 		} else {
-			uWindow[windowObjectName] = { version: VERSION };
+			exports[windowObjectName] = { version: VERSION };
 		}
 
 		return {
@@ -55,15 +73,7 @@ let init = function () {
 
 	if (GET_STARTED) {
 		checkUserscript.version = VERSION;
-		uWindow.checkUserscript = checkUserscript;
+		exports.checkUserscript = checkUserscript;
 	}
 
-};
-
-
-if (typeof module == "undefined") {
-	init();
-	init = undefined;
-} else {
-	module.exports.init = init;
-}
+});

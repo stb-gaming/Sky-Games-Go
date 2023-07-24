@@ -1,3 +1,9 @@
+html,
+body {
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
 body {
 	background-color: black;
 	font-family: Zurich;
@@ -26,7 +32,7 @@ body {
 
 	&::before {
 		content: "";
-		background-image: url(https://images.unsplash.com/photo-1574974409771-cebec54deb00?ixlib=rb-4.0.3);
+		background-image: url("./tv.jpeg");
 		width: 1974px;
 		height: 1507px;
 		z-index: -1;

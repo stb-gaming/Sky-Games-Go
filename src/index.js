@@ -10,29 +10,14 @@ import Controls from './pages/sky_games/Controls';
 import Page404 from "./pages/opentv_epg/404";
 import Interactive from "./pages/opentv_epg/Interactive";
 import { MusicProvider } from "./components/Music";
-import userscripts from "./userscripts";
 import { useEffect } from "react";
+import { initUserscripts } from "./userscripts";
 
 export default function App() {
+
 	useEffect(() => {
-		//let context = Object.assign({ unsafeWindow: window }, window);
-
-
-		let context = { ...window };
-		context.window = context;
-		context.unsafeWindow = context;
-
-
-
-		userscripts.forEach(us => {
-			if (us.init) us.init.call(context);
-		});
-		for (const key in context) {
-			if (!key.startsWith("GM_") && key != "init" && !Object.keys(window).includes(key)) {
-				window[key] = context[key];
-			}
-		}
-	}, []);
+		initUserscripts(window);
+	});
 
 	return (
 		<div className="appContainer">

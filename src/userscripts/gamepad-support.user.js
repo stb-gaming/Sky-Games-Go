@@ -9,29 +9,48 @@
 // @match        https://beehive-bedlam.com/*
 // @match        https://stb-gaming.github.io/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=denki.co.uk
-// @require      https://github.com/STB-Gaming/Sky-Games-X/raw/master/src/userscripts/sky-remote.user.js
+// @require      https://github.com/STB-Gaming/userscripts/raw/master/sky-remote.user.js
 // ==/UserScript==
 
 
-let init = function () {
-	'use strict';
-	// eslint-disable-next-line no-undef
-	const uWindow = typeof unsafeWindow != 'undefined' ? unsafeWindow : window;
-
-	const
-		buttonMapping = {
-			12: "up",
-			13: "down",
-			14: "left",
-			15: "right",
-			9: "backup",
-			0: "select",
-			1: "red",
-			2: "blue",
-			3: "yellow",
-			8: "green",
-			11: "help"
+(function (userscript) {
+	const init = global => {
+		const context = {
+			...global,
+			get global() { return global; },
+			get unsafeWindow() { return global; },
+			get uWindow() { return global; },
+			exports: {}
 		};
+		userscript.call(context, context);
+		return context.exports;
+	};
+
+	if (typeof module === 'undefined') {
+		// eslint-disable-next-line no-undef
+		const uWindow = typeof unsafeWindow === 'undefined' ? window : unsafeWindow,
+			exports = init(uWindow);
+
+		for (const key in exports)
+			if (!uWindow.hasOwnProperty(key))
+				uWindow[key] = exports[key];
+	} else
+		module.exports.init = init;
+})(function ({ SkyRemote, window }) {
+
+	const buttonMapping = {
+		12: "up",
+		13: "down",
+		14: "left",
+		15: "right",
+		9: "backup",
+		0: "select",
+		1: "red",
+		2: "blue",
+		3: "yellow",
+		8: "green",
+		11: "help"
+	};
 
 	let
 		start,
@@ -46,29 +65,21 @@ let init = function () {
 		for (const index of Object.keys(buttonMapping)) {
 			if (lastPressed[index] != gamepad.buttons[index].pressed) {
 				if (gamepad.buttons[index].pressed) {
-					uWindow.SkyRemote.holdButton(buttonMapping[index]);
+					SkyRemote.holdButton(buttonMapping[index]);
 				} else {
-					uWindow.SkyRemote.releaseButton(buttonMapping[index]);
+					SkyRemote.releaseButton(buttonMapping[index]);
 				}
 				lastPressed[index] = gamepad.buttons[index].pressed;
 			}
 		}
 
-		start = uWindow.requestAnimationFrame(mainLoop);
+		start = window.requestAnimationFrame(mainLoop);
 	}
-
-	uWindow.addEventListener("gamepadconnected", event => {
+	window.addEventListener("gamepadconnected", event => {
 		mainLoop();
 	});
 
-	uWindow.addEventListener("gamepaddisconnected", event => {
-		uWindow.cancelAnimationFrame(start);
+	window.addEventListener("gamepaddisconnected", event => {
+		window.cancelAnimationFrame(start);
 	});
-};
-
-if (typeof module == "undefined") {
-	init();
-	init = undefined;
-} else {
-	module.exports.init = init;
-}
+});

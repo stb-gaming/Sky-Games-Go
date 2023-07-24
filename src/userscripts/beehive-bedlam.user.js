@@ -8,20 +8,37 @@
 // @match        https://beehive-bedlam.com/*
 // @match        http://localhost:8080/
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=beehive-bedlam.com/
-// @require      https://github.com/STB-Gaming/Sky-Games-X/raw/master/src/userscripts/check-userscript.js
-// @require      https://github.com/STB-Gaming/Sky-Games-X/raw/master/src/userscripts/sky-remote.user.js
+// @require      https://github.com/STB-Gaming/userscripts/raw/master/sky-remote.user.js
 // ==/UserScript==
 
 
-let init = function () {
-	'use strict';
+(function (userscript) {
+	const init = global => {
+		const context = {
+			...global,
+			get global() { return global; },
+			get unsafeWindow() { return global; },
+			get uWindow() { return global; },
+			exports: {}
+		};
+		userscript.call(context, context);
+		return context.exports;
+	};
 
+	if (typeof module === 'undefined') {
+		// eslint-disable-next-line no-undef
+		const uWindow = typeof unsafeWindow === 'undefined' ? window : unsafeWindow,
+			exports = init(uWindow);
 
-	// eslint-disable-next-line no-undef
-	const uWindow = typeof unsafeWindow != 'undefined' ? unsafeWindow : window;
-	const VERSION = [0, 2, 3],
-		{ GET_STARTED } = uWindow.checkUserscript("STBG Beehive Bedlam", VERSION, "BeehiveBedlam");
-	if (!GET_STARTED/*|| uWindow.location.href !== "https://beehive-bedlam.com/"*/) return;
+		for (const key in exports)
+			if (!uWindow.hasOwnProperty(key))
+				uWindow[key] = exports[key];
+	} else
+		module.exports.init = init;
+})(function ({ checkUserscript, SkyRemote, uWindow, location }) {
+	const VERSION = [0, 2, 5],
+		{ GET_STARTED } = checkUserscript("STBG Beehive Bedlam", VERSION, "BeehiveBedlam");
+	if (!GET_STARTED || location.href !== "https://beehive-bedlam.com/") return;
 
 	const DEG_TO_RAD = Math.PI / 180,
 		E_GAME_STATE = {
@@ -94,7 +111,7 @@ let init = function () {
 			x = lastMousePos.x;
 			y = lastMousePos.y;
 		};
-		if (typeof canvas == "undefined") {
+		if (typeof canvas === "undefined") {
 			console.log("Not ready yet");
 			return;
 		}
@@ -134,13 +151,13 @@ let init = function () {
 
 	function collectBound() {
 		let pos, collected = {}, props = ["x", "y", "width", "height"], p = 0;
-		if (typeof canvas == 'undefined') return;
+		if (typeof canvas === 'undefined' || !canvas) return;
 
 		function updateBounds(update) {
 			if (update) {
-				if (props[p] == "width") {
+				if (props[p] === "width") {
 					collected[props[p]] = pos.x - collected.x;
-				} else if (props[p] == "height") {
+				} else if (props[p] === "height") {
 					collected[props[p]] = pos.y - collected.y;
 				} else {
 					collected[props[p]] = pos[props[p]];
@@ -166,7 +183,7 @@ let init = function () {
 		});
 		uWindow.addEventListener("keyup", e => {
 			//console.log(e.key);
-			if (e.key == "b") updateBounds(true);
+			if (e.key === "b") updateBounds(true);
 		});
 		updateBounds();
 	}
@@ -174,7 +191,7 @@ let init = function () {
 	function collectPos() {
 		let pos, lastPos, lastTime,
 			getTime = () => Date.now() / 1000;
-		if (typeof canvas == 'undefined') return;
+		if (typeof canvas === 'undefined' || !canvas) return;
 
 		canvas.addEventListener("mousemove", e => {
 			bounds = canvas.getBoundingClientRect();
@@ -213,7 +230,7 @@ let init = function () {
 	}
 
 	function setCatapultAngle(deg) {
-		if (typeof canvas == 'undefined') return;
+		if (typeof canvas === 'undefined') return;
 
 		let angleMax = 71;
 		if (deg > angleMax) {
@@ -247,7 +264,7 @@ let init = function () {
 
 		catapult.state = state;
 
-		if (catapult.state == E_CATAPULT_STATE.STILL || gameState != E_GAME_STATE.GAME) {
+		if (catapult.state === E_CATAPULT_STATE.STILL || gameState !== E_GAME_STATE.GAME) {
 			catapult.state = E_CATAPULT_STATE.STILL;
 			cancelAnimationFrame(catapult.animationFrame);
 			catapult.animationFrame = null;
@@ -393,7 +410,7 @@ let init = function () {
 	uWindow.addEventListener("load", () => {
 		setTimeout(() => {
 			canvas = document.querySelector("canvas");
-			if (!canvas) return;
+			if (typeof canvas === 'undefined' || !canvas) return;
 			console.log("Collected canvas");
 
 			debugMouse = createDot();
@@ -435,18 +452,18 @@ let init = function () {
 				}
 			});
 		}, 2000);
-		if (typeof uWindow.SkyRemote === "undefined") {
+		if (typeof SkyRemote === "undefined") {
 			console.log("Sky Remote API is required");
 		} else {
 			console.log("Setting up sky remote");
-			uWindow.SkyRemote.onReleaseButton("up", pressUp);
-			uWindow.SkyRemote.onReleaseButton("down", pressDown);
-			uWindow.SkyRemote.onHoldButton("left", holdLeft);
-			uWindow.SkyRemote.onReleaseButton("left", () => setCatapultState(E_CATAPULT_STATE.STILL));
-			uWindow.SkyRemote.onHoldButton("right", holdRight);
-			uWindow.SkyRemote.onReleaseButton("right", () => setCatapultState(E_CATAPULT_STATE.STILL));
-			uWindow.SkyRemote.onReleaseButton("select", pressSelect);
-			uWindow.SkyRemote.onReleaseButton("backup", pressBack);
+			SkyRemote.onReleaseButton("up", pressUp);
+			SkyRemote.onReleaseButton("down", pressDown);
+			SkyRemote.onHoldButton("left", holdLeft);
+			SkyRemote.onReleaseButton("left", () => setCatapultState(E_CATAPULT_STATE.STILL));
+			SkyRemote.onHoldButton("right", holdRight);
+			SkyRemote.onReleaseButton("right", () => setCatapultState(E_CATAPULT_STATE.STILL));
+			SkyRemote.onReleaseButton("select", pressSelect);
+			SkyRemote.onReleaseButton("backup", pressBack);
 		}
 
 	});
@@ -491,13 +508,5 @@ let init = function () {
 		pressUp, pressDown, pressSelect, pressBack, gameState, updateMenuPos, catapult, toggleDebug
 	};
 
-	uWindow.BeehiveBedlam = BeehiveBedlam;
-};
-
-
-if (typeof module == "undefined") {
-	init();
-	init = undefined;
-} else {
-	module.exports.init = init;
-}
+	exports.BeehiveBedlam = BeehiveBedlam;
+});

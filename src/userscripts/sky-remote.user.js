@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         STBG Sky Remote API
 // @namespace    https://stb-gaming.github.io
-// @version      1.3.7
+// @version      1.3.6
 // @description  The ultimate Sky Remote API (hopefully) containing everything to simulate a sky remote in your browser
 // @author       Tumble
 // @run-at       document-start
@@ -11,20 +11,36 @@
 // @match        http://localhost:4000/*
 // @match        *://*
 // @icon         https://stb-gaming.github.io/assets/img/stb-logo.webp
-// @require      https://github.com/STB-Gaming/Sky-Games-X/raw/master/src/userscripts/check-userscript.js
-// @require      https://github.com/STB-Gaming/Sky-Games-X/raw/master/src/userscripts/beehive-bedlam.user.js
+// @require      https://github.com/STB-Gaming/userscripts/raw/master/beehive-bedlam.user.js
 // ==/UserScript==
 
+(function (userscript) {
+	const init = global => {
+		const context = {
+			...global,
+			get global() { return global; },
+			get unsafeWindow() { return global; },
+			get uWindow() { return global; },
+			exports: {}
+		};
+		userscript.call(context, context);
+		return context.exports;
+	};
 
+	if (typeof module === 'undefined') {
+		// eslint-disable-next-line no-undef
+		const uWindow = typeof unsafeWindow === 'undefined' ? window : unsafeWindow,
+			exports = init(uWindow);
 
-let init = function () {
-	'use strict';
+		for (const key in exports)
+			if (!uWindow.hasOwnProperty(key))
+				uWindow[key] = exports[key];
+	} else
+		module.exports.init = init;
+})(function ({ checkUserscript, exports }) {
+	const VERSION = [1, 3, 6];
 
-	// eslint-disable-next-line no-undef
-	const uWindow = typeof unsafeWindow != 'undefined' ? unsafeWindow : window;
-
-	const VERSION = [1, 3, 7];
-	const { IS_THIS_USERSCRIPT, IS_THIS_USERSCRIPT_DEV, IS_USERSCRIPT, IS_COMMONJS, GET_STARTED } = uWindow.checkUserscript("STBG Sky Remote API", VERSION, "SkyRemote");
+	const { IS_THIS_USERSCRIPT, IS_THIS_USERSCRIPT_DEV, IS_USERSCRIPT, IS_COMMONJS, GET_STARTED } = checkUserscript("STBG Sky Remote API", VERSION, "SkyRemote");
 	if (!GET_STARTED) return;
 
 
@@ -104,7 +120,7 @@ let init = function () {
 	SkyRemote.prototype.printVersionInfo = function () {
 		console.log(`[STB Gaming Sky Remote API]
 Created by: Tumble
-Version: ${this.version.join(".")} (${IS_THIS_USERSCRIPT_DEV ? "Development" : IS_THIS_USERSCRIPT ? "Userscript" : IS_USERSCRIPT ? "Userscript @require" : IS_COMMONJS ? "CommonsJS/Nodejs" : "Website <script>"})`);
+Version: ${VERSION.join(".")} (${IS_THIS_USERSCRIPT_DEV ? "Development" : IS_THIS_USERSCRIPT ? "Userscript" : IS_USERSCRIPT ? "Userscript @require" : IS_COMMONJS ? "CommonsJS/Nodejs" : "Website <script>"})`);
 	};
 
 	SkyRemote.prototype.listButtons = function () {
@@ -254,7 +270,7 @@ Please contact the website owner of this change if you can.`);
 		return "press" + btn.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join("");
 	};
 
-	uWindow.SkyRemote = new SkyRemote([
+	exports.SkyRemote = new SkyRemote([
 		{
 			"button": "0",
 			"keys": [
@@ -531,12 +547,4 @@ Please contact the website owner of this change if you can.`);
 			]
 		}
 	]);
-};
-
-
-if (typeof module == "undefined") {
-	init();
-	init = undefined;
-} else {
-	module.exports.init = init;
-}
+});
