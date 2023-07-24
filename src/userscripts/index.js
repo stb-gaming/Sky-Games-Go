@@ -1,3 +1,5 @@
+import emitEvent from '../utils/emitEvent';
+
 const userscripts = [
 	require('./GM_addStyle'),
 	require('./check-userscript'),
@@ -20,4 +22,6 @@ export function initUserscripts(window) {
 	for (const key in userscriptExports)
 		if (!key.startsWith("GM") && !window.hasOwnProperty(key))
 			window[key] = userscriptExports[key];
+
+	emitEvent("userscriptsLoaded", userscriptExports);
 }

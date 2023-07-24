@@ -4,11 +4,21 @@
 	left: 26px;
 	top: 14px;
 
-	user-select: none;
+	%focusable {
+		outline: none;
+	}
 
-	.itemSelected {
+	%selectedItem {
 		background-color: #fcda15;
 		cursor: pointer;
+
+		.menuNumber {
+			color: #0000b3;
+			background-color: #fec200;
+		}
+		.title {
+			color: #0000b3;
+		}
 	}
 
 	li {
@@ -29,10 +39,6 @@
 			font-size: 24px;
 		}
 
-		.titleSelected {
-			color: #0000b3;
-		}
-
 		.menuNumber {
 			background-color: #00137d;
 			color: #758ae5;
@@ -51,9 +57,23 @@
 			font-size: 24px;
 		}
 
-		.menuNumberSelected {
-			color: #0000b3;
-			background-color: #fec200;
+		&:hover,
+		&:focus,
+		&:focus-within,
+		&:focus-visible {
+			@extend %focusable;
+			@extend %selectedItem;
+		}
+	}
+
+	a {
+		&:hover,
+		&:focus,
+		&:focus-visible {
+			@extend %focusable;
+			li {
+				@extend %selectedItem;
+			}
 		}
 	}
 }

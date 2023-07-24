@@ -1,13 +1,31 @@
+/**
+ * Creates a menu with navigation functionality.
+ *
+ * @param {Object} options - The options for creating the menu.
+ * @param {Array} options.pages - An array of DOM elements representing the pages of the menu.
+ * @param {Function} [options.onFocus=(item) => {}] - Callback function triggered when an item is focused.
+ * @param {string} [options.itemSelector="a"] - CSS selector to select individual items within the pages.
+ * @param {boolean} [options.animations=false] - Boolean indicating whether animations are enabled for item transitions.
+ * @param {string} [options.focusClass] - Not used in this function.
+ * @param {Function} [options.onPageChange=() => {}] - Callback function triggered when the page changes.
+ * @returns {Object} - An object containing the methods and properties for the menu.
+ */
 function createMenu({
 	pages,
 	onFocus = (item) => { },
+	focusClass,
 	itemSelector = "a",
 	animations = false,
-	onPageChange = () => { }
-}) {
+	onPageChange = () => { },
+} = {}) {
 	let p, i, items = [];
 
-
+	/**
+	 * Navigates to the specified page.
+	 *
+	 * @param {number} newPage - The index of the new page to navigate to.
+	 * @returns {void}
+	 */
 	function gotoPage(newPage) {
 		if (!pages[newPage]) {
 			if (onPageChange) {
@@ -16,7 +34,6 @@ function createMenu({
 					pos: getPos()
 				});
 			} else {
-
 				console.log("no more pages");
 			}
 			return;
@@ -24,7 +41,6 @@ function createMenu({
 		if (pages[p]) pages[p].style.display = "none";
 		let lastPos = getPos();
 		let dp = newPage - p;
-		//console.log({ p, newPage, dp });
 		p = newPage;
 		pages[p].style.display = null;
 		items = getItems(p);
@@ -49,7 +65,10 @@ function createMenu({
 				items[i].dataset.x = c;
 			}
 		}
-
+		for (const item of items) {
+			const { x, y } = item.dataset;
+			item.tabIndex = (Number(y) * cols.length) + Number(x);
+		}
 		i = 0;
 		if (lastPos && dp) {
 			let r;
@@ -57,12 +76,17 @@ function createMenu({
 				r = rows[lastPos.y];
 				lastPos.y--;
 			}
-			//console.log({ lastPos, r, dp });
 			i = dp > 0 ? r[0] : r[r.length - 1];
 		}
-		//console.log(i);
 		updateFocus();
 	}
+
+	/**
+	 * Sets the pages of the menu and initializes the menu.
+	 *
+	 * @param {Array} newPages - An array of DOM elements representing the new pages of the menu.
+	 * @returns {void}
+	 */
 	function setPages(newPages) {
 		pages = newPages;
 		if (!Array.isArray(pages)) pages = Array.from(pages);
@@ -70,11 +94,18 @@ function createMenu({
 		gotoPage(0);
 	}
 
+	/**
+	 * Traverses the menu in the specified direction.
+	 *
+	 * @param {number} dx - The movement in the x-axis (horizontal direction).
+	 * @param {number} dy - The movement in the y-axis (vertical direction).
+	 * @returns {void}
+	 */
 	function traverse(dx, dy) {
 		if (!items | !items.length) {
 			console.warn("no items");
 			return;
-		};
+		}
 		let current = items[i];
 		if (!current) {
 			console.warn("no current item");
@@ -84,7 +115,6 @@ function createMenu({
 			cb = current.getBoundingClientRect(),
 			cx = (cb.left + cb.right) / 2,
 			cy = (cb.top + cb.bottom) / 2;
-		//console.log({ current, cx, cy });
 
 		let rels = items.map((e, i) => {
 			let eb = e.getBoundingClientRect(),
@@ -110,7 +140,6 @@ function createMenu({
 		rels = rels.filter(e => (e.i != i) && (!dx || e.ux > 0) && (!dy || e.uy > 0));
 		rels = rels.sort((a, b) => a.m - b.m).sort((a, b) => (dx ? a.mx - b.mx : dy ? a.my - b.my : a.m - b.m));
 
-		//console.log(rels);
 		if (!rels.length) {
 			if (dx > 0) {
 				nextPage();
@@ -118,11 +147,13 @@ function createMenu({
 				lastPage();
 			}
 			return;
-		};
+		}
+		if (focusClass) getSelected().classList.remove(focusClass);
 		i = rels[0].i;
 		let item = rels[0].e;
+		if (focusClass) item.classList.add(focusClass);
 
-		if (animations && Math.sqrt(dx * dx + dy * dy) == 1) {
+		if (animations && Math.sqrt(dx * dx + dy * dy) === 1) {
 			//Update Animations
 			if (dy > 0) item.classList.add("down");
 			if (dy < 0) item.classList.add("up");
@@ -135,12 +166,14 @@ function createMenu({
 				item.classList.remove("left", "right", "up", "down");
 			}, 0);
 		}
-
-
-		//Update Item Focus
 		updateFocus();
 	}
 
+	/**
+	 * Updates the focus on the current item and triggers the onFocus callback.
+	 *
+	 * @returns {void}
+	 */
 	function updateFocus() {
 		let current = items[i];
 
@@ -149,60 +182,125 @@ function createMenu({
 		onFocus(current);
 	}
 
+	/**
+	 * Initializes the menu by setting the pages and the current page to the first page.
+	 *
+	 * @returns {void}
+	 */
 	function init() {
 		setPages(pages);
 	}
 
-
-
+	/**
+	 * Navigates to the next page.
+	 *
+	 * @returns {void}
+	 */
 	function nextPage() {
 		gotoPage(p + 1);
 	}
 
+	/**
+	 * Navigates to the previous page.
+	 *
+	 * @returns {void}
+	 */
 	function lastPage() {
 		gotoPage(p - 1);
-
 	}
 
+	/**
+	 * Traverses the menu to the left.
+	 *
+	 * @returns {void}
+	 */
 	function left() {
 		traverse(-1, 0);
 	}
 
+	/**
+	 * Traverses the menu to the right.
+	 *
+	 * @returns {void}
+	 */
 	function right() {
 		traverse(1, 0);
 	}
 
+	/**
+	 * Traverses the menu upwards.
+	 *
+	 * @returns {void}
+	 */
 	function up() {
 		traverse(0, -1);
 	}
 
+	/**
+	 * Traverses the menu downwards.
+	 *
+	 * @returns {void}
+	 */
 	function down() {
 		traverse(0, 1);
 	}
 
+	/**
+	 * Navigates to the specified item in the menu.
+	 *
+	 * @param {HTMLElement} item - The DOM element representing the item to navigate to.
+	 * @returns {void}
+	 */
 	function goto(item) {
 		i = items.indexOf(item);
 		updateFocus();
 	}
 
-
-
+	/**
+	 * Gets the array of pages in the menu.
+	 *
+	 * @returns {Array} - An array of DOM elements representing the pages of the menu.
+	 */
 	function getPages() {
 		return pages;
 	}
 
+	/**
+	 * Gets the items in the specified page.
+	 *
+	 * @param {number} p - The index of the page.
+	 * @returns {Array} - An array of DOM elements representing the items in the page.
+	 */
 	function getItems(p) {
 		return Array.from(pages[p].querySelectorAll(itemSelector));
 	}
 
+	/**
+	 * Gets the index of an item in the menu based on its data-x and data-y attributes.
+	 *
+	 * @param {Object} pos - The position object containing the x and y attributes.
+	 * @param {number} pos.x - The x-coordinate of the item.
+	 * @param {number} pos.y - The y-coordinate of the item.
+	 * @returns {number} - The index of the item in the menu.
+	 */
 	function getItem({ x, y }) {
-		return items.findIndex(i => i.x == x && i.y == y);
+		return items.findIndex(i => i.x === x && i.y === y);
 	}
 
+	/**
+	 * Gets the currently focused item in the menu.
+	 *
+	 * @returns {HTMLElement} - The DOM element representing the currently focused item.
+	 */
 	function getSelected() {
 		return items[i];
 	}
 
+	/**
+	 * Gets the current position (data-x and data-y attributes) of the focused item.
+	 *
+	 * @returns {Object} - The position object containing the x and y attributes.
+	 */
 	function getPos() {
 		let current = items[i];
 		if (!current || !current.dataset) return;
@@ -210,15 +308,34 @@ function createMenu({
 		return { x, y };
 	}
 
+	/**
+	 * Sets the onPageChange callback function.
+	 *
+	 * @param {Function} fn - The onPageChange callback function.
+	 * @returns {void}
+	 */
 	function setOnPageChange(fn) {
 		onPageChange = fn;
 	}
 
-
+	// Initialize the menu and return an object containing all the public methods and properties.
 	return {
-		nextPage, lastPage, left, right, up, down, getSelected, getItems, goto, init, getPages, setPages, getPos, getItem, setOnPageChange
+		nextPage,
+		lastPage,
+		left,
+		right,
+		up,
+		down,
+		getSelected,
+		getItems,
+		goto,
+		init,
+		getPages,
+		setPages,
+		getPos,
+		getItem,
+		setOnPageChange,
 	};
 }
-
 
 export default createMenu;

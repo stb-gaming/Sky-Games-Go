@@ -60,6 +60,8 @@ max-width:100vw;
 	height: 50vh;
 	width: 100vw;
 	    touch-action: none;
+
+	user-select: none;
 }
 
 #sky-remote-dpad {

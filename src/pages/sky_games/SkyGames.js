@@ -4,7 +4,7 @@ import { Music, MusicContext } from '../../components/Music';
 import '../../scss/skyGames/main.scss';
 import SkyGamesLink from './components/SkyGamesLink.js';
 import SkyGamesLogo from './components/SkyGamesLogo';
-import createMenu from './utils/createMenu';
+import createMenu from '../../utils/createMenu';
 
 
 function SkyGamesTab({ label, href = "#", selected }) {
@@ -12,8 +12,15 @@ function SkyGamesTab({ label, href = "#", selected }) {
 }
 
 function SkyGamesGame({ game, img = game.image || game.splash || game.menu || game.gameplay || "SKY Games/nogame.png", href = game.url || "#", alt = game.title || href, onHover }) {
-	return <SkyGamesLink to={href} className="skyGames_game" onMouseEnter={onHover}><img src={"/assets/img/games/" + img} alt={alt}></img></SkyGamesLink>;
+	return <SkyGamesLink to={href} className="skyGames_game" onFocus={onHover} onMouseEnter={onHover}><img src={"/assets/img/games/" + img} alt={alt}></img></SkyGamesLink>;
 }
+
+
+
+const capitalise = text =>
+	text.split(" ").map(word =>
+		word.charAt(0).toUpperCase() + word.slice(1)
+	).join(" ");
 
 function sortObjArr(arr, prop, reverse) {
 	let xor = (foo, bar) => (foo && !bar) || (!foo && bar);
@@ -108,33 +115,31 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 
 
 	useEffect(() => {
-		if (filteredGames.length) setSelectedGame(filteredGames[Math.floor(Math.random() * filteredGames.length)]);
+		//if (filteredGames.length) setSelectedGame(filteredGames[Math.floor(Math.random() * filteredGames.length)]);
 
 		let gameGrid = document.querySelector(".skyGames_gameGrid");
 		if (!gameGrid) return;
 		menu.setPages([gameGrid]);
+		//menu.goto(menu.getItem({ x: 1, y: 1 }));
 		console.log("updated menu");
 	}, [filteredGames]);
 
 	useEffect(() => {
-		if (!isPageLoaded || bindsSetup || !window.SkyRemote) return;
-		setBindsSetup(true);
-		const { SkyRemote } = window;
 
-		SkyRemote.onReleaseButton("up", () => {
-			menu.up();
-		});
-		SkyRemote.onReleaseButton("down", () => {
-			menu.down();
-		});
-		SkyRemote.onReleaseButton("left", () => {
-			menu.left();
-		});
-		SkyRemote.onReleaseButton("right", () => {
-			menu.right();
-		});
+		if (bindsSetup) return;
+		document.addEventListener("userscriptsLoaded", ({ detail: { SkyRemote } }) => {
+			if (bindsSetup) return;
+			setBindsSetup(true);
+
+			for (const direction of ["up", "down", "left", "right"]) {
+				SkyRemote.onReleaseButton(direction, () => {
+					console.log(direction);
+					menu[direction]();
+				});
+			}
 
 
+		});
 	});
 
 
@@ -208,6 +213,7 @@ function SkyGamesGameInfo({ game }) {
 			<p className="gameText_title">{game.title}</p>
 			<p className="gameText_blurb">{game.description}</p>
 		</div>
+		<span className="infoEntry_gameCategory">{game.category || "In your Game Pass ✓"}</span>
 	</div>;
 }
 
@@ -260,6 +266,11 @@ const SkyGames = () => {
 		if (!isPageLoaded || bindsSetup || !window.SkyRemote) return;
 		setBindsSetup(true);
 		const { SkyRemote } = window;
+		["red", "green", "yellow", "blue"].forEach(colour => {
+			SkyRemote.onReleaseButton(colour, () => {
+				document.querySelector(`.skyGames_color${capitalise(colour)}`);
+			});
+		});
 
 		SkyRemote.onReleaseButton("red", () => {
 			document.querySelector(".skyGames_colorRed").click();

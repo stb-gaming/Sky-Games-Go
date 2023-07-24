@@ -17,9 +17,7 @@ function MusicProvider({ children, value = {} }) {
 			audioRef.current.volume = volume;
 			audioRef.current.muted = muted;
 			if (isPlaying)
-				audioRef.current.play().catch(error => {
-					console.error("error");
-				});
+				audioRef.current.play().catch(console.error);
 			else
 				audioRef.current.pause();
 		} else {

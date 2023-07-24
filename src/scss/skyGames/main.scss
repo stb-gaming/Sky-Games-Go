@@ -470,10 +470,14 @@ $arrow_x: -20px;
 	}
 
 	.gameInfo_infoEntry {
+		$round-border-radius: 0.5em;
+
 		background-color: #c7d4ec;
 		height: 100%;
 		display: grid;
 		grid-template-rows: 140px auto 25px;
+		border-bottom-left-radius: $round-border-radius;
+		border-bottom-right-radius: $round-border-radius;
 
 		.skyGames_infoImage {
 			//margin: 8px 6px;
@@ -514,19 +518,30 @@ $arrow_x: -20px;
 				//left: 0;
 			}
 		}
+
+		.infoEntry_gameCategory {
+			background-color: #255595;
+			color: white;
+			border-bottom-left-radius: $round-border-radius;
+			border-bottom-right-radius: $round-border-radius;
+			text-align: center;
+			display: flex;
+			flex-flow: column;
+			justify-content: center;
+		}
 	}
 }
 
 .skyGames_footer {
 	//Temp code so i can see it
-	position: relative;
+	// position: relative;
 	//-------------------------
 	&Container {
 		//Temp code so i can see it
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: 1000;
+		// position: absolute;
+		// top: 0;
+		// left: 0;
+		// z-index: 1000;
 		//-------------------------
 
 		display: grid;
