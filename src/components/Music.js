@@ -11,26 +11,28 @@ function MusicProvider({ children, value = {} }) {
 	const audioRef = React.createRef();
 
 	useEffect(() => {
-		if (currentTrack && audioRef.current) {
+		let audioRefCurrent = audioRef.current;
+		if (currentTrack && audioRefCurrent) {
 			if (audioRef.current.src !== currentTrack)
 				audioRef.current.src = currentTrack;
-			audioRef.current.volume = volume;
-			audioRef.current.muted = muted;
+			audioRefCurrent.volume = volume;
+			audioRefCurrent.muted = muted;
 			if (isPlaying)
-				audioRef.current.play().catch(console.error);
+				audioRefCurrent.play().catch(console.error);
 			else
-				audioRef.current.pause();
+				audioRefCurrent.pause();
 		} else {
-			audioRef.current.pause();
+			audioRefCurrent.pause();
 			setIsPlaying(false);
 		}
-	}, [currentTrack, isPlaying, volume, muted, audioRef.current]);
+	}, [currentTrack, isPlaying, volume, muted, audioRef, audioRef.current]);
 
 	useEffect(() => {
+		let audioRefCurrent = audioRef.current;
 		const play = () => {
 
 			if (!currentTrack || isPlaying) return;
-			audioRef.current.play().catch(error => {
+			audioRefCurrent.play().catch(error => {
 				console.error("error");
 			});
 			setIsPlaying(true);
@@ -46,9 +48,9 @@ function MusicProvider({ children, value = {} }) {
 			interactions.forEach(event => {
 				document.removeEventListener(event, play);
 			});
-			if (audioRef.current) {
-				if (audioRef.current.pause) audioRef.current.pause();
-				audioRef.current.currentTime = 0;
+			if (audioRefCurrent) {
+				if (audioRefCurrent.pause) audioRefCurrent.pause();
+				audioRefCurrent.currentTime = 0;
 			}
 		});
 	});
@@ -94,7 +96,7 @@ function Music({ src }) {
 		if (src !== currentTrack) {
 			changeTrack(src);
 		}
-	}, [changeTrack, src]);
+	}, [changeTrack, src, currentTrack],);
 
 	return null;
 }

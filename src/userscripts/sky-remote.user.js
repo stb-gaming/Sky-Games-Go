@@ -53,7 +53,7 @@
 	function SkyRemoteAPI(bindings) {
 		if (!new.target) throw new Error("Use 'new' with this function");
 		if (!bindings || !bindings.length) {
-			throw "[SKY REMOTE] No bindings were provided";
+			throw new Error("[SKY REMOTE] No bindings were provided");
 		}
 
 		this.bindings = bindings;
