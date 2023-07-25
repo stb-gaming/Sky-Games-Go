@@ -1,0 +1,30 @@
+{
+	"debug.toolBarLocation": "docked",
+	"files.autoSave": "onFocusChange",
+	"javascript.format.semicolons": "insert",
+	"typescript.format.semicolons": "insert",
+	"terminal.integrated.tabs.location": "right",
+	"debug.terminal.clearBeforeReusing": true,
+	"files.defaultLanguage": "markdown",
+	"workbench.editorAssociations": {
+		"*.svg": "svgPreview.previewEditor",
+		"*.md": "default"
+	},
+	"redhat.telemetry.enabled": true,
+	"diffEditor.codeLens": true,
+	"files.exclude": {
+		"**/.DS_Store": false,
+		"**/.git": false,
+		"**/.hg": false,
+		"**/.svn": false,
+		"**/CVS": false,
+		"**/Thumbs.db": false
+	},
+	"workbench.iconTheme": "vscode-icons",
+	"editor.insertSpaces": false,
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"files.insertFinalNewline": true,
+	"git.enableSmartCommit": true,
+	"emmet.showAbbreviationSuggestions": true,
+	"debug.showSubSessionsInToolBar": true,
+}
