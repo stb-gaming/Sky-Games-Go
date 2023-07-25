@@ -58,7 +58,29 @@ const Controls = () => {
 		<div className="skyGamesMain">
 			<div id="skyGames_fade" className={`${isPageLoaded ? "done" : ""}`} ref={whiteFade} />
 			<div className="skyGamesMainContainer">
-				<p>Yay!</p>
+				<img src="/assets/img/skyGames/Sky_Games_X_Controls.svg" alt="Sky Games X Controls:
+
+				Sky: Escape Key.
+
+				TV Guide: A Key.
+				Box Office: S Key.
+				Services: D Key.
+				Interactive: F Key.
+
+				i-Button: G Key.
+
+				Channel Up: Page Up Key.
+				Channel Down: Page Down Key.
+
+				Arrow Buttons: Arrow Keys/IJKL/D-Pad.
+				Select: Enter/Space/A Button.
+				Back Up: Backspace/START Button.
+				Help: T Key/Right Analog Stick.
+
+				Red: Q Key/B Button.
+				Green: W Key/SELECT Button.
+				Yellow: E Key/Y Button.
+				Blue: R Key/X Button." id="skyGamesControls" />
 			</div>
 		</div>
 		<div className="skyGames_footer">
