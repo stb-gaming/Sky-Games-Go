@@ -72,7 +72,7 @@ function createMenu({
 		i = 0;
 		if (lastPos && dp) {
 			let r;
-			while (!r || r.length == 0) {
+			while (!r || r.length === 0) {
 				r = rows[lastPos.y];
 				lastPos.y--;
 			}
@@ -137,7 +137,7 @@ function createMenu({
 			return { i, e, ux, uy, m, my, mx };
 
 		});
-		rels = rels.filter(e => (e.i != i) && (!dx || e.ux > 0) && (!dy || e.uy > 0));
+		rels = rels.filter(e => (e.i !== i) && (!dx || e.ux > 0) && (!dy || e.uy > 0));
 		rels = rels.sort((a, b) => a.m - b.m).sort((a, b) => (dx ? a.mx - b.mx : dy ? a.my - b.my : a.m - b.m));
 
 		if (!rels.length) {

@@ -294,29 +294,29 @@
 			/*
 			REFERENCE (credit: Aaron from denki)
 
-				if (psCatapult->eState == CATAPULT_STATE_ROTATE_LEFT || psCatapult->eState == CATAPULT_STATE_ROTATE_RIGHT)
+				if (psCatapult->eState === CATAPULT_STATE_ROTATE_LEFT || psCatapult->eState === CATAPULT_STATE_ROTATE_RIGHT)
 				{
 					if (psCatapult->dwAngularVelocity < (int) psCatapult->udwMaxRotationSpeed)
 						psCatapult->dwAngularVelocity += psCatapult->udwAcceleration;
 				}
 
-				if (psCatapult->eState == CATAPULT_STATE_ROTATE_LEFT)
+				if (psCatapult->eState === CATAPULT_STATE_ROTATE_LEFT)
 					Catapult_SetAngle(psCatapult, psCatapult->udwAngle - psCatapult->dwAngularVelocity);
 				else
 				{
-					if (psCatapult->eState == CATAPULT_STATE_ROTATE_RIGHT)
+					if (psCatapult->eState === CATAPULT_STATE_ROTATE_RIGHT)
 						Catapult_SetAngle(psCatapult, psCatapult->udwAngle + psCatapult->dwAngularVelocity);
 				}
 
 			*/
-			if (catapult.state == E_CATAPULT_STATE.LEFT || catapult.state == E_CATAPULT_STATE.RIGHT)
+			if (catapult.state === E_CATAPULT_STATE.LEFT || catapult.state === E_CATAPULT_STATE.RIGHT)
 				if (catapult.angularVelocity < catapult.maxRotationSpeed)
 					catapult.angularVelocity += catapult.acceleration;
 			console.log(catapult);
 
-			if (catapult.state == E_CATAPULT_STATE.LEFT)
+			if (catapult.state === E_CATAPULT_STATE.LEFT)
 				setCatapultAngle(catapult.currentAngle - catapult.angularVelocity);
-			if (catapult.state == E_CATAPULT_STATE.RIGHT)
+			if (catapult.state === E_CATAPULT_STATE.RIGHT)
 				setCatapultAngle(catapult.currentAngle + catapult.angularVelocity);
 
 			catapult.animationFrame = requestAnimationFrame(loop);
@@ -367,19 +367,19 @@
 	}
 
 	function holdLeft() {
-		if (gameState == E_GAME_STATE.GAME) {
+		if (gameState === E_GAME_STATE.GAME) {
 			setCatapultState(E_CATAPULT_STATE.LEFT);
 		}
 	}
 
 	function holdRight() {
-		if (gameState == E_GAME_STATE.GAME) {
+		if (gameState === E_GAME_STATE.GAME) {
 			setCatapultState(E_CATAPULT_STATE.RIGHT);
 		}
 	}
 
 	async function pressSelect() {
-		if (gameState == E_GAME_STATE.GAME) {
+		if (gameState === E_GAME_STATE.GAME) {
 			mouseUp();
 			await click();
 			setTimeout(() => {
@@ -398,7 +398,7 @@
 	}
 
 	async function pressBack() {
-		if (gameState == E_GAME_STATE.GAME) {
+		if (gameState === E_GAME_STATE.GAME) {
 			mouseUp();
 			updateMenuPos();
 			click();
@@ -417,7 +417,7 @@
 			catapult.originDebug = createDot();
 
 			canvas.addEventListener("mouseup", e => {
-				if (gameState == E_GAME_STATE.NONE) {
+				if (gameState === E_GAME_STATE.NONE) {
 					gameState = E_GAME_STATE.MENU;
 					setTimeout(updateMenuPos, 0);
 					return;
@@ -441,9 +441,9 @@
 						if (Object.values(E_GAME_STATE).includes(option)) {
 							gameState = option;
 							menuPos = 0;
-							//console.log("new state", Object.keys(E_GAME_STATE)[Object.values(E_GAME_STATE).findIndex(s => s == gameState)]);
+							//console.log("new state", Object.keys(E_GAME_STATE)[Object.values(E_GAME_STATE).findIndex(s => s === gameState)]);
 						}
-						if (gameState == E_GAME_STATE.GAME)
+						if (gameState === E_GAME_STATE.GAME)
 							setTimeout(startGame, 0);
 						else
 							setTimeout(updateMenuPos, 0);
@@ -469,7 +469,7 @@
 	});
 
 	window.addEventListener("resize", () => {
-		if (gameState == E_GAME_STATE.GAME) {
+		if (gameState === E_GAME_STATE.GAME) {
 			setCatapultAngle(catapult.currentAngle);
 		} else {
 			updateMenuPos();

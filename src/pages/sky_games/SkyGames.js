@@ -26,7 +26,7 @@ function sortObjArr(arr, prop, reverse) {
 	let xor = (foo, bar) => (foo && !bar) || (!foo && bar);
 	return arr.sort((a, b) => {
 		let sorted = [a[prop], b[prop]].sort();
-		if (xor(sorted[0] === b[prop], typeof a[prop] == "boolean" || typeof b[prop] == "boolean")) {
+		if (xor(sorted[0] === b[prop], typeof a[prop] === "boolean" || typeof b[prop] === "boolean")) {
 			return reverse ? -1 : 1;
 		} else {
 			return reverse ? 1 : -1;
@@ -84,7 +84,7 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 	}, [sort, games]);
 
 	useEffect(() => {
-		if (typeof list == "number") {
+		if (typeof list === "number") {
 			//list is page number
 			// All Games
 			let offset = (list - 1) * GRID_PAGE_LENGTH;
@@ -165,7 +165,7 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 			let currentTab = tabs.indexOf(list);
 			last = tabs[(currentTab - 1 + tabs.length) % tabs.length];
 			next = tabs[(currentTab + 1) % tabs.length];
-		} else if (typeof list == "number") {
+		} else if (typeof list === "number") {
 			let pageCount = Math.ceil(games.length / GRID_PAGE_LENGTH);
 			const mod1 = (a, b) => ((a - 1 + b) % b) + 1;
 
@@ -317,7 +317,7 @@ const SkyGames = () => {
 		</div>
 		<div className="skyGamesMain">
 			<div id="skyGames_fade" className={`${isPageLoaded ? "done" : ""}`} ref={whiteFade} />
-			<div className="skyGamesMainContainer">
+			<div className="skyGamesMainContainer split">
 
 				<SkyGamesGamesList list={list} sort={sort} games={games} isPageLoaded={isPageLoaded} />
 				{/* <div className="test"></div> */}

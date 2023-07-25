@@ -15,7 +15,7 @@ export const yearToPack = year => {
 	let packNames = Object.keys(packs);
 	for (let i in packNames) {
 		if (
-			Number(i) + 1 == packNames.length
+			Number(i) + 1 === packNames.length
 			|| year < Number(packNames[Number(i) + 1])
 		) return Number(packNames[i]);
 	}

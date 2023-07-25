@@ -86,7 +86,7 @@
 
 		document.addEventListener("keyup", e => {
 			let button = SkyRemoteAPI.buttons[b];
-			let binding = bindings.find(b => b.button == button);
+			let binding = bindings.find(b => b.button === button);
 			if (!binding) {
 				console.log("[SKY REMOTE] Setting up new button");
 				binding = {
@@ -97,7 +97,7 @@
 				};
 				bindings.push(binding);
 			}
-			if (e.key == "End") {
+			if (e.key === "End") {
 				b++;
 				b %= SkyRemoteAPI.buttons.length;
 				console.log("[SKY REMOTE] Progress:", bindings);
@@ -171,7 +171,7 @@ Version: ${VERSION.join(".")} (${IS_THIS_USERSCRIPT_DEV ? "Development" : IS_THI
 			console.error("[SKY REMOTE] No button was provided");
 			return;
 		}
-		return this.bindings.find(b => b.button == btn);
+		return this.bindings.find(b => b.button === btn);
 	};
 
 	/**
@@ -303,7 +303,7 @@ Version: ${VERSION.join(".")} (${IS_THIS_USERSCRIPT_DEV ? "Development" : IS_THI
 		};
 
 		element.addEventListener("keyup", e => {
-			if (e.key == e.code) { handler(e); }
+			if (e.key === e.code) { handler(e); }
 		});
 
 		element.addEventListener("keypress", handler);

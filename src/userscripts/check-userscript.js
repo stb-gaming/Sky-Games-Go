@@ -24,11 +24,11 @@
 })(function ({ uWindow, exports }) {
 
 	function checkUserscript(name, VERSION, windowObjectName = name) {
-		const IS_COMMONJS = typeof module != 'undefined',
+		const IS_COMMONJS = typeof module !== 'undefined',
 			// eslint-disable-next-line no-undef
-			IS_USERSCRIPT = IS_COMMONJS ? false : typeof GM_info != 'undefined',
+			IS_USERSCRIPT = IS_COMMONJS ? false : typeof GM_info !== 'undefined',
 			// eslint-disable-next-line no-undef
-			IS_THIS_USERSCRIPT = IS_USERSCRIPT ? GM_info.script.name == name : false,
+			IS_THIS_USERSCRIPT = IS_USERSCRIPT ? GM_info.script.name === name : false,
 			// eslint-disable-next-line no-undef
 			IS_THIS_USERSCRIPT_DEV = IS_THIS_USERSCRIPT && GM_info.scriptUpdateURL.startsWith("file://"),
 			GET_STARTED = !uWindow[windowObjectName];

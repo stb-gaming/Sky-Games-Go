@@ -63,7 +63,7 @@
 		gamepad = gamepads[0];
 
 		for (const index of Object.keys(buttonMapping)) {
-			if (lastPressed[index] != gamepad.buttons[index].pressed) {
+			if (lastPressed[index] !== gamepad.buttons[index].pressed) {
 				if (gamepad.buttons[index].pressed) {
 					SkyRemote.holdButton(buttonMapping[index]);
 				} else {
