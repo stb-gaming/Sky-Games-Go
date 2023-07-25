@@ -1,10 +1,7 @@
-import { useState } from 'react';
 import '../../../scss/main.scss';
 import '../../../scss/opentv_epg/epg_menu.scss';
 
-const EPGMenuItem = ({ selected, number, title }) => {
-
-
+const EPGMenuItem = ({ number, title }) => {
 	return <li>
 		<div className="menuNumber">
 			<span>{number}</span>

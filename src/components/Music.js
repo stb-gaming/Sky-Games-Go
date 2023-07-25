@@ -11,7 +11,7 @@ function MusicProvider({ children, value = {} }) {
 	const audioRef = React.createRef();
 
 	useEffect(() => {
-		if (currentTrack) {
+		if (currentTrack && audioRef.current) {
 			if (audioRef.current.src !== currentTrack)
 				audioRef.current.src = currentTrack;
 			audioRef.current.volume = volume;
@@ -24,7 +24,7 @@ function MusicProvider({ children, value = {} }) {
 			audioRef.current.pause();
 			setIsPlaying(false);
 		}
-	}, [currentTrack, isPlaying, volume, muted, audioRef]);
+	}, [currentTrack, isPlaying, volume, muted, audioRef.current]);
 
 	useEffect(() => {
 		const play = () => {
@@ -79,7 +79,7 @@ function MusicProvider({ children, value = {} }) {
 
 
 	return (
-		<MusicContext.Provider value={value}>
+		<MusicContext.Provider value={{ ...value }}>
 			{children}
 			<audio data-testid="page-music-audio" ref={audioRef} src={currentTrack} autoPlay={false} loop={true} />
 		</MusicContext.Provider>

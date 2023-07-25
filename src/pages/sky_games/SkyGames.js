@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Music, MusicContext } from '../../components/Music';
 import '../../scss/skyGames/main.scss';
 import SkyGamesLink from './components/SkyGamesLink.js';
@@ -122,7 +122,7 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 		menu.setPages([gameGrid]);
 		//menu.goto(menu.getItem({ x: 1, y: 1 }));
 		console.log("updated menu");
-	}, [filteredGames]);
+	}, [filteredGames, menu]);
 
 	useEffect(() => {
 
@@ -284,9 +284,7 @@ const SkyGames = () => {
 		SkyRemote.onReleaseButton("blue", () => {
 			document.querySelector(".skyGames_colorBlue").click();
 		});
-
-
-	});
+	}, [isPageLoaded, bindsSetup]);
 
 
 

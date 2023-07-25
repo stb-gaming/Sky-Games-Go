@@ -53,6 +53,9 @@
 						console.warn(`This website using an older version of '${name}'.
 	Try refreshing the website. or contact the website owner`);
 					break;
+				default: // this is the same version
+					console.debug(`The '${name}' userscript is up to date.`);
+					break; // Optionally, you can add a break statement here, though it's not necessary.
 			}
 		} else {
 			exports[windowObjectName] = { version: VERSION };
@@ -67,7 +70,7 @@
 		};
 	}
 
-	const VERSION = [0, 1, 1],
+	const VERSION = [0, 1, 2],
 		{ GET_STARTED } = checkUserscript("STBG Check Userscript", VERSION, "checkUserscript");
 
 

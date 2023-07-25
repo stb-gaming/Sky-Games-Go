@@ -38,7 +38,7 @@ const TestPage = () => {
 			});
 			console.log("sky remote bound");
 		});
-	}, []);
+	}, [bindsSetup, menu]);
 
 	return <>
 		<EPGContainer>
