@@ -25,7 +25,7 @@ function MusicProvider({ children, value = {} }) {
 			audioRefCurrent.pause();
 			setIsPlaying(false);
 		}
-	}, [currentTrack, isPlaying, volume, muted, audioRef, audioRef.current]);
+	}, [currentTrack, isPlaying, volume, muted, audioRef]);
 
 	useEffect(() => {
 		let audioRefCurrent = audioRef.current;
