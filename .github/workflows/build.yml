@@ -44,9 +44,8 @@ jobs:
       - name: Get changelog
         id: changelog
         run: |
-          git fetch --tags --force
-          latest_tag=$(git describe --tags --abbrev=0)
-          changelog=$(git log --oneline --pretty=format:"%h %ad %s (%an)" $latest_tag..HEAD)
+          latest_tag=`git describe --tags --abbrev=0 2>/dev/null || echo HEAD`
+          changelog=`git log --oneline $latest_tag`
           echo "::set-output name=changelog::$changelog"
 
       - name: Create release
