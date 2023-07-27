@@ -10,7 +10,9 @@ jobs:
   build:
     name: Build React app and deploy release artifacts
     runs-on: ubuntu-latest
-
+    permissions:
+        deployments: write
+        contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
