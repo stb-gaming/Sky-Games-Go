@@ -11,7 +11,7 @@
 		return context.exports;
 	};
 
-	if (typeof module === 'undefined') {
+	if (typeof module === 'undefined' || typeof module.exports === 'undefined') {
 		// eslint-disable-next-line no-undef
 		const uWindow = typeof unsafeWindow === 'undefined' ? window : unsafeWindow,
 			exports = init(uWindow);
