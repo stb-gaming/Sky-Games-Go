@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import storage from "../utils/storage";
 
 
 const MusicContext = createContext();
@@ -11,16 +12,24 @@ function MusicProvider({ children, value = {} }) {
 	const audioRef = React.createRef();
 
 	useEffect(() => {
+		const soundSettings = storage.getItem('soundSettings') || {};
+		setVolume(Number(soundSettings.volume) || 1);
+		setMuted(soundSettings.muted || false);
+	}, []);
+
+	useEffect(() => {
 		let audioRefCurrent = audioRef.current;
 		if (currentTrack && audioRefCurrent) {
 			if (audioRef.current.src !== currentTrack)
 				audioRef.current.src = currentTrack;
 			audioRefCurrent.volume = volume;
 			audioRefCurrent.muted = muted;
-			if (isPlaying)
-				audioRefCurrent.play().catch(console.error);
-			else
-				audioRefCurrent.pause();
+			if (audioRefCurrent.paused === isPlaying) {
+				if (isPlaying)
+					audioRefCurrent.play().catch(console.error);
+				else
+					audioRefCurrent.pause();
+			}
 		} else {
 			audioRefCurrent.pause();
 			setIsPlaying(false);
@@ -76,8 +85,11 @@ function MusicProvider({ children, value = {} }) {
 	const toggleMute = () => {
 		setMuted(!muted);
 	};
+	const changeMute = (val) => {
+		setMuted(val);
+	};
 
-	Object.assign(value, { isPlaying, setIsPlaying, changeTrack, currentTrack, changeVolume, volume, toggleMute, muted });
+	Object.assign(value, { isPlaying, setIsPlaying, changeTrack, currentTrack, changeVolume, volume, toggleMute, muted, changeMute });
 
 
 	return (

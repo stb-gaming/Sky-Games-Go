@@ -9,7 +9,7 @@ import EPGHeader from './components/EPGHeader';
 import EPGMenuContainer from './components/EPGMenuContainer';
 import EPGMenuItem from './components/EPGMenuItem';
 
-const TestPage = () => {
+const TVGuide = () => {
 
 	const [bindsSetup, setBindsSetup] = useState(false);
 
@@ -18,7 +18,7 @@ const TestPage = () => {
 	useEffect(() => {
 		let epgMenu = document.querySelector(".epgMenuContainer");
 		if (epgMenu) menu.setPages([epgMenu]);
-		console.log("menu setup");
+		console.debug("menu setup");
 
 		if (bindsSetup) return;
 		document.addEventListener("userscriptsLoaded", ({ detail: { SkyRemote } }) => {
@@ -36,7 +36,7 @@ const TestPage = () => {
 			SkyRemote.onReleaseButton("right", () => {
 				menu.right();
 			});
-			console.log("sky remote bound");
+			console.debug("sky remote bound");
 		});
 	}, [bindsSetup, menu]);
 
@@ -65,5 +65,5 @@ const TestPage = () => {
 		</EPGContainer>
 	</>;
 };
-
-export default TestPage;
+TVGuide.url = "/tv-guide";
+export default TVGuide;

@@ -152,73 +152,14 @@ $gameInfo_width: d;
 	margin-left: $leftMargin_width - calc($divider_width / 2);
 	margin-right: 720px - ($leftMargin_width + $gameGrid_width + (3 * calc($divider_width/2)) + $gameInfo_width);
 
-	display: grid;
-	grid-template-columns: ($gameGrid_width + $divider_width) ($gameInfo_width + $divider_width);
+	& > img {
+		width: 100%;
+	}
+	&.split {
+		display: grid;
+		grid-template-columns: ($gameGrid_width + $divider_width) ($gameInfo_width + $divider_width);
+	}
 }
-
-// @mixin gameArrows($top, $right, $bottom, $left) {
-// 	$arrow-size: 20.8%;
-
-// 	/*
-// 		P   O   N   M
-// 		    E   F
-// 		QD         GL
-
-// 		RC         HK
-
-// 		A   B   I   J
-
-// 		*/
-
-// 	//Arrow Sizing
-// 	$point_C: 0% (100% - $arrow-size);
-// 	$point_D: 0% $arrow-size;
-// 	$point_E: $arrow-size 0%;
-// 	$point_F: (100% - $arrow-size) 0%;
-// 	$point_G: 100% $arrow-size;
-// 	$point_H: 100% (100% - $arrow-size);
-
-// 	$arrow_remover: calc($arrow-size / 2);
-
-// 	// Arrow Removal
-// 	$point_P: 0% 0%;
-// 	@if not $top {
-// 		$point_P: $arrow_remover $arrow_remover;
-// 	}
-// 	$point_M: 100% 0%;
-// 	@if not $right {
-// 		$point_M: (100% - $arrow_remover) $arrow_remover;
-// 	}
-// 	$point_A: 0% 100%;
-// 	@if not $left {
-// 		$point_A: $arrow_remover (100% - $arrow_remover);
-// 	}
-// 	$point_J: 100% 100%;
-// 	@if not $bottom {
-// 		$point_J: (100% - $arrow_remover) (100% - $arrow_remover);
-// 	}
-
-// 	clip-path: polygon(
-// 		/*A*/ $point_A,
-// 		/*B*/ $arrow-size 100%,
-// 		/*C*/ $point_C,
-// 		/*D*/ $point_D,
-// 		/*E*/ $point_E,
-// 		/*F*/ $point_F,
-// 		/*G*/ $point_G,
-// 		/*H*/ $point_H,
-// 		/*I*/ (100% - $arrow-size) 100%,
-// 		/*J*/ $point_J,
-// 		/*K*/ $point_H,
-// 		/*L*/ $point_G,
-// 		/*M*/ $point_M,
-// 		/*N*/ $point_F,
-// 		/*O*/ $point_E,
-// 		/*P*/ $point_P,
-// 		/*Q*/ $point_D,
-// 		/*R*/ $point_C
-// 	);
-// }
 
 @mixin gameArrows($top: false, $right: false, $bottom: false, $left: false) {
 	// Default background image
@@ -609,4 +550,11 @@ $arrow_x: -20px;
 	position: relative;
 	width: 100px;
 	height: 100px;
+}
+
+#skyGamesControls {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }

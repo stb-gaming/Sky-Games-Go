@@ -1,0 +1,117 @@
+$brightYellow: #fcda15;
+$darkYellow: #fec200;
+$darkBlue: #00137d;
+$lightBlue: #002db6;
+
+$itemHeight: 30px;
+
+$keyWidth: 395px;
+$keyBG: $darkBlue;
+$keyColor: white;
+$keyHoverBG: $darkYellow;
+$keyHoverColor: $darkBlue;
+
+$valueWidth: 207px;
+$valueFontSize: 27px;
+$valueBG: $lightBlue;
+$valueColor: grey;
+$valueHoverBG: $brightYellow;
+$valueHoverColor: $lightBlue;
+
+form {
+	display: grid;
+	grid-template-columns: $keyWidth $valueWidth;
+	column-gap: 20px;
+	row-gap: 3px;
+}
+
+label,
+input {
+	font-size: 20px;
+	font-family: inherit;
+	text-align: left;
+	height: $itemHeight;
+	margin: 0;
+	outline: none;
+	overflow: hidden;
+	border: none;
+}
+
+input {
+	appearance: none;
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+label,
+input[type="submit"],
+button {
+	grid-column-start: 1;
+	background-color: $keyBG;
+	color: $keyColor;
+	padding-left: 5px;
+
+	&:hover,
+	&:focus {
+		background-color: $keyHoverBG;
+		color: $keyHoverColor;
+	}
+}
+form:not(#system-details) {
+	input:not([type="submit"]) {
+		text-transform: uppercase;
+	}
+}
+input:not([type="submit"]) {
+	background-color: $valueBG;
+	color: $valueColor;
+	font-size: $valueFontSize;
+	text-align: center;
+
+	&:hover,
+	&:focus {
+		background-color: $valueHoverBG;
+		color: $valueHoverColor;
+	}
+}
+
+input[type="range"] {
+	background-color: $lightBlue;
+
+	&::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		background-color: $valueColor;
+		width: 0;
+		height: 100%;
+		border-radius: none;
+		box-shadow: (-$valueWidth) 0 0 $valueWidth $valueColor;
+	}
+	&:focus {
+		&::-webkit-slider-thumb {
+			box-shadow: (-$valueWidth) 0 0 $valueWidth $valueColor;
+		}
+	}
+}
+
+input[type="checkbox"] {
+	position: relative;
+	&::before {
+		content: "OFF";
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		translate: -50% -50%;
+	}
+	&:checked::before {
+		content: "ON";
+	}
+}
+
+label:focus + input,
+label:hover + input,
+label + input:focus,
+label + input:hover {
+	background-color: $valueHoverBG;
+	color: $valueHoverColor;
+}

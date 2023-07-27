@@ -1,59 +1,56 @@
-@use '../fonts/fonts.scss';
+@use "../fonts/fonts.scss";
 
 .epgContainer {
-    background:
+	user-select: none;
+	background:
         /* left cloud thing*/ radial-gradient(circle at 0px 25%, #b0bfde 0%, transparent 20%) 0px 25%,
-        /* right cloud thing*/ radial-gradient(circle at 110% 50%, #b0bfde 0%, transparent 30%) 100% 50%,
-        /*lower cloud thing*/ radial-gradient(circle at 25% 120%, #b0bfde 0%, transparent 40%) 25% 100%,
-        /*background*/ radial-gradient(circle at bottom left, #659df2 70%, #2973fa 95%);
+		/* right cloud thing*/ radial-gradient(circle at 110% 50%, #b0bfde 0%, transparent 30%) 100% 50%,
+		/*lower cloud thing*/ radial-gradient(circle at 25% 120%, #b0bfde 0%, transparent 40%) 25% 100%,
+		/*background*/ radial-gradient(circle at bottom left, #659df2 70%, #2973fa 95%);
 
+	width: 720px;
+	height: 576px;
 
-    width: 720px;
-    height: 576px;
+	position: absolute;
+	left: 0;
+	top: 0;
 
-    position:absolute;
-    left: 0;
-    top: 0;
+	padding: 0;
+	margin: 0;
 
-    padding: 0;
-    margin: 0;
-
-
-    /*background-image: url('../../../public/assets/img/sharing-image.png');
+	/*background-image: url('../../../public/assets/img/sharing-image.png');
     background-size: contain;*/
 }
 
 .epgContentContainer {
-    position: absolute;
-    top: 120px;
-    left: 52px;
+	position: absolute;
+	top: 120px;
+	left: 52px;
 
-    height: 390px;
-    width: 610px;
+	height: 390px;
+	width: 610px;
 
-    /* https://stackoverflow.com/questions/14123999/center-a-div-horizontally-and-vertically */
-    position: absolute;
-    left: 50%;
-    -webkit-transform: translate(-50%, 0%);
-    transform: translate(-50%, -0%);
-
-    
+	/* https://stackoverflow.com/questions/14123999/center-a-div-horizontally-and-vertically */
+	position: absolute;
+	left: 50%;
+	-webkit-transform: translate(-50%, 0%);
+	transform: translate(-50%, -0%);
 }
 
 .epgArrowDown {
-    width: 20px;
+	width: 20px;
 
-    position: absolute;
-    bottom: 25px;
-    right: 72px;;
+	position: absolute;
+	bottom: 25px;
+	right: 72px;
 }
 
 .epgArrowUp {
-    width: 20px;
+	width: 20px;
 
-    position: absolute;
-    top: 16px;
-    right: 72px;
+	position: absolute;
+	top: 16px;
+	right: 72px;
 
-    transform: rotate(180deg);
+	transform: rotate(180deg);
 }

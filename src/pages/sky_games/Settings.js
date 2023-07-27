@@ -1,13 +1,13 @@
 import { Music, MusicContext } from '../../components/Music';
 import '../../scss/skyGames/main.scss';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import SkyGamesLink from './components/SkyGamesLink.js';
 import SkyGamesLogo from './components/SkyGamesLogo';
 import SkyGames from './SkyGames';
-import Settings from './Settings';
+import Controls from './Controls';
 
-const Controls = () => {
+const Settings = () => {
 	const whiteFade = useRef();
 	const [isPageLoaded, setIsPageLoaded] = useState(false);
 	const location = useLocation();
@@ -55,45 +55,29 @@ const Controls = () => {
 		<Music src="/assets/music/sky-games.mp3" />
 		<div className="skyGamesHeader">
 			<SkyGamesLogo />
-			<h1>Controls</h1>
+			<h1>Settings</h1>
 		</div>
 		<div className="skyGamesMain">
 			<div id="skyGames_fade" className={`${isPageLoaded ? "done" : ""}`} ref={whiteFade} />
 			<div className="skyGamesMainContainer">
-				<img src="/assets/img/skyGames/Sky_Games_X_Controls.svg" alt="Sky Games X Controls:
-
-				Sky: Escape Key.
-
-				TV Guide: A Key.
-				Box Office: S Key.
-				Services: D Key.
-				Interactive: F Key.
-
-				i-Button: G Key.
-
-				Channel Up: Page Up Key.
-				Channel Down: Page Down Key.
-
-				Arrow Buttons: Arrow Keys/IJKL/D-Pad.
-				Select: Enter/Space/A Button.
-				Back Up: Backspace/START Button.
-				Help: T Key/Right Analog Stick.
-
-				Red: Q Key/B Button.
-				Green: W Key/SELECT Button.
-				Yellow: E Key/Y Button.
-				Blue: R Key/X Button." id="skyGamesControls" />
+				<h2>Userscripts</h2>
+				<ul id="userscript-links">
+					<li><Link to="https://raw.githubusercontent.com/stb-gaming/Sky-Games-X/master/src/userscripts/sky-remote.user.js">Sky Remote API</Link></li>
+					<li><Link to="https://raw.githubusercontent.com/stb-gaming/Sky-Games-X/master/src/userscripts/gamepad-support.user.js">Gamepad Support</Link></li>
+					<li><Link to="https://raw.githubusercontent.com/stb-gaming/Sky-Games-X/master/src/userscripts/sky-remote-mobile.user.js">Mobile Touchpad</Link></li>
+					<li><Link to="https://raw.githubusercontent.com/stb-gaming/Sky-Games-X/master/src/userscripts/beehive-bedlam.user.js">Beehive Bedlam Helper</Link></li>
+				</ul>
 			</div>
-		</div>
+		</div >
 		<div className="skyGames_footer">
 			<div className="skyGames_footerContainer">
-				<SkyGamesLink to={SkyGames.url} className="skyGames_colorRed">Controls</SkyGamesLink>
+				<SkyGamesLink to={Controls.url} className="skyGames_colorRed">Controls</SkyGamesLink>
 				<SkyGamesLink to={SkyGames.url + "/1"} className="skyGames_colorGreen">All Games</SkyGamesLink>
 				<SkyGamesLink to="#" onClick={toggleMute} className="skyGames_colorYellow">Toggle Music</SkyGamesLink>
-				<SkyGamesLink to={Settings.url} className="skyGames_colorBlue">Settings</SkyGamesLink>
+				<SkyGamesLink to={SkyGames.url} className="skyGames_colorBlue">Settings</SkyGamesLink>
 			</div>
 		</div>
-	</div>;
+	</div >;
 };
-Controls.url = "/interactive/sky-games/controls";
-export default Controls;
+Settings.url = "/interactive/sky-games/settings";
+export default Settings;

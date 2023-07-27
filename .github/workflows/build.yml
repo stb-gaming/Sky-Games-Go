@@ -1,0 +1,91 @@
+name: Build and deploy React app
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+
+jobs:
+  build:
+    name: Build React app and deploy release artifacts
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js v18
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install dependancies
+        run: npm ci
+
+      - name: Build React app
+        env:
+          CI: false
+        run: npm run build
+
+      - name: Get version
+        id: version
+        run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
+
+      - name: Get name
+        id: name
+        run: echo "::set-output name=name::$(node -p "require('./package.json').name")"
+
+      - name: Get changelog
+        id: changelog
+        run: echo "::set-output name=changelog::$(git log --oneline $(git describe --tags --abbrev=0 2>/dev/null || echo HEAD))"
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{steps.version.outputs.version}}
+          release_name: ${{steps.name.outputs.name}} v${{steps.version.outputs.version}}
+          body: ${{steps.changelog.outputs.changelog}}
+          draft: false
+          prerelease: ${{ github.ref != 'refs/heads/master' }}
+
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Sky-Games-X
+          path: build
+  deploy:
+    runs-on: ubuntu-latest
+    name: Publish site to Cloudflare Pages
+    needs: build
+    permissions:
+      contents: read
+      deployments: write
+    #  environment:
+    #    name: cloudflare-pages
+    #    url: ${{steps.deployment.outputs.url}}
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Sky-Games-X
+          path: /static
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        id: deployment
+        with:
+          # https://github.com/stb-gaming/Sky-Games-X/settings/secrets/actions
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{needs.build.steps.name.outputs.name}}
+          directory: /static
+          # Optional: Enable this if you want to have GitHub Deployments triggered
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: Switch what branch you are publishing to.
+          # By default this will be the branch which triggered this workflow
+          branch: master

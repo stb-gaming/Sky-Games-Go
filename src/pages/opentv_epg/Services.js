@@ -1,21 +1,21 @@
 import { Link } from 'react-router-dom';
 import '../../scss/main.scss';
 import '../../scss/opentv_epg/main.scss';
-import SkyGames from '../sky_games/SkyGames';
 
 import EPGContainer from './components/EPGContainer';
 import EPGHeader from './components/EPGHeader';
 import EPGMenuContainer from './components/EPGMenuContainer';
 import EPGMenuItem from './components/EPGMenuItem';
+import SystemSettings from './SystemSettings';
 
-const Interactive = () => {
+const Services = () => {
 	return <>
 		<EPGContainer>
-			<EPGHeader page={4} />
+			<EPGHeader page={3} />
 			<div className="epgContentContainer">
 				<EPGMenuContainer>
-					<Link to={SkyGames.url}>
-						<EPGMenuItem number="1" title="Sky Games" selected={true} />
+					<Link to={SystemSettings.url}>
+						<EPGMenuItem number="1" title="SYSTEM SETTINGS" selected={true} />
 					</Link>
 				</EPGMenuContainer>
 			</div>
@@ -23,6 +23,5 @@ const Interactive = () => {
 		</EPGContainer>
 	</>;
 };
-
-Interactive.url = "/interactive";
-export default Interactive;
+Services.url = "/services";
+export default Services;

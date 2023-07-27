@@ -5,7 +5,8 @@ import '../../scss/skyGames/main.scss';
 import SkyGamesLink from './components/SkyGamesLink.js';
 import SkyGamesLogo from './components/SkyGamesLogo';
 import createMenu from '../../utils/createMenu';
-
+import Controls from './Controls';
+import Settings from './Settings';
 
 function SkyGamesTab({ label, href = "#", selected }) {
 	return <SkyGamesLink to={href} className={(selected ? "active " : "") + "skyGamesTab"}>{label}</SkyGamesLink>;
@@ -52,12 +53,12 @@ function MovingArrows({ last, next, sort }) {
 	}, []);
 
 	return <>
-		<SkyGamesLink to={"/sky-games/" + last + (sort ? "/" + sort : "")} className="skyGamesArrowLeft" >
+		<SkyGamesLink to={SkyGames.url + "/" + last + (sort ? "/" + sort : "")} className="skyGamesArrowLeft" >
 			<img src="/assets/img/skyGames/arrow.svg" alt="last page" />
 		</SkyGamesLink>
 
 
-		<SkyGamesLink to={"/sky-games/" + next + (sort ? "/" + sort : "")} className="skyGamesArrowRight">
+		<SkyGamesLink to={SkyGames.url + "/" + next + (sort ? "/" + sort : "")} className="skyGamesArrowRight">
 			<img src="/assets/img/skyGames/arrow.svg" alt="next page" />
 		</SkyGamesLink></>;
 }
@@ -103,8 +104,8 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 			if (list === "family") {
 				filtered.splice(7, 1, {
 					title: "All Games",
-					description: "Yes all games",
-					url: "/sky-games/1"
+					description: "All available games to play",
+					url: SkyGames.url + "/1"
 				});
 			}
 			setFilteredGames(filtered);
@@ -306,9 +307,9 @@ const SkyGames = () => {
 			<SkyGamesLogo />
 			{["new", "classics", "family"].includes(list) ?
 				<div className="skyGamesTabs">
-					<SkyGamesTab label="New Games" selected={list === undefined || list === "new"} href="/sky-games/new" />
-					<SkyGamesTab label="Classics" selected={list === "classics"} href="/sky-games/classics" />
-					<SkyGamesTab label="Family Fun" selected={list === "family"} href="/sky-games/family" />
+					<SkyGamesTab label="New Games" selected={list === undefined || list === "new"} href={SkyGames.url + "/new"} />
+					<SkyGamesTab label="Classics" selected={list === "classics"} href={SkyGames.url + "/classics"} />
+					<SkyGamesTab label="Family Fun" selected={list === "family"} href={SkyGames.url + "/family"} />
 					{/* <SkyGamesTab label="All" selected={list === "1"} href="/sky-games/1" /> */}
 				</div>
 				: <h1>{pageTitle}</h1>}
@@ -325,14 +326,13 @@ const SkyGames = () => {
 		</div>
 		<div className="skyGames_footer">
 			<div className="skyGames_footerContainer">
-				<SkyGamesLink to="/sky-games/controls" className="skyGames_colorRed">Controls</SkyGamesLink>
-				<SkyGamesLink to="/sky-games/1" className="skyGames_colorGreen">All Games</SkyGamesLink>
+				<SkyGamesLink to={Controls.url} className="skyGames_colorRed">Controls</SkyGamesLink>
+				<SkyGamesLink to={SkyGames.url + "/1"} className="skyGames_colorGreen">All Games</SkyGamesLink>
 				<SkyGamesLink to="#" onClick={toggleMute} className="skyGames_colorYellow">Toggle Music</SkyGamesLink>
-				<SkyGamesLink to="#" className="skyGames_colorBlue">Enter Code</SkyGamesLink>
+				<SkyGamesLink to={Settings.url} className="skyGames_colorBlue">Settings</SkyGamesLink>
 			</div>
 		</div>
 	</div>;
 };
-
-
+SkyGames.url = "/interactive/sky-games";
 export default SkyGames;

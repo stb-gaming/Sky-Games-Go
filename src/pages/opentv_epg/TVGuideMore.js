@@ -7,7 +7,7 @@ import EPGHeader from './components/EPGHeader';
 import EPGMenuContainer from './components/EPGMenuContainer';
 import EPGMenuItem from './components/EPGMenuItem';
 
-const TestPageMore = () => {
+const TVGuideMore = () => {
 	return <>
 		<EPGContainer>
 			<EPGHeader page={1} />
@@ -31,5 +31,5 @@ const TestPageMore = () => {
 		</EPGContainer>
 	</>;
 };
-
-export default TestPageMore;
+TVGuideMore.url = "/tv-guide/more";
+export default TVGuideMore;

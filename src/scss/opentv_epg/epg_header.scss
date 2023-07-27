@@ -36,6 +36,22 @@
 	}
 }
 
+.epgHeader_text {
+	height: 16px;
+	margin-top: 13px;
+	margin-left: -10px;
+	color: #00003b;
+	h1 {
+		color: #00003b;
+		margin: 0;
+		font-size: 28px;
+		margin-top: 3px;
+	}
+	span {
+		font-size: 20px;
+	}
+}
+
 .headerSelect {
 	span {
 		color: #2a66e2;
