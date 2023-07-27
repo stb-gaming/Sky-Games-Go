@@ -13,6 +13,9 @@ jobs:
     permissions:
         deployments: write
         contents: write
+    outputs:
+      name: ${{ steps.name.outputs.name }}
+      version: ${{ steps.version.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -40,7 +43,11 @@ jobs:
 
       - name: Get changelog
         id: changelog
-        run: echo "::set-output name=changelog::$(git log --oneline $(git describe --tags --abbrev=0 2>/dev/null || echo HEAD))"
+        run: |
+          git fetch --tags --force
+          latest_tag=$(git describe --tags --abbrev=0)
+          changelog=$(git log --oneline --pretty=format:"%h %ad %s (%an)" $latest_tag..HEAD)
+          echo "::set-output name=changelog::$changelog"
 
       - name: Create release
         id: create_release
@@ -85,8 +92,8 @@ jobs:
           # https://github.com/stb-gaming/Sky-Games-X/settings/secrets/actions
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ${{needs.build.outputs.name.outputs.name}}
-          directory: /build
+          projectName: ${{ needs.build.outputs.name }}
+          directory: static
           # Optional: Enable this if you want to have GitHub Deployments triggered
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           # Optional: Switch what branch you are publishing to.
