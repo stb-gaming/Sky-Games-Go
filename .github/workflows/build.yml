@@ -85,7 +85,7 @@ jobs:
           # https://github.com/stb-gaming/Sky-Games-X/settings/secrets/actions
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ${{jobs.build.steps.name.outputs.name}}
+          projectName: ${{needs.build.outputs.name}}
           directory: /build
           # Optional: Enable this if you want to have GitHub Deployments triggered
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
