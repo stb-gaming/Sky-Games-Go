@@ -71,11 +71,12 @@ jobs:
     #    name: cloudflare-pages
     #    url: ${{steps.deployment.outputs.url}}
     steps:
+      - run: "mkdir static"
       - name: Download build artifact
         uses: actions/download-artifact@v3
         with:
           name: Sky-Games-X
-          path: /static
+          path: static
 
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
@@ -84,8 +85,8 @@ jobs:
           # https://github.com/stb-gaming/Sky-Games-X/settings/secrets/actions
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ${{needs.build.steps.name.outputs.name}}
-          directory: /static
+          projectName: ${{jobs.build.steps.name.outputs.name}}
+          directory: /build
           # Optional: Enable this if you want to have GitHub Deployments triggered
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           # Optional: Switch what branch you are publishing to.
