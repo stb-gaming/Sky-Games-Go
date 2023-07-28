@@ -1,6 +1,6 @@
 {
 	"name": "sky-games-x",
-	"version": "0.1.0-test17",
+	"version": "0.1.0-test18",
 	"author": "STB Gaming",
 	"dependencies": {
 		"@testing-library/jest-dom": "^5.17.0",

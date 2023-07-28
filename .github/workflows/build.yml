@@ -77,10 +77,11 @@ jobs:
         with:
           name: userscripts
           path: build/userscripts
+
   deploy:
     runs-on: ubuntu-latest
     name: Publish site to Cloudflare Pages
-    needs: [build,get-info]
+    needs: [build, get-info]
     if: github.ref == 'refs/heads/master'
     permissions:
       contents: read
@@ -111,9 +112,10 @@ jobs:
           # Optional: Switch what branch you are publishing to.
           # By default this will be the branch which triggered this workflow
           #branch: master
+
   release:
-    name: "Upload Release Files"
-    needs: [build,get-info]
+    name: "Upload release files"
+    needs: [build, get-info]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -145,15 +147,28 @@ jobs:
           name: userscripts
           path: userscripts
 
-      - name: Create userscripts zip file
+      - name: Create userscripts artifact
         run: zip --junk-paths userscripts.zip userscripts/*
 
-      - name: Upload userscripts artifacts
+      - name: Upload userscripts artifact
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./userscripts.zip
-          asset_name: "userscripts.zip"
+          asset_name: "${{needs.get-info.outputs.name}}-v${{needs.get-info.outputs.version}}-userscripts.zip"
+          asset_content_type: application/octet-stream"
+
+      - name: Create static web artifact
+        run: zip -r web.zip web
+
+      - name: Upload static web artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./web.zip
+          asset_name: "${{needs.get-info.outputs.name}}-v${{needs.get-info.outputs.version}}-web.zip"
           asset_content_type: application/octet-stream"
