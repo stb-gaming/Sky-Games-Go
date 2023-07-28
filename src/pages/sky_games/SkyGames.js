@@ -7,6 +7,7 @@ import SkyGamesLogo from './components/SkyGamesLogo';
 import createMenu from '../../utils/createMenu';
 import Controls from './Controls';
 import Settings from './Settings';
+import games from '../../data/games.json'
 
 function SkyGamesTab({ label, href = "#", selected }) {
 	return <SkyGamesLink to={href} className={(selected ? "active " : "") + "skyGamesTab"}>{label}</SkyGamesLink>;
@@ -220,7 +221,6 @@ function SkyGamesGameInfo({ game }) {
 
 
 const SkyGames = () => {
-	const games = require("../../data/games.json");
 	const whiteFade = useRef();
 	const params = useParams();
 	const { sort } = params;

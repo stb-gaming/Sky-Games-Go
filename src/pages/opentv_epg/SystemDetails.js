@@ -6,21 +6,15 @@ import '../../scss/opentv_epg/epg_settings.scss';
 import EPGContainer from './components/EPGContainer';
 import EPGHeader from './components/EPGHeader';
 import packageJson from "../../../package.json";
+import SkyRemote from '../../userscripts/SkyRemote.user';
 
 
 const SystemDetails = () => {
 
 	const [browserVersion, setBrowserVersion] = useState('Loading...');
 	const [environment, setEnvironment] = useState("Loading...");
-	const [skyRemoteVersion, setSkyRemoteVersion] = useState("Loading...");
 	const [serialNumber, setSerialNumber] = useState("Loading...");
 
-	useEffect(() => {
-
-		document.addEventListener("userscriptsLoaded", ({ detail: { SkyRemote } }) => {
-			setSkyRemoteVersion(SkyRemote.version.join("."));
-		});
-	});
 
 	useEffect(() => {
 		let serialNumber = localStorage.getItem("serialNumber");
@@ -29,7 +23,7 @@ const SystemDetails = () => {
 			localStorage.setItem("serialNumber", serialNumber);
 		}
 		setSerialNumber(serialNumber);
-	});
+	}, []);
 
 
 
@@ -109,7 +103,7 @@ const SystemDetails = () => {
 					<label htmlFor="hi">EPG Software Version</label>
 					<input type="text" name="hi" disabled id="" value={packageJson.version} />
 					<label htmlFor="hi">SkyRemote API</label>
-					<input type="text" name="hi" disabled id="" value={skyRemoteVersion} />
+					<input type="text" name="hi" disabled id="" value={SkyRemote.version.join(".")} />
 
 				</form>
 			</div>

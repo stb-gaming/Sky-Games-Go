@@ -1,27 +1,25 @@
 import emitEvent from '../utils/emitEvent';
 
-const userscripts = [
-	require('./GM_addStyle'),
-	require('./check-userscript'),
-	require('./sky-remote.user'),
-	//require('./beehive-bedlam.user'),
-	//require('./template.user')
-	//require('./sky-remote-mobile.user'),
-	require('./gamepad-support.user')
-];
+// const userscripts = [
+// 	'./GM_addStyle',
+// 	'./check-userscript',
+// 	'./sky-remote.user',
+// 	//'./beehive-bedlam.user',
+// 	//'./template.user',
+// 	//'./sky-remote-mobile.user',
+// 	'./gamepad-support.user'
+// ].map(file => import(file));
+
+import SkyRemote from './SkyRemote.user';
+
+import './gamepadSupport.user';
 
 
-export function initUserscripts(window) {
-	const userscriptExports = {};
-	for (const userscript of userscripts) {
-		let exports = userscript.init({ ...window, ...userscriptExports });
-		for (const key in exports)
-			userscriptExports[key] = exports[key];
-	}
-
-	for (const key in userscriptExports)
-		if (!key.startsWith("GM") && !window.hasOwnProperty(key))
-			window[key] = userscriptExports[key];
-
-	emitEvent("userscriptsLoaded", userscriptExports);
+export async function initUserscripts(window) {
+	console.error("No dont use this, we use propper modules now");
 }
+
+window.SkyRemote = SkyRemote;
+
+
+export default { SkyRemote };

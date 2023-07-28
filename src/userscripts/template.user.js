@@ -23,7 +23,7 @@
 		return context.exports;
 	};
 
-	if (typeof module === 'undefined' || typeof module.exports === 'undefined') {
+	if (typeof module === 'undefined') {
 		// eslint-disable-next-line no-undef
 		const uWindow = typeof unsafeWindow === 'undefined' ? window : unsafeWindow,
 			exports = init(uWindow);
@@ -31,8 +31,10 @@
 		for (const key in exports)
 			if (!uWindow.hasOwnProperty(key))
 				uWindow[key] = exports[key];
-	} else
+	} else {
+		if (!module.exports) module.exports = {};
 		module.exports.init = init;
+	}
 })(function ({ exports }) {
 	exports.test = function () {
 		console.log("works");

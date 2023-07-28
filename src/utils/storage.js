@@ -29,9 +29,11 @@ Storage.prototype.setItem = async function (name, value) {
 	console.debug(`Saving ${name}...`);
 	let valueString = conditionalJSONStringify(value);
 	if (isElectron() || isReactNative()) {
-		let file = safeRequire("path").join(this.folder, name + ".json");
+		const path = await safeRequire("path");
+		let file = path.join(this.folder, name + ".json");
 		try {
-			await safeRequire('fs/promises').writeFile(file, valueString);
+			const fs = await safeRequire('fs/promises');
+			await fs.writeFile(file, valueString);
 		} catch (error) {
 			console.error("Error writing to file:", error);
 		}
@@ -45,9 +47,11 @@ Storage.prototype.getItem = async function (name) {
 	console.debug(`Retrieving ${name}...`);
 	let valueText;
 	if (isElectron() || isReactNative()) {
-		const file = safeRequire('path').join(this.folder, name + ".json");
+		const path = await safeRequire("path");
+		const file = path.join(this.folder, name + ".json");
 		try {
-			valueText = await safeRequire('fs/promises').readFile(file, 'utf8');
+			const fs = await safeRequire('fs/promises');
+			valueText = await fs.readFile(file, 'utf8');
 		} catch (error) {
 			console.error("Error reading file:", error);
 			return null;
@@ -58,4 +62,5 @@ Storage.prototype.getItem = async function (name) {
 	return JSON.parse(valueText);
 };
 
-export default new Storage();
+const storage = new Storage();
+export default storage;

@@ -7,39 +7,14 @@
 // @run-at       document-start
 // @match        https://denki.co.uk/sky/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=denki.co.uk
-// @require      https://github.com/STB-Gaming/userscripts/raw/master/sky-remote.user.js
 // @grant        GM_addStyle
 // ==/UserScript==
 
 
-
-
-(function (userscript) {
-	const init = global => {
-		const context = {
-			...global,
-			get global() { return global; },
-			get unsafeWindow() { return global; },
-			get uWindow() { return global.window; },
-			exports: {}
-		};
-		userscript.call(context, context);
-		return context.exports;
-	};
-
-	if (typeof module === 'undefined' || typeof module.exports === 'undefined') {
-		// eslint-disable-next-line no-undef
-		const uWindow = typeof unsafeWindow === 'undefined' ? window : unsafeWindow,
-			exports = init(uWindow);
-
-		for (const key in exports)
-			if (!uWindow.hasOwnProperty(key))
-				uWindow[key] = exports[key];
-	} else
-		module.exports.init = init;
-})(function ({ uWindow, SkyRemote, GM_addStyle, exports }) {
-
-	let css = `
+import SkyRemote from "./SkyRemote.user";
+import GM_addStyle from "./GM_addStyle";
+const uWindow = typeof unsafeWindow === 'undefined' ? window : unsafeWindow;
+let css = `
 html,body {
 	margin:0;
 	padding:0;
@@ -287,7 +262,7 @@ justify-content: flex-start;
 }
 
 `,
-		html = `
+	html = `
 		<div id="game-log-container" >
 		<div id="game-log"></div>
 		</div>
@@ -310,139 +285,138 @@ justify-content: flex-start;
 	</div>
 `;
 
-	let log = (function () {
-		let { log, info, warn, error } = window.console;
-		return { log, info, warn, error };
-	})(),
-		queuedLogs = [];
-	function logLog(type, ...args) {
-		log[type](...args);
-		let logLine = document.createElement("p");
-		logLine.classList.add(type);
-		logLine.innerText = args.join(" ");
-		if (document.getElementById("game-log")) {
-			document.getElementById("game-log").appendChild(logLine);
-		} else {
-			queuedLogs.push(logLine);
-		}
+let log = (function () {
+	let { log, info, warn, error } = uWindow.console;
+	return { log, info, warn, error };
+})(),
+	queuedLogs = [];
+function logLog(type, ...args) {
+	log[type](...args);
+	let logLine = document.createElement("p");
+	logLine.classList.add(type);
+	logLine.innerText = args.join(" ");
+	if (document.getElementById("game-log")) {
+		document.getElementById("game-log").appendChild(logLine);
+	} else {
+		queuedLogs.push(logLine);
 	}
+}
 
-	exports.getQueuedLogs = function () {
-		console.log(queuedLogs.map(l => l.classList.toString() + ": " + l.innerText).join(`
+exports.getQueuedLogs = function () {
+	console.log(queuedLogs.map(l => l.classList.toString() + ": " + l.innerText).join(`
 		`));
-	};
+};
 
-	Object.keys(log).forEach(type => {
-		window.console[type] = logLog.bind(null, type);
-	});
+Object.keys(log).forEach(type => {
+	uWindow.console[type] = logLog.bind(null, type);
+});
 
-	function setupControls() {
-		let select = document.getElementById("sky-remote-select");
-		//console.log(select);
+function setupControls() {
+	let select = document.getElementById("sky-remote-select");
+	//console.log(select);
 
-		[
-			{
-				button: "select",
-				element: document.getElementById("sky-remote-select")
-			},
-			{
-				button: "backup",
-				element: document.getElementById("sky-remote-backup")
-			},
-			{
-				button: "help",
-				element: document.getElementById("sky-remote-help")
-			},
-			{
-				button: "red",
-				element: document.getElementById("sky-remote-red")
-			},
-			{
-				button: "green",
-				element: document.getElementById("sky-remote-green")
-			},
-			{
-				button: "yellow",
-				element: document.getElementById("sky-remote-yellow")
-			},
-			{
-				button: "blue",
-				element: document.getElementById("sky-remote-blue")
-			}
-		].forEach(b => {
-			b.element.addEventListener("touchstart", () => {
-				SkyRemote.holdButton(b.button);
-			});
-			b.element.addEventListener("touchend", () => {
-				SkyRemote.releaseButton(b.button);
-			});
-		});
-		let toggleLog = () => {
-			let logContainer = document.getElementById("game-log-container");
-			console.log(logContainer);
-			logContainer.style.display = logContainer.style.display ? null : "none";
-		};
-		document.getElementById("sky-remote-log").addEventListener("touchend", toggleLog);
-		toggleLog();
-
-		let dpad = document.getElementById("sky-remote-dpad");
-
-		function touchEvent(e) {
-			let dpad = e.currentTarget,
-				bounds = dpad.getBoundingClientRect(),
-				touch = e.targetTouches[0],
-
-				x = 2 * (touch.clientX - bounds.left) / bounds.width - 1,
-				y = 2 * (touch.clientY - bounds.top) / bounds.height - 1,
-				deadZone = .2;
-			if (Math.abs(x) < deadZone) x = 0;
-			if (Math.abs(y) < deadZone) y = 0;
-			console.log({ x, y });
-			if (Math.sign(x) < 0) {
-				SkyRemote.releaseButton("right");
-				SkyRemote.holdButton("left");
-			}
-			if (Math.sign(x) > 0) {
-				SkyRemote.releaseButton("left");
-				SkyRemote.holdButton("right");
-			}
-			if (Math.sign(y) < 0) {
-				SkyRemote.releaseButton("down");
-				SkyRemote.holdButton("up");
-			}
-			if (Math.sign(y) > 0) {
-				SkyRemote.releaseButton("up");
-				SkyRemote.holdButton("down");
-			}
+	[
+		{
+			button: "select",
+			element: document.getElementById("sky-remote-select")
+		},
+		{
+			button: "backup",
+			element: document.getElementById("sky-remote-backup")
+		},
+		{
+			button: "help",
+			element: document.getElementById("sky-remote-help")
+		},
+		{
+			button: "red",
+			element: document.getElementById("sky-remote-red")
+		},
+		{
+			button: "green",
+			element: document.getElementById("sky-remote-green")
+		},
+		{
+			button: "yellow",
+			element: document.getElementById("sky-remote-yellow")
+		},
+		{
+			button: "blue",
+			element: document.getElementById("sky-remote-blue")
 		}
-
-		dpad.addEventListener("touchstart", touchEvent);
-		dpad.addEventListener("touchmove", touchEvent);
-		dpad.addEventListener("touchend", e => {
-			["up", "down", "left", "right"].forEach(d =>
-				SkyRemote.releaseButton(d));
+	].forEach(b => {
+		b.element.addEventListener("touchstart", () => {
+			SkyRemote.holdButton(b.button);
 		});
+		b.element.addEventListener("touchend", () => {
+			SkyRemote.releaseButton(b.button);
+		});
+	});
+	let toggleLog = () => {
+		let logContainer = document.getElementById("game-log-container");
+		console.log(logContainer);
+		logContainer.style.display = logContainer.style.display ? null : "none";
+	};
+	document.getElementById("sky-remote-log").addEventListener("touchend", toggleLog);
+	toggleLog();
+
+	let dpad = document.getElementById("sky-remote-dpad");
+
+	function touchEvent(e) {
+		let dpad = e.currentTarget,
+			bounds = dpad.getBoundingClientRect(),
+			touch = e.targetTouches[0],
+
+			x = 2 * (touch.clientX - bounds.left) / bounds.width - 1,
+			y = 2 * (touch.clientY - bounds.top) / bounds.height - 1,
+			deadZone = .2;
+		if (Math.abs(x) < deadZone) x = 0;
+		if (Math.abs(y) < deadZone) y = 0;
+		console.log({ x, y });
+		if (Math.sign(x) < 0) {
+			SkyRemote.releaseButton("right");
+			SkyRemote.holdButton("left");
+		}
+		if (Math.sign(x) > 0) {
+			SkyRemote.releaseButton("left");
+			SkyRemote.holdButton("right");
+		}
+		if (Math.sign(y) < 0) {
+			SkyRemote.releaseButton("down");
+			SkyRemote.holdButton("up");
+		}
+		if (Math.sign(y) > 0) {
+			SkyRemote.releaseButton("up");
+			SkyRemote.holdButton("down");
+		}
 	}
 
-
-	var meta = document.createElement('meta');
-	meta.name = "viewport";
-	meta.content = "width=device-width,initial-scale=1.0,user-scalable=no";
-	document.getElementsByTagName('head')[0].appendChild(meta);
-
-	//document.body.innerHTML += html;
-
-	GM_addStyle(css);
-
-
-	uWindow.addEventListener("load", () => {
-		let test = document.createElement("span");
-		test.innerHTML = html;
-		document.body.appendChild(test);
-		document.getElementById("game-log").append(...queuedLogs);
-
-		setupControls();
-
-
+	dpad.addEventListener("touchstart", touchEvent);
+	dpad.addEventListener("touchmove", touchEvent);
+	dpad.addEventListener("touchend", e => {
+		["up", "down", "left", "right"].forEach(d =>
+			SkyRemote.releaseButton(d));
 	});
+}
+
+
+var meta = document.createElement('meta');
+meta.name = "viewport";
+meta.content = "width=device-width,initial-scale=1.0,user-scalable=no";
+document.getElementsByTagName('head')[0].appendChild(meta);
+
+//document.body.innerHTML += html;
+
+GM_addStyle(css);
+
+
+uWindow.addEventListener("load", () => {
+	let test = document.createElement("span");
+	test.innerHTML = html;
+	document.body.appendChild(test);
+	document.getElementById("game-log").append(...queuedLogs);
+
+	setupControls();
+
+
 });

@@ -11,45 +11,22 @@
 // @match        http://localhost:4000/*
 // @match        *://*
 // @icon         https://stb-gaming.github.io/assets/img/stb-logo.webp
-// @require      https://github.com/STB-Gaming/userscripts/raw/master/beehive-bedlam.user.js
 // ==/UserScript==
 
-(function (userscript) {
-	const init = global => {
-		const context = {
-			...global,
-			get global() { return global; },
-			get unsafeWindow() { return global; },
-			get uWindow() { return global; },
-			exports: {}
-		};
-		userscript.call(context, context);
-		return context.exports;
-	};
+import checkUserscript from "./check-userscript";
+const VERSION = [1, 3, 8];
+let SkyRemote;
 
-	if (typeof module === 'undefined' || typeof module.exports === 'undefined') {
-		// eslint-disable-next-line no-undef
-		const uWindow = typeof unsafeWindow === 'undefined' ? window : unsafeWindow,
-			exports = init(uWindow);
-
-		for (const key in exports)
-			if (!uWindow.hasOwnProperty(key))
-				uWindow[key] = exports[key];
-	} else
-		module.exports.init = init;
-})(function ({ checkUserscript, exports }) {
-	const VERSION = [1, 3, 8];
-
-	const { IS_THIS_USERSCRIPT, IS_THIS_USERSCRIPT_DEV, IS_USERSCRIPT, IS_COMMONJS, GET_STARTED } = checkUserscript("STBG Sky Remote API", VERSION, "SkyRemote");
-	if (!GET_STARTED) return;
+const { IS_THIS_USERSCRIPT, IS_THIS_USERSCRIPT_DEV, IS_USERSCRIPT, IS_COMMONJS, GET_STARTED } = checkUserscript("STBG Sky Remote API", VERSION, "SkyRemote");
+if (GET_STARTED) {
 
 
 	/**
- * Initializes the SkyRemote object with the given bindings.
- *
- * @param {Object[]} bindings - An array of button bindings, each containing button name, keys, and keyCodes.
- * @constructor
- */
+	* Initializes the SkyRemote object with the given bindings.
+	*
+	* @param {Object[]} bindings - An array of button bindings, each containing button name, keys, and keyCodes.
+	* @constructor
+	*/
 	function SkyRemoteAPI(bindings) {
 		if (!new.target) throw new Error("Use 'new' with this function");
 		if (!bindings || !bindings.length) {
@@ -64,7 +41,6 @@
 			controls[button] = keyCodes[0];
 			return controls;
 		}, {});
-		this.heldButtons = [];
 
 	}
 
@@ -75,9 +51,9 @@
 	 */
 	SkyRemoteAPI.buttons = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'sky', 'tv-guide', 'box-office', 'services', 'interactive', 'i', 'up', 'left', 'down', 'right', 'select', 'channel-up', 'channel-down', 'backup', 'help', 'red', 'green', 'yellow', 'blue'];
 	/**
- * Creates an array of button bindings.
- * @returns {Object[]} - An array of button bindings.
- */
+	* Creates an array of button bindings.
+	* @returns {Object[]} - An array of button bindings.
+	*/
 	SkyRemoteAPI.createBindings = function () {
 		let bindings = [];
 		let b = 0;
@@ -187,7 +163,6 @@ Version: ${VERSION.join(".")} (${IS_THIS_USERSCRIPT_DEV ? "Development" : IS_THI
 		}
 		if (this.listButtons().includes(btn)) {
 			let keyCode = this.remote[btn];
-			this.heldButtons[keyCode] = true;
 			SkyRemoteAPI.triggerEvent("keydown", keyCode, element);
 		}
 	};
@@ -229,10 +204,7 @@ Version: ${VERSION.join(".")} (${IS_THIS_USERSCRIPT_DEV ? "Development" : IS_THI
 			return;
 		}
 		let keyCode = this.remote[btn];
-		if (this.heldButtons[keyCode]) {
-			SkyRemoteAPI.triggerEvent("keyup", keyCode, element);
-			this.heldButtons[keyCode] = false;
-		}
+		SkyRemoteAPI.triggerEvent("keyup", keyCode, element);
 	};
 
 	/**
@@ -363,7 +335,7 @@ Please contact the website owner of this change if you can.`);
 	 * The SkyRemote API object containing all the available functions.
 	 * @type {SkyRemoteAPI}
 	 */
-	exports.SkyRemote = new SkyRemoteAPI([
+	SkyRemote = new SkyRemoteAPI([
 		{
 			"button": "0",
 			"keys": [
@@ -640,4 +612,6 @@ Please contact the website owner of this change if you can.`);
 			]
 		}
 	]);
-});
+}
+
+export default SkyRemote;
