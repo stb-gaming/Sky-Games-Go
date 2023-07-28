@@ -145,12 +145,15 @@ jobs:
           name: userscripts
           path: userscripts
 
+      - name: Create userscripts zip file
+        run: zip --junk-paths userscripts build/userscripts/*
+
       - name: Upload userscripts artifacts
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./userscripts
-          asset_name: "us"
+          asset_path: ./userscripts.zip
+          asset_name: "userscripts.zip"
           asset_content_type: application/octet-stream"
