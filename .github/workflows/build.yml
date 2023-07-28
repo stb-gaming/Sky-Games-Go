@@ -146,7 +146,7 @@ jobs:
           path: userscripts
 
       - name: Create userscripts zip file
-        run: zip --junk-paths userscripts build/userscripts/*
+        run: zip --junk-paths userscripts userscripts/*
 
       - name: Upload userscripts artifacts
         uses: actions/upload-release-asset@v1
