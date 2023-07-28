@@ -33,7 +33,7 @@ jobs:
           CI: false
         run: npm run build
       - name: Build Userscripts
-      - run: npm run userscripts
+        run: npm run userscripts
 
       - name: Get version
         id: version
