@@ -5,7 +5,8 @@ on:
       - master
       - develop
   release:
-    types: ['*']
+    types:
+      - created
 
 
 jobs:
