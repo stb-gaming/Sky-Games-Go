@@ -4,18 +4,50 @@ on:
     branches:
       - master
       - develop
+  release:
+    types:
+      - published
 
 
 jobs:
-  build:
-    name: Build React app and deploy release artifacts
+  get-info:
+    name: Get Info about stuff
     runs-on: ubuntu-latest
-    permissions:
-        deployments: write
-        contents: write
     outputs:
       name: ${{ steps.name.outputs.name }}
       version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js v18
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+      - name: Get version
+        id: version
+        run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
+
+      - name: Get name
+        id: name
+        run: echo "::set-output name=name::$(node -p "require('./package.json').name")"
+
+      - name: Get changelog
+        id: changelog
+        run: |
+          latest_tag=`git describe --tags --abbrev=0 2>/dev/null || echo HEAD`
+          changelog=`git log --oneline $latest_tag`
+          echo "::set-output name=changelog::$changelog"
+
+  build:
+    name: Build React app and deploy release artifacts
+    runs-on: ubuntu-latest
+
+    needs: get-info
+    permissions:
+        deployments: write
+        contents: write
+    if: github.event_name != 'release'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -35,30 +67,15 @@ jobs:
       - name: Build Userscripts
         run: npm run userscripts
 
-      - name: Get version
-        id: version
-        run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
-
-      - name: Get name
-        id: name
-        run: echo "::set-output name=name::$(node -p "require('./package.json').name")"
-
-      - name: Get changelog
-        id: changelog
-        run: |
-          latest_tag=`git describe --tags --abbrev=0 2>/dev/null || echo HEAD`
-          changelog=`git log --oneline $latest_tag`
-          echo "::set-output name=changelog::$changelog"
-
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{steps.version.outputs.version}}
-          release_name: ${{steps.name.outputs.name}} v${{steps.version.outputs.version}}
-          body: ${{steps.changelog.outputs.changelog}}
+          tag_name: v${{needs.get-info.outputs.version}}
+          release_name: ${{needs.get-info.outputs.name}} v${{needs.get-info.outputs.version}}
+          body: ${{needs.get-info.outputs.changelog}}
           draft: false
           prerelease: ${{ github.ref != 'refs/heads/master' }}
 
@@ -68,10 +85,16 @@ jobs:
         with:
           name: Sky-Games-X
           path: build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: userscripts
+          path: build/userscripts
   deploy:
     runs-on: ubuntu-latest
     name: Publish site to Cloudflare Pages
-    needs: build
+    needs: [build,get-info]
     if: github.ref == 'refs/heads/master'
     permissions:
       contents: read
@@ -94,10 +117,35 @@ jobs:
           # https://github.com/stb-gaming/Sky-Games-X/settings/secrets/actions
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ${{ needs.build.outputs.name }}
+          projectName: ${{ needs.get-info.outputs.name }}
           directory: static
           # Optional: Enable this if you want to have GitHub Deployments triggered
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           # Optional: Switch what branch you are publishing to.
           # By default this will be the branch which triggered this workflow
           #branch: master
+  release:
+    name: "Upload Release Files"
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - run: "mkdir web userscripts"
+      - name: Download web release artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Sky-Games-X
+          path: web
+      - name: Download userscripts artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: userscripts
+          path: userscripts
+      - name: Upload userscripts artifacts
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./userscripts
