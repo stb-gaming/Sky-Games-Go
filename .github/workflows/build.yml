@@ -152,3 +152,4 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./userscripts
+          asset_name: "us"
