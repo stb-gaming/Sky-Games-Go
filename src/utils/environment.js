@@ -2,7 +2,7 @@
 
 export async function safeRequire(module) {
 	try {
-		return await import(module);
+		return await import(`${module}`);
 	} catch (error) {
 		return null;
 	}
