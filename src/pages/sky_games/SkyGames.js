@@ -9,6 +9,8 @@ import Controls from './Controls';
 import Settings from './Settings';
 import games from '../../data/games.json'
 
+const GRID_PAGE_LENGTH = 9;
+
 function SkyGamesTab({ label, href = "#", selected }) {
 	return <SkyGamesLink to={href} className={(selected ? "active " : "") + "skyGamesTab"}>{label}</SkyGamesLink>;
 }
@@ -16,8 +18,6 @@ function SkyGamesTab({ label, href = "#", selected }) {
 function SkyGamesGame({ game, img = game.image || game.splash || game.menu || game.gameplay || "SKY Games/nogame.png", href = game.url || "#", alt = game.title || href, onHover }) {
 	return <SkyGamesLink to={href} className="skyGames_game" onFocus={onHover} onMouseEnter={onHover}><img src={"/assets/img/games/" + img} alt={alt}></img></SkyGamesLink>;
 }
-
-
 
 const capitalise = text =>
 	text.split(" ").map(word =>
@@ -67,7 +67,6 @@ function MovingArrows({ last, next, sort }) {
 
 function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 	const [selectedGame, setSelectedGame] = useState({ title: "Choose a game", description: "Hover over a game to see details", image: "SKY Games/nogame.png" });
-	const GRID_PAGE_LENGTH = 9;
 
 	list = Number(list) || list;
 	const [sortedGames, setSortedGames] = useState([]);
@@ -300,6 +299,16 @@ const SkyGames = () => {
 		pageTitle = name + (sort ? `, sorted by ${sort}` : '');
 	}
 
+	const isOnAllGames = () => {
+		let numList;
+		try {
+			numList = Number(list)
+		} catch (error) {
+			return false;
+		}
+		return [...Array(games.length % GRID_PAGE_LENGTH).keys()].includes(numList - 1);
+	}
+
 	return <div className="skyGames">
 		{/* <img src="/assets/img/reference.jpg" alt="reference" className="skyGames_reference" /> */}
 		<Music src="/assets/music/sky-games.mp3" />
@@ -327,7 +336,7 @@ const SkyGames = () => {
 		<div className="skyGames_footer">
 			<div className="skyGames_footerContainer">
 				<SkyGamesLink to={Controls.url} className="skyGames_colorRed">Controls</SkyGamesLink>
-				<SkyGamesLink to={SkyGames.url + "/1"} className="skyGames_colorGreen">All Games</SkyGamesLink>
+				<SkyGamesLink to={isOnAllGames() ? SkyGames.url : SkyGames.url + "/1"} className="skyGames_colorGreen">{isOnAllGames() ? "Featured": "All Games"}</SkyGamesLink>
 				<SkyGamesLink to="#" onClick={toggleMute} className="skyGames_colorYellow">Toggle Music</SkyGamesLink>
 				<SkyGamesLink to={Settings.url} className="skyGames_colorBlue">Settings</SkyGamesLink>
 			</div>
