@@ -11,19 +11,12 @@ import Settings from './pages/sky_games/Settings';
 import Page404 from "./pages/opentv_epg/404";
 import Interactive from "./pages/opentv_epg/Interactive";
 import { MusicProvider } from "./components/Music";
-import { useEffect } from "react";
-import { initUserscripts } from "./userscripts";
 import Services from "./pages/opentv_epg/Services";
 import SoundSettings from "./pages/opentv_epg/TestPageSound";
 import SystemSettings from "./pages/opentv_epg/SystemSettings";
 import SystemDetails from "./pages/opentv_epg/SystemDetails";
 
 export default function App() {
-
-	useEffect(() => {
-		initUserscripts(window);
-	});
-
 	return (
 		<div className="appContainer">
 			<MusicProvider>
