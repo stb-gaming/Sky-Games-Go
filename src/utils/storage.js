@@ -38,7 +38,7 @@ Storage.prototype.setItem = async function (name, value) {
 			console.error("Error writing to file:", error);
 		}
 	} else {
-		localStorage.setItem(name, value);
+		localStorage.setItem(name, valueString);
 	}
 };
 
