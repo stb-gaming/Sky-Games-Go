@@ -5,6 +5,7 @@ import storage from "../utils/storage";
 const MusicContext = createContext();
 
 function MusicProvider({ children, value = {} }) {
+
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [currentTrack, setCurrentTrack] = useState("");
 	const [volume, setVolume] = useState(1);
@@ -12,9 +13,10 @@ function MusicProvider({ children, value = {} }) {
 	const audioRef = React.createRef();
 
 	useEffect(() => {
-		const soundSettings = storage.getItem('soundSettings') || {};
-		setVolume(Number(soundSettings.volume) || 1);
-		setMuted(soundSettings.muted || false);
+		storage.getItem("soundSettings").then(soundSettings => {
+			setVolume(Number(soundSettings.volume) || 1);
+			setMuted(soundSettings.muted || false);
+		});
 	}, []);
 
 	useEffect(() => {
