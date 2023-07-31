@@ -14,8 +14,9 @@ function MusicProvider({ children, value = {} }) {
 
 	useEffect(() => {
 		storage.getItem("soundSettings").then(soundSettings => {
-			setVolume(Number(soundSettings.volume) || 1);
-			setMuted(soundSettings.muted || false);
+			if (soundSettings === null) soundSettings = { volume: 1, muted: false }; // fix null error
+			setVolume(Number(soundSettings.volume));
+			setMuted(soundSettings.muted);
 		});
 	}, []);
 
