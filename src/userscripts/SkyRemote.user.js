@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         STBG Sky Remote API
 // @namespace    https://stb-gaming.github.io
-// @version      1.3.8
+// @version      1.4.0
 // @description  The ultimate Sky Remote API (hopefully) containing everything to simulate a sky remote in your browser
 // @author       Tumble
 // @run-at       document-start
@@ -115,7 +115,7 @@ SkyRemoteAPI.createBindings = function () {
  * @param {number} key - The key code to be triggered.
  * @param {HTMLElement} [element=document] - The element on which the event should be triggered (default is document).
  */
-SkyRemoteAPI.triggerEvent = function (event, key, element = document) {
+SkyRemoteAPI.triggerEvent = function (event, key, element = document, destination) {
 	if (!event) {
 		console.error("[SKY REMOTE] No event was provided");
 		return;
@@ -124,12 +124,19 @@ SkyRemoteAPI.triggerEvent = function (event, key, element = document) {
 		console.error("[SKY REMOTE] No key was provided");
 		return;
 	}
-	element.dispatchEvent(new KeyboardEvent(event, {
+	const eventParams = [event, {
 		keyCode: key,
 		bubbles: true,
 		cancelable: true,
 		composed: true
-	}));
+	}];
+	if (destination) {
+		if (typeof destination !== "string") origin = "https://denki.co.uk";
+		if (!(element instanceof Window)) element = window.frames[0];
+		element.postMessage(eventParams, origin);
+	}
+	else
+		element.dispatchEvent(new KeyboardEvent(...eventParams));
 };
 
 /**
@@ -246,14 +253,14 @@ SkyRemoteAPI.prototype.getBinding = function (btn) {
  * @param {SkyRemoteButton} btn - The name of the button to be held.
  * @param {HTMLElement} [element=document] - The element on which the button should be held (default is document).
  */
-SkyRemoteAPI.prototype.holdButton = function (btn, element = document) {
+SkyRemoteAPI.prototype.holdButton = function (btn, element = document, destination) {
 	if (!btn) {
 		console.error("[SKY REMOTE] No button was provided");
 		return;
 	}
 	if (this.listButtons().includes(btn)) {
 		let keyCode = this.remote[btn];
-		SkyRemoteAPI.triggerEvent("keydown", keyCode, element);
+		SkyRemoteAPI.triggerEvent("keydown", keyCode, element, destination);
 	}
 };
 
@@ -285,13 +292,13 @@ SkyRemoteAPI.prototype.onHoldButton = function (btn, func, element = document) {
  * @param {SkyRemoteButton} btn - The name of the button to be released.
  * @param {HTMLElement} [element=document] - The element on which the button should be released (default is document).
  */
-SkyRemoteAPI.prototype.releaseButton = function (btn, element = document) {
+SkyRemoteAPI.prototype.releaseButton = function (btn, element = document, destination) {
 	if (!btn) {
 		console.error("[SKY REMOTE] No button was provided");
 		return;
 	}
 	let keyCode = this.remote[btn];
-	SkyRemoteAPI.triggerEvent("keyup", keyCode, element);
+	SkyRemoteAPI.triggerEvent("keyup", keyCode, element, destination);
 };
 
 /**
@@ -321,13 +328,13 @@ SkyRemoteAPI.prototype.onReleaseButton = function (btn, func, element = document
  * @param {SkyRemoteButton} btn - The name of the button to be pressed.
  * @param {HTMLElement} [element=document] - The element on which the button should be pressed (default is document).
  */
-SkyRemoteAPI.prototype.pressButton = function (btn, element = document) {
+SkyRemoteAPI.prototype.pressButton = function (btn, element = document, destination) {
 	if (!btn) {
 		console.error("[SKY REMOTE] No button was provided");
 		return;
 	}
-	this.holdButton(btn, element);
-	setTimeout(() => this.releaseButton(btn, element), 500);
+	this.holdButton(btn, element, destination);
+	setTimeout(() => this.releaseButton(btn, element, destination), 500);
 };
 
 /**
