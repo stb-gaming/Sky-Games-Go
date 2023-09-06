@@ -87,10 +87,7 @@ describe("Testing <MusicProvider> and <Music>", () => {
 
 		expect(audioElement.volume).toBe(volume);
 	});
-
-
-
 });
 
 
-//TOO: make more of these tests
+//TODO: make more of these tests

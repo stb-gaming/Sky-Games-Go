@@ -6,7 +6,7 @@ const userscripts = {
 	'SkyRemote': { path: './src/userscripts/SkyRemote.user.js', exportsLibrary: true },
 	'BeehiveBedlam': { path: './src/userscripts/BeehiveBedlam.user.js', exportsLibrary: true },
 	'SkyRemoteMobile': { path: './src/userscripts/SkyRemoteMobile.user.js', exportsLibrary: false },
-	'gamepadSupport': { path: './src/userscripts/gamepadSupport.user.js', exportsLibrary: false }
+	'GamepadSupport': { path: './src/userscripts/GamepadSupport.user.js', exportsLibrary: false }
 };
 
 
@@ -47,6 +47,7 @@ class UserscriptExportPlugin {
 		return `${this.getHeader(entryName)}
 (function() {
 	"use strict";
+	const IS_STANDALONE = true;
 	${source}${userscripts[name].exportsLibrary ? `
 	const uWindow = typeof unsafeWindow === 'undefined' ? window : unsafeWindow;
 	if(typeof ${name} !== 'undefined' || typeof uWindow['${name}'] !== 'undefined' ) uWindow["${name}"] = uWindow["${name}"]||${name};` : ''}

@@ -66,7 +66,7 @@ let canvas, bounds,
 	catapult = {
 		state: E_CATAPULT_STATE.STILL,
 		angularVelocity: 0,
-		acceleration: .03,
+		acceleration: 1,
 		maxRotationSpeed: 5,
 		animationFrame: undefined,
 		currentAngle: 0,
@@ -148,7 +148,7 @@ function collectBound() {
 				collected = {};
 			}
 		}
-		console.log(`next get ${props[p]}`);
+		console.debug(`next get ${props[p]}`);
 	}
 
 	canvas.addEventListener("mousemove", e => {
@@ -433,15 +433,17 @@ uWindow.addEventListener("load", () => {
 	if (typeof SkyRemote === "undefined") {
 		console.log("Sky Remote API is required");
 	} else {
-		console.debug("Setting up sky remote");
-		SkyRemote.onReleaseButton("up", pressUp);
-		SkyRemote.onReleaseButton("down", pressDown);
-		SkyRemote.onHoldButton("left", holdLeft);
-		SkyRemote.onReleaseButton("left", () => setCatapultState(E_CATAPULT_STATE.STILL));
-		SkyRemote.onHoldButton("right", holdRight);
-		SkyRemote.onReleaseButton("right", () => setCatapultState(E_CATAPULT_STATE.STILL));
-		SkyRemote.onReleaseButton("select", pressSelect);
-		SkyRemote.onReleaseButton("backup", pressBack);
+		console.debug("Setting up Sky Remote");
+		const removalParams = [
+			SkyRemote.onReleaseButton("up", pressUp),
+			SkyRemote.onReleaseButton("down", pressDown),
+			SkyRemote.onHoldButton("left", holdLeft),
+			SkyRemote.onReleaseButton("left", () => setCatapultState(E_CATAPULT_STATE.STILL)),
+			SkyRemote.onHoldButton("right", holdRight),
+			SkyRemote.onReleaseButton("right", () => setCatapultState(E_CATAPULT_STATE.STILL)),
+			SkyRemote.onReleaseButton("select", pressSelect),
+			SkyRemote.onReleaseButton("backup", pressBack)
+		];
 	}
 
 });

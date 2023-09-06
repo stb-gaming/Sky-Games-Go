@@ -14,7 +14,7 @@ Storage.prototype.setFolder = function (folder) {
 function conditionalJSONStringify(obj) {
 	try {
 		if (typeof obj === 'string') {
-			JSON.parse(obj);
+			JSON.parse(obj); // is the json parsable?
 			return obj;
 		} else {
 			return JSON.stringify(obj);
@@ -43,9 +43,10 @@ Storage.prototype.setItem = async function (name, value) {
 };
 
 
-Storage.prototype.getItem = async function (name) {
+Storage.prototype.getItem = async function (name, fallback = null) {
 	console.debug(`Retrieving ${name}...`);
 	let valueText;
+	let retVal;
 	if (isElectron() || isReactNative()) {
 		const path = await safeRequire("path");
 		const file = path.join(this.folder, name + ".json");
@@ -54,12 +55,16 @@ Storage.prototype.getItem = async function (name) {
 			valueText = await fs.readFile(file, 'utf8');
 		} catch (error) {
 			console.error("Error reading file:", error);
-			return null;
+			return fallback;
 		}
 	} else {
 		valueText = localStorage.getItem(name);
 	}
-	return JSON.parse(valueText);
+	retVal = JSON.parse(valueText);
+	if (retVal === null)
+		return fallback;
+	else
+		return retVal;
 };
 
 const storage = new Storage();

@@ -14,7 +14,10 @@ function MusicProvider({ children, value = {} }) {
 
 	useEffect(() => {
 		storage.getItem("soundSettings").then(soundSettings => {
-			if (soundSettings === null) soundSettings = { volume: 1, muted: false }; // fix null error
+			if (!soundSettings) {
+				soundSettings = { volume: 1.0, muted: false }; // default sound settings
+				storage.setItem("soundSettings", soundSettings);
+			}
 			setVolume(Number(soundSettings.volume));
 			setMuted(soundSettings.muted);
 		});
@@ -42,11 +45,8 @@ function MusicProvider({ children, value = {} }) {
 	useEffect(() => {
 		let audioRefCurrent = audioRef.current;
 		const play = () => {
-
 			if (!currentTrack || isPlaying) return;
-			audioRefCurrent.play().catch(error => {
-				console.error("error");
-			});
+			audioRefCurrent.play().catch(console.error);
 			setIsPlaying(true);
 		};
 

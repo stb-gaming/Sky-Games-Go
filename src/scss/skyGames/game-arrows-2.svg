@@ -17,16 +17,9 @@
 			</g>
 		</g>
 
-		<g transform="translate(0, 56.33)">
-			<use href="#triangle" transform="rotate(180)" />
-		</g>
-
 
 		<g transform="translate(-55.33)">
 			<use href="#triangle" transform="rotate(-90)" />
-		</g>
-		<g transform="translate(55.33)">
-			<use href="#triangle" transform="rotate(90)" />
 		</g>
 	</g>
 </svg>

@@ -10,12 +10,9 @@ import EPGHeader from './components/EPGHeader';
 import { useNavigate } from 'react-router-dom';
 import storage from '../../utils/storage';
 
-/*
-localStorage.setItem('soundSettings',{
-	volume:1,
-	muted:"false
-})
-*/
+import SkyRemote from '../../userscripts/SkyRemote.user';
+import EPGContentContainer from './components/EPGContentContainer';
+import getParentLocation from '../../utils/getParentLocation';
 
 const SoundSettings = () => {
 
@@ -25,42 +22,32 @@ const SoundSettings = () => {
 	const [menu] = useState(createMenu({ itemSelector: "input" }));
 
 	useEffect(() => {
-		let form = new FormData(document.getElementById("sound-settings"));
-		let soundSettings = {};
-
-		form.forEach((v, k) => {
-			soundSettings[k] = v;
-		});
-
-	}, []);
-
-	useEffect(() => {
-		let epgMenu = document.querySelector("#sound-settings");
+		let epgMenu = document.getElementById("soundSettings");
 		if (epgMenu) menu.setPages([epgMenu]);
-		console.debug("menu setup");
 
 		if (bindsSetup) return;
-		document.addEventListener("userscriptsLoaded", ({ detail: { SkyRemote } }) => {
-			if (bindsSetup) return;
-			setBindsSetup(true);
-			SkyRemote.onReleaseButton("up", () => {
-				menu.up();
-			});
-			SkyRemote.onReleaseButton("down", () => {
-				menu.down();
-			});
-			SkyRemote.onReleaseButton("left", () => {
-				menu.left();
-			});
-			SkyRemote.onReleaseButton("right", () => {
-				menu.right();
-			});
+		setBindsSetup(true);
+
+		const removalParams = [
+			...["up", "down", "left", "right"].map(direction => SkyRemote.onReleaseButton(direction, () => {
+				menu[direction]();
+			})),
+			SkyRemote.onReleaseButton("select", () => {
+				menu.getSelected().click();
+			}),
 			SkyRemote.onReleaseButton("backup", () => {
-				navigate(-1);
-			});
-			console.debug("sky remote bound");
-		});
-	}, [bindsSetup, menu, navigate]);
+				navigate(getParentLocation(window.location.pathname));
+			})
+		];
+		console.debug("Sky Remote bound");
+		return () => {
+			setBindsSetup(false);
+			for (const paramSet of removalParams) {
+				SkyRemote.removeButtonEventListener(...paramSet);
+			}
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [menu]);
 
 	function onMute({ target }) {
 		musicContext.changeMute(target.checked);
@@ -77,31 +64,25 @@ const SoundSettings = () => {
 		form.forEach((v, k) => {
 			soundSettings[k] = v;
 		});
-		console.log(soundSettings);
 
 		storage.setItem("soundSettings", soundSettings);
-		navigate("/services/system-settings");
+		navigate("/services/system-setup");
 	}
-
 
 	return <>
 		<EPGContainer>
 			{/* <img alt="" className="reference" src="/assets/img/image0.jpg" /> */}
 			<EPGHeader title={"SOUND SETTINGS"} />
-			<div className="epgContentContainer">
-				<form id="sound-settings" onSubmit={onSave} action="#">
+			<EPGContentContainer>
+				<form id="soundSettings" onSubmit={onSave} action="#">
 					<label htmlFor="volume">Volume</label>
-					<input type="range" id="volumeSlider" name="volume" onChange={onVolChange} value={musicContext.volume} min={0} max={1} step={.1} />
+					<input type="range" id="volumeSlider" name="volume" onChange={onVolChange} value={musicContext.volume} min={0} max={1} step={.1} data-x="0" />
 					<label htmlFor="muted">Muted</label>
-					<input type="checkbox" name="muted" onChange={onMute} value={musicContext.muted} />
+					<input type="checkbox" name="muted" onChange={onMute} value={musicContext.muted} data-x="0" />
 					<input type="submit" value="Save New Settings" />
-
 				</form>
-			</div>
-
+			</EPGContentContainer>
 		</EPGContainer>
-
-
 	</>;
 };
 SoundSettings.url = "/services/system-settings/sound-settings";

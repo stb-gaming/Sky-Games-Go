@@ -8,24 +8,43 @@ import EPGHeader from './components/EPGHeader';
 import packageJson from "../../../package.json";
 import SkyRemote from '../../userscripts/SkyRemote.user';
 
+import Storage from '../../utils/storage';
+import { useNavigate } from 'react-router-dom';
+import EPGContentContainer from './components/EPGContentContainer';
+import getParentLocation from '../../utils/getParentLocation';
+
 
 const SystemDetails = () => {
 
 	const [browserVersion, setBrowserVersion] = useState('Loading...');
 	const [environment, setEnvironment] = useState("Loading...");
 	const [serialNumber, setSerialNumber] = useState("Loading...");
-
+	const [bindsSetup, setBindsSetup] = useState(false);
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		let serialNumber = localStorage.getItem("serialNumber");
-		if (!serialNumber) {
-			serialNumber = Array.from({ length: 10 }, () => Math.round(Math.random() * 9)).join("");
-			localStorage.setItem("serialNumber", serialNumber);
-		}
-		setSerialNumber(serialNumber);
+		if (bindsSetup) return;
+		setBindsSetup(true);
+		const removalParams = SkyRemote.onReleaseButton("backup", () => {
+			navigate(getParentLocation(window.location.pathname));
+		});
+		console.debug("Sky Remote bound");
+		return () => {
+			setBindsSetup(false);
+			SkyRemote.removeButtonEventListener(...removalParams);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-
+	useEffect(() => {
+		Storage.getItem("serialNumber").then(serial => {
+			if (!serial) {
+				serial = Array.from({ length: 10 }, () => Math.round(Math.random() * 9)).join("");
+				Storage.setItem("serialNumber", serial);
+			}
+			setSerialNumber(serial);
+		});
+	}, []);
 
 	useEffect(() => {
 		// Get the browser version when the component mounts
@@ -86,7 +105,7 @@ const SystemDetails = () => {
 		<EPGContainer>
 			{/* <img alt="" className="reference" src="/assets/img/image0.jpg" /> */}
 			<EPGHeader title={"SYSTEM DETAILS"} />
-			<div className="epgContentContainer">
+			<EPGContentContainer>
 				<form id="system-details" onSubmit={onSave} >
 					<label htmlFor="manufacturer">Manufacturer</label>
 					<input type="text" name="manufacturer" disabled id="" value={packageJson.author} />
@@ -106,9 +125,9 @@ const SystemDetails = () => {
 					<input type="text" name="hi" disabled id="" value={SkyRemote.version.join(".")} />
 
 				</form>
-			</div>
+			</EPGContentContainer>
 
-		</EPGContainer>
+		</EPGContainer >
 
 
 	</>;

@@ -5,12 +5,11 @@ import EPGContainer from './components/EPGContainer';
 import EPGHeader from './components/EPGHeader';
 import FYIMessage from './components/FYIMessage';
 
-const Page404 = () => {
+const PageFYI = () => {
 	return <>
 		<EPGContainer>
-			<EPGHeader />
-			<FYIMessage code="04" />
-
+			<EPGHeader title={"FOR YOUR INFORMATION"} />
+			<FYIMessage>For your information</FYIMessage>
 		</EPGContainer >
 	</>;
 };

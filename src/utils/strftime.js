@@ -1,4 +1,4 @@
-function strftime(format) {
+export default function strftime(format) {
 	const date = this;
 
 	const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -31,6 +31,3 @@ function strftime(format) {
 		}
 	});
 };
-
-
-export default strftime;

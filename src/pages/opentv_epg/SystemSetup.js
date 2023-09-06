@@ -1,20 +1,26 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../scss/main.scss';
 import '../../scss/opentv_epg/main.scss';
+import Settings from '../sky_games/Settings';
 import createMenu from '../../utils/createMenu';
 
 import EPGContainer from './components/EPGContainer';
 import EPGHeader from './components/EPGHeader';
 import EPGMenuContainer from './components/EPGMenuContainer';
 import EPGMenuItem from './components/EPGMenuItem';
+import SystemDetails from './SystemDetails';
+import SoundSettings from './SoundSettings';
 
 import SkyRemote from '../../userscripts/SkyRemote.user';
 import EPGContentContainer from './components/EPGContentContainer';
+import getParentLocation from '../../utils/getParentLocation';
 
-const TVGuide = () => {
+const SystemSetup = () => {
+
 	const [bindsSetup, setBindsSetup] = useState(false);
 	const [menu] = useState(createMenu({ itemSelector: ".epgMenuContainer li" }));
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		let epgMenu = document.querySelector(".epgMenuContainer");
@@ -30,6 +36,9 @@ const TVGuide = () => {
 			SkyRemote.onReleaseButton("select", () => {
 				menu.getSelected().click();
 			}),
+			SkyRemote.onReleaseButton("backup", () => {
+				navigate(getParentLocation(window.location.pathname));
+			})
 		];
 		console.debug("Sky Remote bound");
 		return () => {
@@ -40,29 +49,25 @@ const TVGuide = () => {
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [menu]);
-
 	return <>
 		<EPGContainer>
-			<EPGHeader page={1} />
+			<EPGHeader title={"SYSTEM SETUP"} />
 			<EPGContentContainer>
 				<EPGMenuContainer>
-					<EPGMenuItem number="1" title="ALL CHANNELS" selected={true} />
-					<EPGMenuItem number="2" title="HD CHANNELS" />
-					<EPGMenuItem number="3" title="ENTERTAINMENT" />
-					<EPGMenuItem number="4" title="LIFESTYLE & CULTURE" />
-					<EPGMenuItem number="5" title="MOVIES" />
-					<EPGMenuItem number="6" title="SPORTS" />
-					<EPGMenuItem number="7" title="NEWS" />
-					<EPGMenuItem number="8" title="DOCUMENTARIES" />
-					<EPGMenuItem number="9" title="KIDS" />
-					<Link to="/tv-guide/more">
-						<EPGMenuItem number="0" title="MORE..." />
+					<Link to={Settings.url}>
+						<EPGMenuItem number="1" title="SKY GAMES SETTINGS" />
+					</Link>
+					<Link to={SoundSettings.url}>
+						<EPGMenuItem number="2" title="SOUND SETTINGS" />
+					</Link>
+					<Link to={SystemDetails.url}>
+						<EPGMenuItem number="3" title="SYSTEM DETAILS" />
 					</Link>
 				</EPGMenuContainer>
-				<img src="/assets/img/arrow.svg" className="epgArrowDown" alt="There is another page" />
 			</EPGContentContainer>
+
 		</EPGContainer>
 	</>;
 };
-TVGuide.url = "/tv-guide";
-export default TVGuide;
+SystemSetup.url = "/services/system-setup";
+export default SystemSetup;

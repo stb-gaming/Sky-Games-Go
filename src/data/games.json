@@ -112,7 +112,7 @@
 		"archived": "2023-04-12",
 		"image": null,
 		"menu": null,
-		"category": "Beat 'em up"
+		"category": "Action"
 	},
 	{
 		"title": "Courage the Cowardly Dog 1",
@@ -127,7 +127,7 @@
 		"image": null,
 		"menu": null,
 		"list": "classics",
-		"category": "Dungeon Crawler"
+		"category": "Adventure"
 	},
 	{
 		"title": "Courage the Cowardly Dog 2",
@@ -141,7 +141,7 @@
 		"archived": "2023-07-14",
 		"image": null,
 		"menu": null,
-		"category": "Dungeon Crawler"
+		"category": "Adventure"
 	},
 	{
 		"title": "Courage the Cowardly Dog 3",
@@ -155,7 +155,7 @@
 		"archived": "2023-07-14",
 		"image": null,
 		"menu": null,
-		"category": "Dungeon Crawler"
+		"category": "Adventure"
 	},
 	{
 		"title": "Darts",
@@ -199,7 +199,7 @@
 		"image": null,
 		"menu": null,
 		"list": "classics",
-		"category": "Action-Adventure"
+		"category": "Adventure"
 	},
 	{
 		"title": "Letter Box",
@@ -231,7 +231,7 @@
 		"category": "Action"
 	},
 	{
-		"title": "Codename Kids Next Door: BITTERSWEET",
+		"title": "Codename Kids Next Door",
 		"description": "Stop the evil Stickybeard in his tracks!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/cknd/app.html",
@@ -240,6 +240,34 @@
 		"gameplay": "Cartoon Network/Codename Kids Next Door/Codename Kids Next Door/Play003Hold.jpg",
 		"date": "2004-07-29",
 		"archived": "2023-04-15",
+		"image": null,
+		"menu": null,
+		"category": "Adventure"
+	},
+	{
+		"title": "Codename Kids Next Door Episode 2",
+		"description": "Numbuh Four takes to the pirates head-on!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/cknd_2/app.html",
+		"brand": "Cartoon Network",
+		"splash": "Cartoon Network/Codename Kids Next Door/Codename Kids Next Door Episode 2/Splash.jpg",
+		"gameplay": "Cartoon Network/Codename Kids Next Door/Codename Kids Next Door Episode 2/Screen02.jpg",
+		"date": "2005-01-06",
+		"archived": "2023-08-19",
+		"image": null,
+		"menu": null,
+		"category": "Adventure"
+	},
+	{
+		"title": "Codename Kids Next Door Episode 3",
+		"description": "Sink the Sweet Revenge III once and for all!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/cknd_3/app.html",
+		"brand": "Cartoon Network",
+		"splash": "Cartoon Network/Codename Kids Next Door/Codename Kids Next Door Episode 3/Splash.jpg",
+		"gameplay": "Cartoon Network/Codename Kids Next Door/Codename Kids Next Door Episode 3/screenshot_04.jpg",
+		"date": "2005-08-04",
+		"archived": "2023-08-19",
 		"image": null,
 		"menu": null,
 		"category": "Adventure"
@@ -257,7 +285,7 @@
 		"image": null,
 		"menu": null,
 		"list": "classics",
-		"category": "Dungeon Crawler"
+		"category": "Adventure"
 	},
 	{
 		"title": "Thunderbirds: Flashpoint Earth",
@@ -271,7 +299,7 @@
 		"archived": "2023-04-15",
 		"image": null,
 		"menu": null,
-		"category": "Adventure"
+		"category": "Action"
 	},
 	{
 		"title": "Genie's Cave",
@@ -285,6 +313,7 @@
 		"archived": "2023-04-29",
 		"image": null,
 		"menu": null,
+		"list": "family",
 		"category": "Puzzle"
 	},
 	{
@@ -313,6 +342,7 @@
 		"archived": "2023-04-29",
 		"image": null,
 		"menu": null,
+		"list": "family",
 		"category": "Word"
 	},
 	{
@@ -327,7 +357,8 @@
 		"archived": "2023-04-12",
 		"image": null,
 		"menu": null,
-		"category": "Platformer"
+		"list": "family",
+		"category": "Adventure"
 	},
 	{
 		"title": "Dexter vs. Mandark",
@@ -341,7 +372,7 @@
 		"archived": "2023-04-20",
 		"image": null,
 		"menu": null,
-		"category": "Action-Adventure"
+		"category": "Action"
 	},
 	{
 		"title": "Foster's Home for Imaginary Friends",
@@ -355,7 +386,21 @@
 		"archived": "2023-04-29",
 		"image": null,
 		"menu": null,
-		"category": "Dungeon Crawler"
+		"category": "Adventure"
+	},
+	{
+		"title": "Foster's: Bad Bloo",
+		"description": "More timeline chaos!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/fosters2/app.html",
+		"brand": "Cartoon Network",
+		"splash": "Cartoon Network/Foster's Home For Imaginary Friends/Foster's Home For Imaginary Friends Episode 2/Splash.bmp",
+		"gameplay": "Cartoon Network/Foster's Home For Imaginary Friends/Foster's Home For Imaginary Friends Episode 2/Play003Garden.jpg",
+		"date": "2005-11-10",
+		"archived": "2023-08-25",
+		"image": null,
+		"menu": null,
+		"category": "Adventure"
 	},
 	{
 		"title": "Jumble Fever",
@@ -385,7 +430,7 @@
 		"image": null,
 		"menu": null,
 		"list": "classics",
-		"category": "Platformer"
+		"category": "Adventure"
 	},
 	{
 		"title": "Ed, Edd, n Eddy 1",
@@ -399,7 +444,7 @@
 		"archived": "2023-04-12",
 		"image": null,
 		"menu": null,
-		"category": "Action-Adventure"
+		"category": "Action"
 	},
 	{
 		"title": "Star Trek: STRANDED",
@@ -427,7 +472,21 @@
 		"archived": "2023-04-30",
 		"image": null,
 		"menu": null,
-		"category": "Dungeon Crawler"
+		"category": "Adventure"
+	},
+	{
+		"title": "Dexter: Mandark Strikes Back",
+		"description": "Dexter's feud with Mandark continues!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/dl2/app.html",
+		"brand": "Cartoon Network",
+		"splash": "Cartoon Network/Dexter's Laboratory/Dexter's Laboratory Episode 2/Splash.jpg",
+		"gameplay": "Cartoon Network/Dexter's Laboratory/Dexter's Laboratory Episode 2/Screenshot01.jpg",
+		"date": "2005-10-13",
+		"archived": "2023-08-06",
+		"image": null,
+		"menu": null,
+		"category": "Action"
 	},
 	{
 		"title": "Shrek Episode 3",
@@ -441,7 +500,7 @@
 		"archived": "2023-05-13",
 		"image": null,
 		"menu": null,
-		"category": "Platformer"
+		"category": "Adventure"
 	},
 	{
 		"title": "Word Crunch Deluxe",
@@ -459,7 +518,7 @@
 	},
 	{
 		"title": "SpongeBob SquarePants 1",
-		"description": "Evade Neptune and bring justice to longtime rival Plankton!",
+		"description": "Evade the Thug Tugs and bring justice to longtime rival Plankton!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/sb/app.html",
 		"brand": "Nickelodeon",
@@ -470,7 +529,52 @@
 		"image": "Nickelodeon/SpongeBob SquarePants/SpongeBob SquarePants/Poster.jpg",
 		"menu": null,
 		"list": "forest of fear",
-		"category": "Platformer"
+		"category": "Adventure"
+	},
+	{
+		"title": "SpongeBob SquarePants 2",
+		"description": "Help Krabs recover the secret formula!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/sb2/app.html",
+		"brand": "Nickelodeon",
+		"splash": "Nickelodeon/SpongeBob SquarePants/SpongeBob SquarePants - Episode 2/Splash.jpg",
+		"gameplay": "Nickelodeon/SpongeBob SquarePants/SpongeBob SquarePants - Episode 2/Play03.jpg",
+		"date": "2006-04-27",
+		"archived": "2023-08-12",
+		"image": null,
+		"menu": null,
+		"list": "forest of fear",
+		"category": "Adventure"
+	},
+	{
+		"title": "SpongeBob SquarePants 3",
+		"description": "Where's Gary? He's been kidnapped by the ghostly Flying Dutchman!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/sb3/app.html",
+		"brand": "Nickelodeon",
+		"splash": "Nickelodeon/SpongeBob SquarePants/SpongeBob SquarePants - Episode 3/Splash.jpg",
+		"gameplay": "Nickelodeon/SpongeBob SquarePants/SpongeBob SquarePants - Episode 3/Play01.jpg",
+		"date": "2006-07-06",
+		"archived": "2023-08-12",
+		"image": null,
+		"menu": null,
+		"list": "forest of fear",
+		"category": "Adventure"
+	},
+	{
+		"title": "SpongeBob SquarePants 4",
+		"description": "Plankton has duped Neptune!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/sb4/app.html",
+		"brand": "Nickelodeon",
+		"splash": "Nickelodeon/SpongeBob SquarePants/SpongeBob SquarePants - Episode 4/Splash.jpg",
+		"gameplay": "Nickelodeon/SpongeBob SquarePants/SpongeBob SquarePants - Episode 4/Play01.jpg",
+		"date": "2006-08-17",
+		"archived": "2023-08-19",
+		"image": null,
+		"menu": null,
+		"list": "forest of fear",
+		"category": "Adventure"
 	},
 	{
 		"title": "Grim Adventures",
@@ -484,10 +588,10 @@
 		"archived": "2023-04-14",
 		"image": null,
 		"menu": null,
-		"category": "Dungeon Crawler"
+		"category": "Adventure"
 	},
 	{
-		"title": "Codename Kids Next Door: TEENAGER",
+		"title": "Codename Kids Next Door 2.0",
 		"description": "Kids versus grown-ups, the ultimate battle of wits!",
 		"developer": "Denki",
 		"url": "https://denki.co.uk/sky/cknd2/app.html",
@@ -512,7 +616,7 @@
 		"archived": "2023-04-27",
 		"image": null,
 		"menu": null,
-		"category": "Dungeon Crawler"
+		"category": "Adventure"
 	},
 	{
 		"title": "Shrek Episode 4",
@@ -526,7 +630,7 @@
 		"archived": "2023-05-13",
 		"image": null,
 		"menu": null,
-		"category": "Platformer"
+		"category": "Adventure"
 	},
 	{
 		"title": "Scooby-Doo: Tomb It May Concern",
@@ -540,7 +644,7 @@
 		"archived": "2023-04-22",
 		"image": null,
 		"menu": null,
-		"category": "Dungeon Crawler"
+		"category": "Adventure"
 	},
 	{
 		"title": "Shrek Episode 5",
@@ -554,7 +658,21 @@
 		"archived": "2023-05-13",
 		"image": null,
 		"menu": null,
-		"category": "Platformer"
+		"category": "Adventure"
+	},
+	{
+		"title": "Dexter: Dorkster's Revenge",
+		"description": "Take the battle to Mandark's laboratory!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/dl3/app.html",
+		"brand": "Cartoon Network",
+		"splash": "Cartoon Network/Dexter's Laboratory/Dexter's Laboratory Episode 3/splash.jpg",
+		"gameplay": "Cartoon Network/Dexter's Laboratory/Dexter's Laboratory Episode 3/screenshot_03.jpg",
+		"date": "2006-01-12",
+		"archived": "2023-08-06",
+		"image": null,
+		"menu": null,
+		"category": "Action"
 	},
 	{
 		"title": "Number Crunch",
@@ -585,6 +703,20 @@
 		"category": "Adventure"
 	},
 	{
+		"title": "Mind Aerobics",
+		"description": "Train your brain with ten different exercises!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/ma/app.html",
+		"brand": "SKY Games",
+		"splash": "SKY Games/Carol Vorderman's Mind Aerobics/Carol Vorderman's Mind Aerobics/Splash.jpg",
+		"gameplay": null,
+		"date": "2007-03-15",
+		"archived": "2023-09-02",
+		"image": null,
+		"menu": "SKY Games/Carol Vorderman's Mind Aerobics/Carol Vorderman's Mind Aerobics/Menu.jpg",
+		"category": "Puzzle"
+	},
+	{
 		"title": "Kingpin Bowling",
 		"description": "A bowling alley on your screen?",
 		"developer": "Denki",
@@ -596,7 +728,8 @@
 		"archived": "2023-04-29",
 		"image": null,
 		"menu": null,
-		"category": "Sports"
+		"category": "Sports",
+		"list": "family"
 	},
 	{
 		"title": "Jumble Quest",
@@ -610,6 +743,7 @@
 		"archived": "2023-05-06",
 		"image": null,
 		"menu": null,
+		"list": "family",
 		"category": "Puzzle"
 	},
 	{
@@ -624,7 +758,7 @@
 		"archived": "2023-05-06",
 		"image": null,
 		"menu": null,
-		"category": "Platformer"
+		"category": "Adventure"
 	},
 	{
 		"title": "Bugz",
@@ -652,6 +786,7 @@
 		"archived": "2023-04-20",
 		"image": null,
 		"menu": null,
+		"list": "family",
 		"category": "Maze"
 	},
 	{
@@ -680,7 +815,7 @@
 		"archived": "2023-06-12",
 		"image": null,
 		"menu": null,
-		"category": "Platformer"
+		"category": "Action"
 	},
 	{
 		"title": "The Muppet Show",
@@ -694,7 +829,22 @@
 		"archived": "2023-05-06",
 		"image": null,
 		"menu": null,
+		"list": "family",
 		"category": "Platformer"
+	},
+	{
+		"title": "Denki's Sticky Blocks!",
+		"description": "Denki Blocks is back and stickier than ever!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/stb/app.html",
+		"brand": "Denki",
+		"splash": "Denki/Denki Blocks!/Sticky Blocks!/Splash copy.jpg",
+		"gameplay": "Denki/Denki Blocks!/Sticky Blocks!/play2 copy.jpg",
+		"date": "2008-03-06",
+		"archived": "2023-08-05",
+		"image": null,
+		"menu": "Denki/Denki Blocks!/Sticky Blocks!/ModeSelect copy.jpg",
+		"category": "Puzzle"
 	},
 	{
 		"title": "Robotboy: Tag Team Trouble",
@@ -709,6 +859,20 @@
 		"image": null,
 		"menu": null,
 		"category": "Action"
+	},
+	{
+		"title": "Golden Balls",
+		"description": "A game of trust and bluff!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/gb/app.html",
+		"brand": "Endemol",
+		"splash": null,
+		"gameplay": "Endemol/Golden Balls/Gameplay1.png",
+		"date": "2008-10-09",
+		"archived": "2023-08-05",
+		"image": null,
+		"menu": "Endemol/Golden Balls/Menu.png",
+		"category": "Gameshow"
 	},
 	{
 		"title": "Wall-E",

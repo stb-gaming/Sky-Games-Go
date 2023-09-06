@@ -1,15 +1,28 @@
 import { Music, MusicContext } from '../../components/Music';
 import '../../scss/skyGames/main.scss';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SkyGamesLink from './components/SkyGamesLink.js';
 import SkyGamesLogo from './components/SkyGamesLogo';
 import SkyGames from './SkyGames';
 import Settings from './Settings';
+import TVGuide from '../opentv_epg/TVGuide';
+import BoxOffice from '../opentv_epg/BoxOffice';
+import Services from '../opentv_epg/Services';
+import Interactive from '../opentv_epg/Interactive';
+
+import SkyRemote from '../../userscripts/SkyRemote.user';
+
+const capitalise = text =>
+	text.split(" ").map(word =>
+		word.charAt(0).toUpperCase() + word.slice(1)
+	).join(" ");
 
 const Controls = () => {
 	const whiteFade = useRef();
+	const navigate = useNavigate();
 	const [isPageLoaded, setIsPageLoaded] = useState(false);
+	const [bindsSetup, setBindsSetup] = useState(false);
 	const location = useLocation();
 	const { toggleMute } = useContext(MusicContext);
 
@@ -49,6 +62,45 @@ const Controls = () => {
 	}, [location]);
 
 
+	useEffect(() => {
+		if (!isPageLoaded || bindsSetup) return;
+		setBindsSetup(true);
+
+		const removalParams = ["red", "green", "yellow", "blue"].map(colour => SkyRemote.onReleaseButton(colour, () => {
+			document.querySelector(`.skyGames_color${capitalise(colour)}`).click();
+		}));
+		return () => {
+			for (const paramSet of removalParams) {
+				SkyRemote.removeButtonEventListener(...paramSet);
+			}
+			setBindsSetup(false);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isPageLoaded]);
+
+	useEffect(() => {
+
+		const removalParams = [
+			SkyRemote.onReleaseButton("tv-guide", () => {
+				navigate(TVGuide.url);
+			}),
+			SkyRemote.onReleaseButton("box-office", () => {
+				navigate(BoxOffice.url);
+			}),
+			SkyRemote.onReleaseButton("services", () => {
+				navigate(Services.url);
+			}),
+			SkyRemote.onReleaseButton("interactive", () => {
+				navigate(Interactive.url);
+			})
+		];
+
+		return () => {
+			for (const paramSet of removalParams) {
+				SkyRemote.removeButtonEventListener(...paramSet);
+			}
+		};
+	});
 
 	return <div className="skyGames">
 		{/* <img src="/assets/img/reference.jpg" alt="reference" className="skyGames_reference" /> */}

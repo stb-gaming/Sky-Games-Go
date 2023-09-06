@@ -39,6 +39,8 @@ input {
 
 input {
 	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
@@ -58,11 +60,13 @@ button {
 		color: $keyHoverColor;
 	}
 }
+
 form:not(#system-details) {
 	input:not([type="submit"]) {
 		text-transform: uppercase;
 	}
 }
+
 input:not([type="submit"]) {
 	background-color: $valueBG;
 	color: $valueColor;
@@ -79,7 +83,10 @@ input:not([type="submit"]) {
 input[type="range"] {
 	background-color: $lightBlue;
 
-	&::-webkit-slider-thumb {
+	&::-webkit-slider-thumb,
+	&::-moz-slider-thumb {
+		appearance: none;
+		-moz-appearance: none;
 		-webkit-appearance: none;
 		background-color: $valueColor;
 		width: 0;
@@ -87,8 +94,11 @@ input[type="range"] {
 		border-radius: none;
 		box-shadow: (-$valueWidth) 0 0 $valueWidth $valueColor;
 	}
+
 	&:focus {
-		&::-webkit-slider-thumb {
+
+		&::-webkit-slider-thumb,
+		&::-moz-slider-thumb {
 			box-shadow: (-$valueWidth) 0 0 $valueWidth $valueColor;
 		}
 	}
@@ -96,6 +106,7 @@ input[type="range"] {
 
 input[type="checkbox"] {
 	position: relative;
+
 	&::before {
 		content: "OFF";
 		position: absolute;
@@ -103,15 +114,16 @@ input[type="checkbox"] {
 		top: 50%;
 		translate: -50% -50%;
 	}
+
 	&:checked::before {
 		content: "ON";
 	}
 }
 
-label:focus + input,
-label:hover + input,
-label + input:focus,
-label + input:hover {
+label:focus+input,
+label:hover+input,
+label+input:focus,
+label+input:hover {
 	background-color: $valueHoverBG;
 	color: $valueHoverColor;
 }

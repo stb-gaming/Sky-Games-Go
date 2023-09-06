@@ -3,10 +3,14 @@
 .epgContainer {
 	user-select: none;
 	background:
-        /* left cloud thing*/ radial-gradient(circle at 0px 25%, #b0bfde 0%, transparent 20%) 0px 25%,
-		/* right cloud thing*/ radial-gradient(circle at 110% 50%, #b0bfde 0%, transparent 30%) 100% 50%,
-		/*lower cloud thing*/ radial-gradient(circle at 25% 120%, #b0bfde 0%, transparent 40%) 25% 100%,
-		/*background*/ radial-gradient(circle at bottom left, #659df2 70%, #2973fa 95%);
+		/* left cloud thing*/
+		radial-gradient(circle at 0px 25%, #b0bfde 0%, transparent 20%) 0px 25%,
+		/* right cloud thing*/
+		radial-gradient(circle at 110% 50%, #b0bfde 0%, transparent 30%) 100% 50%,
+		/*lower cloud thing*/
+		radial-gradient(circle at 25% 120%, #b0bfde 0%, transparent 40%) 25% 100%,
+		/*background*/
+		radial-gradient(circle at bottom left, #659df2 70%, #2973fa 95%);
 
 	width: 720px;
 	height: 576px;
@@ -53,4 +57,20 @@
 	right: 72px;
 
 	transform: rotate(180deg);
+}
+
+
+.button-prompt {
+
+	&-select,
+	&-backup {
+		color: #000;
+		border: 1px solid #fff;
+		display: inline;
+		padding: 2px;
+		font-size: 18px;
+		background: #fcda15;
+		font-weight: bold;
+		vertical-align: 1px;
+	}
 }

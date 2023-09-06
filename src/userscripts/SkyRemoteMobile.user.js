@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         STBG Mobile Interface
 // @namespace    https://stb-gaming.github.io
-// @version      0.1.7
+// @version      0.1.8
 // @description  A userscript that adds a button layout based on the Sky Gamepad to mobile browsers, adding touch support for mobile devices
 // @author       tumble1999
 // @run-at       document-start
@@ -12,31 +12,66 @@
 
 
 import SkyRemote from "./SkyRemote.user";
-import GM_addStyle from "./GM_addStyle";
+import addStyle from "./GM_addStyle";
 const uWindow = typeof unsafeWindow === 'undefined' ? window : unsafeWindow;
 let css = `
-html,body {
-	margin:0;
-	padding:0;
-	max-width: 100vw;
-	max-height: 100vh;
-	overflow: hidden;
+html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    body {
+      display: grid;
+      grid-template-areas: "game" "controls";
+      grid-template-rows: auto 336px;
+    }
+
+// @media screen and (min-width: 768px) {
+// 	body {
+//     grid-template-rows: 80% 20%;
+// 	}
+// }
+
+div.emscripten,figure {
+	    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+	z-index: 2;
+}
+
+div.emscripten_border {
+    grid-area: game;
+	position: relative;
+	    background-color: gray;
+		border: none;
 }
 
 canvas {
-max-width:100vw;
+	position: absolute;
+}
+#sky-remote-container {
+    grid-area: controls;
+	position:relative;
+
 }
 
 #sky-remote {
-	position: absolute;
-	bottom: 0;
-	background-color: gray;
-	z-index: 100;
-	height: 50vh;
-	width: 100vw;
-	    touch-action: none;
+	    position: relative;
+    bottom: 0;
+    background-color: gray;
+    height: 100%;
+    /* width: 100vw; */
+    touch-action: none;
+    user-select: none;
+}
 
-	user-select: none;
+p {
+	display: none;
 }
 
 #sky-remote-dpad {
@@ -73,7 +108,7 @@ max-width:100vw;
 	pointer-events: none;
 	width: 184px;
 	height: 184px;
-	z-index: 100;
+	z-index: 1;
 	background-color: turquoise;
 	border-radius: 50%;
 	background-size: 165px;
@@ -206,6 +241,7 @@ max-width:100vw;
     width: 80px;
     height: 35px;
 	text-align:center;
+	z-index:3;
 }
 
 #sky-remote-green {
@@ -227,12 +263,13 @@ max-width:100vw;
 }
 #game-log-container {
     position: absolute;
+top:0;
     left: 0;
-	bottom: 50vh;
-    height: 50vh;
+    height: 100%;
     width: 100vw;
     background-color: white;
 	font-family: monospace;
+	z-index:2;
 
  display: flex;
 flex-direction: column-reverse;
@@ -241,6 +278,7 @@ justify-content: flex-start;
 }
 
 #game-log p {
+display:block;
 	margin: 0;
     border: solid 0.15em;
 	border-color: #ffffff;
@@ -291,10 +329,23 @@ let log = (function () {
 })(),
 	queuedLogs = [];
 function logLog(type, ...args) {
+	const error = new Error();
+	const stackTrace = error.stack.split("\n")[2].trim();
+	const [_, fileName, lineNumber] = /([^/]+):(\d+):\d+/g.exec(stackTrace);
+
 	log[type](...args);
-	let logLine = document.createElement("p");
+	let logLine = document.createElement("span");
 	logLine.classList.add(type);
-	logLine.innerText = args.join(" ");
+	let logText = document.createElement("p");
+	logText.innerText = args.join(" ");
+	logLine.appendChild(logText);
+	let logLoc = document.createElement("span");
+	logLoc.innerText = `${fileName}:${lineNumber}`;
+	logLine.appendChild(logLoc);
+
+
+
+	if (logLine.innerText === "Skyapp: SkyApp_Initialise)") resizeCanvas();
 	if (document.getElementById("game-log")) {
 		document.getElementById("game-log").appendChild(logLine);
 	} else {
@@ -302,7 +353,7 @@ function logLog(type, ...args) {
 	}
 }
 
-exports.getQueuedLogs = function () {
+function getQueuedLogs() {
 	console.log(queuedLogs.map(l => l.classList.toString() + ": " + l.innerText).join(`
 		`));
 };
@@ -363,6 +414,7 @@ function setupControls() {
 	let dpad = document.getElementById("sky-remote-dpad");
 
 	function touchEvent(e) {
+		resizeCanvas();
 		let dpad = e.currentTarget,
 			bounds = dpad.getBoundingClientRect(),
 			touch = e.targetTouches[0],
@@ -399,19 +451,61 @@ function setupControls() {
 	});
 }
 
+function resizeCanvas() {
+	const canvas = document.querySelector('canvas');
+	const border = document.querySelector('.emscripten_border');
+	const aspectRatio = canvas.width / canvas.height;
 
-var meta = document.createElement('meta');
-meta.name = "viewport";
-meta.content = "width=device-width,initial-scale=1.0,user-scalable=no";
-document.getElementsByTagName('head')[0].appendChild(meta);
+	// Get the computed style of the border element to get its actual width and height
+	const borderStyle = getComputedStyle(border);
+	const borderWidth = parseFloat(borderStyle.width);
+	const borderHeight = parseFloat(borderStyle.height);
+
+	// Calculate the available width and height for the canvas inside the border
+	let availableWidth = borderWidth;
+	let availableHeight = borderHeight;
+
+	if (borderWidth / borderHeight > aspectRatio) {
+		availableWidth = borderHeight * aspectRatio;
+	} else {
+		availableHeight = borderWidth / aspectRatio;
+	}
+
+	// Update the CSS style to fit the available width and height
+	canvas.style.width = availableWidth + 'px';
+	canvas.style.height = availableHeight + 'px';
+
+	// Calculate the offset to center the canvas
+	const offsetX = (borderWidth - availableWidth) / 2;
+	const offsetY = (borderHeight - availableHeight) / 2;
+
+	// Apply the calculated position to the canvas
+	canvas.style.left = offsetX + 'px';
+	canvas.style.top = offsetY + 'px';
+
+}
+
+
+
+
 
 //document.body.innerHTML += html;
 
-GM_addStyle(css);
+(GM_addStyle || addStyle)(css);
+
+uWindow.addEventListener('resize', resizeCanvas);
 
 
 uWindow.addEventListener("load", () => {
+
+	var meta = document.createElement('meta');
+	meta.name = "viewport";
+	meta.content = "width=device-width,initial-scale=1.0,user-scalable=no";
+	document.getElementsByTagName('head')[0].appendChild(meta);
+
+
 	let test = document.createElement("span");
+	test.id = "sky-remote-container";
 	test.innerHTML = html;
 	document.body.appendChild(test);
 	document.getElementById("game-log").append(...queuedLogs);
@@ -419,4 +513,11 @@ uWindow.addEventListener("load", () => {
 	setupControls();
 
 
+	resizeCanvas();
 });
+
+
+
+
+
+export default { getQueuedLogs, resizeCanvas };

@@ -1,9 +1,13 @@
 {
 	"debug.toolBarLocation": "docked",
+	"editor.formatOnSave": true,
+	"editor.formatOnPaste": true,
+	"files.trimTrailingWhitespace": true,
+	"files.trimFinalNewlines": true,
 	"files.autoSave": "onFocusChange",
 	"javascript.format.semicolons": "insert",
 	"typescript.format.semicolons": "insert",
-	"terminal.integrated.tabs.location": "right",
+	"terminal.integrated.tabs.location": "left",
 	"debug.terminal.clearBeforeReusing": true,
 	"files.defaultLanguage": "markdown",
 	"workbench.editorAssociations": {
@@ -22,6 +26,7 @@
 	},
 	"workbench.iconTheme": "vscode-icons",
 	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
 	"javascript.updateImportsOnFileMove.enabled": "always",
 	"files.insertFinalNewline": true,
 	"git.enableSmartCommit": true,

@@ -1,19 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import '../../scss/main.scss';
 import '../../scss/opentv_epg/main.scss';
 
 import EPGContainer from './components/EPGContainer';
 import EPGHeader from './components/EPGHeader';
-import EPGContentContainer from './components/EPGContentContainer';
-import EPGMenuContainer from './components/EPGMenuContainer';
-import EPGMenuItem from './components/EPGMenuItem';
-import SystemSetup from './SystemSetup';
+import FYIMessage from './components/FYIMessage';
 
 import SkyRemote from '../../userscripts/SkyRemote.user';
 import createMenu from '../../utils/createMenu';
 
-const Services = () => {
+const BoxOffice = () => {
 
 	const [bindsSetup, setBindsSetup] = useState(false);
 	const [menu] = useState(createMenu({ itemSelector: ".epgMenuContainer li" }));
@@ -45,17 +41,10 @@ const Services = () => {
 
 	return <>
 		<EPGContainer>
-			<EPGHeader page={3} />
-			<EPGContentContainer>
-				<EPGMenuContainer>
-					<Link to={SystemSetup.url}>
-						<EPGMenuItem number="1" title="SYSTEM SETUP" selected={true} />
-					</Link>
-				</EPGMenuContainer>
-			</EPGContentContainer>
-
+			<EPGHeader page={2} />
+			<FYIMessage code="05" />
 		</EPGContainer>
 	</>;
 };
-Services.url = "/services";
-export default Services;
+BoxOffice.url = "/box-office";
+export default BoxOffice;

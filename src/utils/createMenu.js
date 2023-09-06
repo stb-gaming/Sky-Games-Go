@@ -6,6 +6,7 @@
  * @param {Function} [options.onFocus=(item) => {}] - Callback function triggered when an item is focused.
  * @param {string} [options.itemSelector="a"] - CSS selector to select individual items within the pages.
  * @param {boolean} [options.animations=false] - Boolean indicating whether animations are enabled for item transitions.
+ * @param {boolean} [options.animationLength=0] - Length of item transitions.
  * @param {string} [options.focusClass] - Not used in this function.
  * @param {Function} [options.onPageChange=() => {}] - Callback function triggered when the page changes.
  * @returns {Object} - An object containing the methods and properties for the menu.
@@ -16,9 +17,10 @@ function createMenu({
 	focusClass,
 	itemSelector = "a",
 	animations = false,
+	animationLength = 0,
 	onPageChange = () => { },
 } = {}) {
-	let p, i, items = [];
+	let p, i, items = [], timeouts = [];
 
 	/**
 	 * Navigates to the specified page.
@@ -57,12 +59,12 @@ function createMenu({
 		cols = cols.filter(i => !!i);
 		for (let r in rows) {
 			for (let i of rows[r]) {
-				items[i].dataset.y = r;
+				if (!items[i].dataset.y) items[i].dataset.y = r;
 			}
 		}
 		for (let c in cols) {
 			for (let i of cols[c]) {
-				items[i].dataset.x = c;
+				if (!items[i].dataset.x) items[i].dataset.x = c;
 			}
 		}
 		for (const item of items) {
@@ -165,11 +167,26 @@ function createMenu({
 			// fixes a bug where when you mouse over something
 			// previously focussed with the keyboard it replays
 			// movement animation
-			setTimeout(() => {
+			timeouts.push(setTimeout(() => {
 				item.classList.remove("left", "right", "up", "down");
-			}, 0);
+			}, 0));
+
+			//Moving
+			item.classList.add("moving");
+			timeouts.push(setTimeout(() => {
+				item.classList.remove("moving");
+			}, animationLength));
 		}
 		updateFocus();
+	}
+
+	/**
+	 * @returns {void}
+	 */
+	function clearTimeouts() {
+		while (timeouts.length) {
+			clearTimeout(timeouts.shift());
+		}
 	}
 
 	/**
@@ -338,6 +355,7 @@ function createMenu({
 		getPos,
 		getItem,
 		setOnPageChange,
+		clearTimeouts
 	};
 }
 
