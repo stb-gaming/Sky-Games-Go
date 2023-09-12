@@ -313,19 +313,21 @@ function startGame() {
 
 function updateMenuPos() {
 	//if (![E_GAME_STATE.MENU, E_GAME_STATE.OPTIONS, E_GAME_STATE.PAUSE, E_GAME_STATE.LEVEL_SELECT].includes(gameState)) return;
-	let menuOptions = Object.values(positions[gameState]);
-	if (menuPos < 0) {
-		menuPos = 0;
+	if (typeof positions[gameState] !== 'undefined') {
+		let menuOptions = Object.values(positions[gameState]);
+		if (menuPos < 0) {
+			menuPos = 0;
+		}
+		if (menuPos >= menuOptions.length) {
+			menuPos = menuOptions.length - 1;
+		}
+		let menuPosBounds = menuOptions[menuPos];
+		let pos = {
+			x: menuPosBounds.x + menuPosBounds.width / 2,
+			y: menuPosBounds.y + menuPosBounds.height / 2
+		};
+		mouseMove(pos);
 	}
-	if (menuPos >= menuOptions.length) {
-		menuPos = menuOptions.length - 1;
-	}
-	let menuPosBounds = menuOptions[menuPos];
-	let pos = {
-		x: menuPosBounds.x + menuPosBounds.width / 2,
-		y: menuPosBounds.y + menuPosBounds.height / 2
-	};
-	mouseMove(pos);
 }
 
 function pressUp() {

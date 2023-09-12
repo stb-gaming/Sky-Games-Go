@@ -187,6 +187,20 @@
 		"category": "Puzzle"
 	},
 	{
+		"title": "Incredible Hulk",
+		"description": "Hulk returns in a comic-book style action game!",
+		"developer": "Denki",
+		"url": "http://denki.co.uk/sky/hulk2/app.html",
+		"brand": "Marvel",
+		"splash": "Marvel/The Incredible Hulk/Menu.png",
+		"gameplay": "Marvel/The Incredible Hulk/Desert1.png",
+		"date": "2003-??-??",
+		"archived": "2023-09-09",
+		"image": null,
+		"menu": null,
+		"category": "Action"
+	},
+	{
 		"title": "Looney Tunes: Back in Action",
 		"description": "Bugs and Daffy need your help!",
 		"developer": "Denki",
@@ -591,6 +605,20 @@
 		"category": "Adventure"
 	},
 	{
+		"title": "Millionaire",
+		"description": "Everyone's favourite game show!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/millionaire/app.html",
+		"brand": "Celador",
+		"splash": "Celador/Who Wants To Be A Millionaire/Who Wants To Be A Millionaire/Splash.jpg",
+		"gameplay": "Celador/Who Wants To Be A Millionaire/Who Wants To Be A Millionaire/Screen02.jpg",
+		"date": "2006-03-??",
+		"archived": "2023-09-09",
+		"image": null,
+		"menu": null,
+		"category": "Quiz"
+	},
+	{
 		"title": "Codename Kids Next Door 2.0",
 		"description": "Kids versus grown-ups, the ultimate battle of wits!",
 		"developer": "Denki",
@@ -603,6 +631,20 @@
 		"image": null,
 		"menu": null,
 		"category": "Platformer"
+	},
+	{
+		"title": "Millionaire Gold",
+		"description": "Now with extra gold!!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/millionairegold/app.html",
+		"brand": "Celador",
+		"splash": "Celador/Who Wants To Be A Millionaire/Who Wants To Be A Millionaire Gold Edition/GoldSplash.jpg",
+		"gameplay": "Celador/Who Wants To Be A Millionaire/Who Wants To Be A Millionaire Gold Edition/GoldScreen01.jpg",
+		"date": "2006-04-??",
+		"archived": "2023-09-09",
+		"image": null,
+		"menu": null,
+		"category": "Quiz"
 	},
 	{
 		"title": "Scooby-Doo: Creepy Cowboy",
