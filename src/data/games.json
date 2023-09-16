@@ -216,6 +216,34 @@
 		"category": "Adventure"
 	},
 	{
+		"title": "Looney Tunes: Back in Action 2",
+		"description": "ACME strikes back!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/lt2/app.html",
+		"brand": "Warner Bros",
+		"splash": "Warner Bros/Looney Tunes Episode 2/Front End.jpg",
+		"gameplay": "Warner Bros/Looney Tunes Episode 2/Screen2.jpg",
+		"date": "2004-07-15",
+		"archived": "2023-09-16",
+		"image": null,
+		"menu": null,
+		"category": "Adventure"
+	},
+	{
+		"title": "Looney Tunes: Back in Action 3",
+		"description": "Oh no! Bugs has been kidnapped by ACME!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/lt3/app.html",
+		"brand": "Warner Bros",
+		"splash": "Warner Bros/Looney Tunes Episode 3/splash.jpg",
+		"gameplay": "Warner Bros/Looney Tunes Episode 3/screen_shot_04.jpg",
+		"date": "2005-05-06",
+		"archived": "2023-09-16",
+		"image": null,
+		"menu": null,
+		"category": "Adventure"
+	},
+	{
 		"title": "Letter Box",
 		"description": "Create words in a grid of letters to score!",
 		"developer": "Denki",
@@ -299,6 +327,34 @@
 		"image": null,
 		"menu": null,
 		"list": "classics",
+		"category": "Adventure"
+	},
+	{
+		"title": "Scooby-Doo: Mummy Madness",
+		"description": "Help Mystery Inc tackle a haunted museum!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/sd2/app.html",
+		"brand": "Cartoon Network",
+		"splash": "Cartoon Network/Scooby-Doo Where Are You/Scooby-Doo Where Are You Episode 2/Splash.jpg",
+		"gameplay": "Cartoon Network/Scooby-Doo Where Are You/Scooby-Doo Where Are You Episode 2/PlayObservatory.jpg",
+		"date": "2005-09-08",
+		"archived": "2023-09-16",
+		"image": null,
+		"menu": null,
+		"category": "Adventure"
+	},
+	{
+		"title": "Scooby-Doo: Mystery Mine",
+		"description": "Scooby's gang is tasked with navigating the Mysterious Manor!",
+		"developer": "Denki",
+		"url": "https://denki.co.uk/sky/sd3/app.html",
+		"brand": "Cartoon Network",
+		"splash": "Cartoon Network/Scooby-Doo Where Are You/Scooby-Doo Where Are You Episode 3/Splash.jpg",
+		"gameplay": "Cartoon Network/Scooby-Doo Where Are You/Scooby-Doo Where Are You Episode 3/Play03.jpg",
+		"date": "2005-12-15",
+		"archived": "2023-09-16",
+		"image": null,
+		"menu": null,
 		"category": "Adventure"
 	},
 	{
