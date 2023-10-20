@@ -8,22 +8,44 @@ import createMenu from '../../utils/createMenu';
 import getParentLocation from '../../utils/getParentLocation';
 import Controls from './Controls';
 import Settings from './Settings';
-import games from '../../data/games.json';
 import SkyRemote from "../../userscripts/SkyRemote.user";
 import calculateLastNext from '../../utils/calculateLastNext';
 import TVGuide from '../opentv_epg/TVGuide';
 import BoxOffice from '../opentv_epg/BoxOffice';
 import Services from '../opentv_epg/Services';
 import Interactive from '../opentv_epg/Interactive';
+import games_local from '../../data/games.json';
 const GRID_PAGE_LENGTH = 9;
 const ALL_PAGE_LENGTH = 24;
+const games_json = "https://stb-gaming.github.io/high-scores/games.json";
 
 function SkyGamesTab({ label, href = "#", selected }) {
 	return <SkyGamesLink to={href} className={(selected ? "active " : "") + "skyGamesTab"}>{label}</SkyGamesLink>;
 }
 
-function SkyGamesGame({ game, img = game.image || game.splash || game.menu || game.gameplay || "SKY Games/nogame.png", href = game.url || "#", alt = game.title || href, onHover }) {
-	return <SkyGamesLink to={href} className="skyGames_game" onFocus={onHover} onMouseEnter={onHover}><img src={"/assets/img/games/" + img} alt={alt}></img></SkyGamesLink>;
+function SkyGamesGame({ game, hideimg, img = game.image || game.splash || game.menu || game.gameplay || "SKY Games/nogame.png", href = game.url || "#", alt = game.title || href, onHover }) {
+	return <SkyGamesLink to={href} className="skyGames_game" onFocus={onHover} onMouseEnter={onHover}>
+		{img ?
+			<img src={"/assets/img/games/" + img} alt={alt} />
+			: alt}
+	</SkyGamesLink>;
+}
+
+async function getGames() {
+	try {
+
+		const response = await fetch(games_json, {
+			mode: "cors",
+			headers: {
+				'Content-Type': 'application/json',
+
+				'Accept': 'application/json'
+			}
+		});
+		return await response.json();
+	} catch (error) {
+		return games_local;
+	}
 }
 
 const capitalise = text =>
@@ -130,7 +152,7 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 
 
 	useEffect(() => {
-		let gameGrid = document.querySelector(".skyGames_gameGrid");
+		let gameGrid = document.querySelector(".skyGames_gameGrid") || document.querySelector(".skyGames_allGames");
 		if (!gameGrid) return;
 
 		menu.setPages([gameGrid]);
@@ -211,8 +233,11 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 	else if (filteredGames.length <= ALL_PAGE_LENGTH) { // all games
 		return <>
 			<div className="skyGames_gamesList">
-				<div className="className">
+				<div className="skyGames_allGames">
 					{/* list of games here... */}
+					{filteredGames.map((game, i) => <SkyGamesGame img={null} key={"game_" + i} onHover={() => {
+						setSelectedGame(game);
+					}} game={game} />)}
 				</div>
 			</div>
 			<div className="skyGames_gameInfo">
@@ -286,6 +311,7 @@ const SkyGames = () => {
 	const params = useParams();
 	const navigate = useNavigate();
 	const { sort } = params;
+	const [games, setGames] = useState([]);
 	const [isPageLoaded, setIsPageLoaded] = useState(false);
 	const [bindsSetup, setBindsSetup] = useState(false);
 	const location = useLocation();
@@ -295,6 +321,9 @@ const SkyGames = () => {
 		const fakePageLoadTimeout = setTimeout(() => {
 			setIsPageLoaded(true);
 		}, 500);
+
+		getGames().then(setGames).catch(console.error);
+
 
 		return () => clearTimeout(fakePageLoadTimeout);
 	}, []);
