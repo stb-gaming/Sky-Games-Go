@@ -71,7 +71,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: Sky-Games-X
+          name: Sky-Games-Go
           path: build
 
       - name: Upload artifact
@@ -97,14 +97,14 @@ jobs:
       - name: Download build artifact
         uses: actions/download-artifact@v3
         with:
-          name: Sky-Games-X
+          name: Sky-Games-Go
           path: static
 
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         id: deployment
         with:
-          # https://github.com/stb-gaming/Sky-Games-X/settings/secrets/actions
+          # https://github.com/stb-gaming/Sky-Games-Go/settings/secrets/actions
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: ${{ needs.get-info.outputs.name }}
@@ -140,7 +140,7 @@ jobs:
       - name: Download web release artifact
         uses: actions/download-artifact@v3
         with:
-          name: Sky-Games-X
+          name: Sky-Games-Go
           path: web
 
       - name: Download userscripts artifact
