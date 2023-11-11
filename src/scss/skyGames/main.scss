@@ -584,7 +584,7 @@ back to start
 	}
 
 	50% {
-		transform: translateX(-15px);
+		transform: translateX(-20px);
 	}
 }
 
@@ -599,7 +599,7 @@ $arrow_x: -20px;
 [class^="skyGamesArrow"] {
 	position: absolute;
 	top: 50%;
-	translate: 0% -50%;
+	translate: -5px -50%;
 	z-index: 10;
 }
 
