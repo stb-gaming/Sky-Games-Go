@@ -231,8 +231,21 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 		</>;
 	}
 	else if (filteredGames.length <= ALL_PAGE_LENGTH) { // all games
+
+		const { last, next } = calculateLastNext(list, null, Math.ceil(games.length / ALL_PAGE_LENGTH), 1);
+
+		menu.setOnPageChange(({ dp, pos }) => {
+			if (dp < 0) {//left
+				document.querySelector(".skyGamesArrowLeft").click();
+			}
+			if (dp > 0) {//right
+				document.querySelector(".skyGamesArrowRight").click();
+			}
+		});
+
 		return <>
 			<div className="skyGames_gamesList">
+				<MovingArrows last={last} next={next} sort={sort} />
 				<div className="skyGames_allGames">
 					{/* list of games here... */}
 					{filteredGames.map((game, i) => <SkyGamesGame img={null} key={"game_" + i} onHover={() => {
