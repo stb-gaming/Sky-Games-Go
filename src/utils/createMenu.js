@@ -3,6 +3,7 @@
  *
  * @param {Object} options - The options for creating the menu.
  * @param {Array} options.pages - An array of DOM elements representing the pages of the menu.
+ * @param {Boolean} options.pageVerticality - if the page traversal goes up and down
  * @param {Function} [options.onFocus=(item) => {}] - Callback function triggered when an item is focused.
  * @param {string} [options.itemSelector="a"] - CSS selector to select individual items within the pages.
  * @param {boolean} [options.animations=false] - Boolean indicating whether animations are enabled for item transitions.
@@ -13,6 +14,7 @@
  */
 function createMenu({
 	pages,
+	pageVerticality,
 	onFocus = (item) => { },
 	focusClass,
 	itemSelector = "a",
@@ -72,6 +74,7 @@ function createMenu({
 			item.tabIndex = (Number(y) * cols.length) + Number(x);
 		}
 		i = 0;
+		// TODO: add functionality to copy x value over when pageVerticality is true
 		if (lastPos && dp) {
 			let r;
 			// eslint-disable-next-line eqeqeq
@@ -82,6 +85,14 @@ function createMenu({
 			i = dp > 0 ? r[0] : r[r.length - 1];
 		}
 		updateFocus();
+	}
+
+	/**
+	 *
+	 * @param {Boolean} vp - sets weather the pages traverse virtically
+	 */
+	function setVerticality(vp) {
+		pageVerticality = vp;
 	}
 
 	/**
@@ -146,9 +157,9 @@ function createMenu({
 		rels = rels.sort((a, b) => a.m - b.m).sort((a, b) => (dx ? a.mx - b.mx : dy ? a.my - b.my : a.m - b.m));
 
 		if (!rels.length) {
-			if (dx > 0) {
+			if (pageVerticality ? dy > 0 : dx > 0) {
 				nextPage();
-			} if (dx < 0) {
+			} if (pageVerticality ? dy > 0 : dx < 0) {
 				lastPage();
 			}
 			return;
@@ -355,6 +366,7 @@ function createMenu({
 		getPos,
 		getItem,
 		setOnPageChange,
+		setVerticality,
 		clearTimeouts
 	};
 }

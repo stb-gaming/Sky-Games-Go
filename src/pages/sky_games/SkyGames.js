@@ -233,6 +233,7 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 	else if (filteredGames.length <= ALL_PAGE_LENGTH) { // all games
 
 		const { last, next } = calculateLastNext(list, null, Math.ceil(games.length / ALL_PAGE_LENGTH), 1);
+		menu.setVerticality(true);
 
 		menu.setOnPageChange(({ dp, pos }) => {
 			if (dp < 0) {//left
