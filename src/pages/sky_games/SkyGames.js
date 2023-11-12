@@ -100,6 +100,8 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 	list = Number(list) || list;
 	const [sortedGames, setSortedGames] = useState([]);
 	const [filteredGames, setFilteredGames] = useState([]);
+	const [lastList, setLastList] = useState(NaN);
+	const [currentList, setCurrentList] = useState(NaN);
 	const [menu] = useState(createMenu({ itemSelector: ".skyGames_game", animations: true, animationLength: 500 }));
 	const [bindsSetup, setBindsSetup] = useState(false);
 
@@ -114,6 +116,7 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 
 	useEffect(() => {
 		if (typeof list === "number") {
+			setCurrentList(list);
 			//list is page number
 			// All Games
 			let offset = (list - 1) * ALL_PAGE_LENGTH;
@@ -124,12 +127,18 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 			let filtered = sortedGames.filter(game => game.list === list);
 
 			if (list === "new") {
+				setCurrentList(0);
 				let newGameIndexes = sortObjArr(games, "archived", true).map((g, i) => i);
 				filtered = sortedGames.filter((game, i) => newGameIndexes.includes(i));
 			}
 			filtered = filtered.slice(0, GRID_PAGE_LENGTH);
+			if (list == "classics") {
+				setCurrentList(1);
+
+			}
 
 			if (list === "family") {
+				setCurrentList(2);
 				filtered.splice(7, 1, {
 					title: "All Games",
 					description: "All available games to play",
@@ -155,7 +164,9 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 		let gameGrid = document.querySelector(".skyGames_gameGrid") || document.querySelector(".skyGames_allGames");
 		if (!gameGrid) return;
 
-		menu.setPages([gameGrid]);
+		console.log(lastList, currentList);
+
+		menu.setPages([gameGrid], currentList - lastList);
 	}, [filteredGames, menu]);
 
 
@@ -204,13 +215,16 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 		let tabs = ["new", "classics", "family"];
 
 		const { last, next } = calculateLastNext(list, tabs, Math.ceil(games.length / GRID_PAGE_LENGTH), 1);
+		const lastLink = SkyGames.url + "/" + last + (sort ? "/" + sort : ""),
+			nextLink = SkyGames.url + "/" + next + (sort ? "/" + sort : "");
 
 		menu.setOnPageChange(({ dp, pos }) => {
+			setLastList(currentList);
 			if (dp < 0) {//left
-				document.querySelector(".skyGamesArrowLeft").click();
+				navigate(lastLink);
 			}
 			if (dp > 0) {//right
-				document.querySelector(".skyGamesArrowRight").click();
+				navigate(nextLink);
 			}
 		});
 
@@ -233,20 +247,22 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 	else if (filteredGames.length <= ALL_PAGE_LENGTH) { // all games
 
 		const { last, next } = calculateLastNext(list, null, Math.ceil(games.length / ALL_PAGE_LENGTH), 1);
+		const lastLink = SkyGames.url + "/" + last + (sort ? "/" + sort : ""),
+			nextLink = SkyGames.url + "/" + next + (sort ? "/" + sort : "");
 		menu.setVerticality(true);
 
 		menu.setOnPageChange(({ dp, pos }) => {
+			setLastList(currentList);
 			if (dp < 0) {//left
-				document.querySelector(".skyGamesArrowLeft").click();
+				navigate(lastLink);
 			}
 			if (dp > 0) {//right
-				document.querySelector(".skyGamesArrowRight").click();
+				navigate(nextLink);
 			}
 		});
 
 		return <>
 			<div className="skyGames_gamesList">
-				<MovingArrows last={last} next={next} sort={sort} />
 				<div className="skyGames_allGames">
 					{/* list of games here... */}
 					{filteredGames.map((game, i) => <SkyGamesGame img={null} key={"game_" + i} onHover={() => {
