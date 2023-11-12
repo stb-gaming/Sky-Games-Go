@@ -73,4 +73,4 @@ function ThemeTest() {
 
 
 ThemeTest.url = "/theme-test";
-export default ThemeTest;;
+export default ThemeTest;
