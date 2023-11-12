@@ -16,6 +16,7 @@ import Services from "./pages/opentv_epg/Services";
 import SoundSettings from "./pages/opentv_epg/SoundSettings";
 import SystemSetup from "./pages/opentv_epg/SystemSetup";
 import SystemDetails from "./pages/opentv_epg/SystemDetails";
+import ThemeTest from "./pages/theme_test/theme";
 import { initControllerBinds, cleanupControllerBinds } from './userscripts/GamepadSupport.user';
 import { useEffect } from 'react';
 
@@ -47,6 +48,7 @@ export default function App() {
 						<Route path={Controls.url} element={<Controls />} />
 						<Route path={Settings.url} element={<Settings />} />
 						<Route path={SkyGames.url + "/:list?/:sort?"} element={<SkyGames />} />
+						<Route path={ThemeTest.url} element={<ThemeTest />} />
 						<Route path="*" element={<Page404 />} />
 					</Routes>
 				</BrowserRouter>
