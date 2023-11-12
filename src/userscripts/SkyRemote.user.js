@@ -188,7 +188,9 @@ SkyRemoteAPI.prototype.addButtonEventListener = function (event, btn, func, elem
 			func.call(this, event);
 	};
 
-	element.addEventListener(event, eventListener);
+	element.addEventListener(event, e => {
+		if (e.isTrusted) eventListener(e);
+	});
 
 	return [
 		event,
