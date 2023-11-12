@@ -184,7 +184,7 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 						document.querySelector(`.skyGamesArrow${arrow}`).click();
 					})),
 				SkyRemote.onReleaseButton("backup", () => {
-					SkyGamesNavigate(getParentLocation(window.location.pathname));
+					SkyGamesNavigate(getParentLocation(window.location.pathname), navigate);
 				})
 			];
 
@@ -221,10 +221,10 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 		menu.setOnPageChange(({ dp, pos }) => {
 			setLastList(currentList);
 			if (dp < 0) {//left
-				SkyGamesNavigate(lastLink);
+				SkyGamesNavigate(lastLink, navigate);
 			}
 			if (dp > 0) {//right
-				SkyGamesNavigate(nextLink);
+				SkyGamesNavigate(nextLink, navigate);
 			}
 		});
 
@@ -254,10 +254,10 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 		menu.setOnPageChange(({ dp, pos }) => {
 			setLastList(currentList);
 			if (dp < 0) {//left
-				navigate(lastLink);
+				SkyGamesNavigate(lastLink, navigate);
 			}
 			if (dp > 0) {//right
-				navigate(nextLink);
+				SkyGamesNavigate(nextLink, navigate);
 			}
 		});
 

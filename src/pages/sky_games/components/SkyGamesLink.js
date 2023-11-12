@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-function SkyGamesNavigate(to) {
-	const navigate = useNavigate();
+function SkyGamesNavigate(to, navigate) {
 	const whiteFade = document.getElementById("skyGames_fade");
 
 	if (whiteFade) {
@@ -22,9 +21,10 @@ function SkyGamesNavigate(to) {
 
 
 function SkyGamesLink({ children, to, ...rest }) {
+	const navigate = useNavigate();
 
 	const handleLinkClick = rest.onClick || (e => {
-		SkyGamesNavigate(to);
+		SkyGamesNavigate(to, navigate);
 	});
 
 	return (
