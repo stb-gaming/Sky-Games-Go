@@ -106,11 +106,11 @@ function createMenu({
 	 * @param {Array} newPages - An array of DOM elements representing the new pages of the menu.
 	 * @returns {void}
 	 */
-	function setPages(newPages, forceDp = forceDp) {
+	function setPages(newPages, fdp = forceDp) {
 		pages = newPages;
 		if (!Array.isArray(pages)) pages = Array.from(pages);
 		pages.forEach(page => page.style.display = "none");
-		gotoPage(0, forceDp);
+		gotoPage(0, fdp);
 	}
 
 	/**
