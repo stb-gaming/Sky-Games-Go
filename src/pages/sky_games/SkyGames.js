@@ -132,9 +132,8 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 				filtered = sortedGames.filter((game, i) => newGameIndexes.includes(i));
 			}
 			filtered = filtered.slice(0, GRID_PAGE_LENGTH);
-			if (list == "classics") {
+			if (list === "classics") {
 				setCurrentList(1);
-
 			}
 
 			if (list === "family") {
