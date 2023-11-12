@@ -2,7 +2,6 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { Music, MusicContext } from '../../components/Music';
 import '../../scss/skyGames/main.scss';
-import SkyGamesLink from './components/SkyGamesLink.js';
 import SkyGamesLogo from './components/SkyGamesLogo';
 import createMenu from '../../utils/createMenu';
 import getParentLocation from '../../utils/getParentLocation';
@@ -15,6 +14,7 @@ import BoxOffice from '../opentv_epg/BoxOffice';
 import Services from '../opentv_epg/Services';
 import Interactive from '../opentv_epg/Interactive';
 import games_local from '../../data/games.json';
+import { SkyGamesLink, SkyGamesNavigate } from './components/SkyGamesLink';
 const GRID_PAGE_LENGTH = 9;
 const ALL_PAGE_LENGTH = 24;
 const games_json = "https://stb-gaming.github.io/high-scores/games.json";
@@ -184,7 +184,7 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 						document.querySelector(`.skyGamesArrow${arrow}`).click();
 					})),
 				SkyRemote.onReleaseButton("backup", () => {
-					navigate(getParentLocation(window.location.pathname));
+					SkyGamesNavigate(getParentLocation(window.location.pathname));
 				})
 			];
 
@@ -221,10 +221,10 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 		menu.setOnPageChange(({ dp, pos }) => {
 			setLastList(currentList);
 			if (dp < 0) {//left
-				navigate(lastLink);
+				SkyGamesNavigate(lastLink);
 			}
 			if (dp > 0) {//right
-				navigate(nextLink);
+				SkyGamesNavigate(nextLink);
 			}
 		});
 
