@@ -217,7 +217,7 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 		const { last, next } = calculateLastNext(list, tabs, Math.ceil(games.length / GRID_PAGE_LENGTH), 1);
 		const lastLink = SkyGames.url + "/" + last + (sort ? "/" + sort : ""),
 			nextLink = SkyGames.url + "/" + next + (sort ? "/" + sort : "");
-
+		menu.setVerticality(false);
 		menu.setOnPageChange(({ dp, pos }) => {
 			setLastList(currentList);
 			if (dp < 0) {//left
