@@ -34,13 +34,15 @@ function SkyGamesGame({ game, hideimg, img = game.image || game.splash || game.m
 async function getGames() {
 	try {
 
-		const response = await fetch(games_json, {
-			mode: "cors",
-			headers: {
-				'Content-Type': 'application/json',
+		console.log("hi");
 
-				'Accept': 'application/json'
-			}
+		const response = await fetch(games_json, {
+			// mode: "cors",
+			// headers: {
+			// 	// 'Access-Control-Allow-Origin': 'sky-games.pages.dev',
+			// 	'Content-Type': 'application/json',
+			// 	'Accept': 'application/json'
+			// }
 		});
 		return await response.json();
 	} catch (error) {
@@ -166,7 +168,7 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 		console.log(lastList, currentList);
 
 		menu.setPages([gameGrid], currentList - lastList);
-	}, [filteredGames, menu]);
+	}, [filteredGames, menu, currentList, lastList]);
 
 
 	useEffect(() => {
