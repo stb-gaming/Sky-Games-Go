@@ -1,7 +1,6 @@
 @use "../fonts/fonts.scss";
 @use "sass:list";
 
-
 :root {
 	--sky-games-pink: #f42f64;
 	--tab-overlap: 17px;
@@ -25,6 +24,8 @@ $divider_width: 16px;
 $gameInfo_width: 233px;
 $gameGrid_rowCount: 3;
 $gameGrid_colCount: 3;
+$allGames_rowCount: 12;
+$allGames_colCount: 2;
 
 $game_greyFilter: saturate(0) brightness(1.7);
 
@@ -60,7 +61,6 @@ h6 {
 }
 
 a {
-
 	&,
 	&:focus,
 	&:visited {
@@ -68,7 +68,6 @@ a {
 		cursor: pointer;
 	}
 }
-
 
 %longFadyLoadingThing {
 	z-index: 100;
@@ -81,19 +80,19 @@ a {
 	pointer-events: none;
 	/* Disable mouse events on the overlay */
 	opacity: 1;
-	transition: opacity 0.5s ease, visibility 0.5s ease;
+	transition:
+		opacity 0.5s ease,
+		visibility 0.5s ease;
 	visibility: visible;
 
 	&.done {
 		opacity: 0;
 		visibility: hidden;
 	}
-
 }
 
 #skyGames_fade {
 	@extend %longFadyLoadingThing;
-
 }
 
 %shadow {
@@ -106,6 +105,7 @@ a {
 	display: grid;
 	grid-template-rows: 40px;
 	grid-template-columns: calc(140px + $tabOverlap) auto;
+	padding-right: 88px;
 
 	h1 {
 		margin: 0;
@@ -121,6 +121,14 @@ a {
 
 	.skyGamesTabs {
 		display: flex;
+		&.allGames {
+			justify-content: flex-end;
+		}
+		&.categoryGames {
+			.skyGamesTab {
+				margin: 0px calc(0px - $tabOverlap);
+			}
+		}
 
 		.skyGamesTab {
 			font-size: 20px;
@@ -131,7 +139,6 @@ a {
 			border-top-left-radius: $border-radius;
 			border-bottom: none;
 
-			margin: 0px calc(0px - $tabOverlap);
 			padding: 8px $tabOverlap;
 			text-align: center;
 			z-index: 0;
@@ -147,14 +154,13 @@ a {
 
 				z-index: 3;
 
-				&+.skyGamesTab {
+				& + .skyGamesTab {
 					z-index: 2;
 				}
 			}
 		}
 	}
 }
-
 
 .skyGamesMain {
 	box-shadow: $shadow;
@@ -175,7 +181,7 @@ $gameInfo_width: d;
 	margin-left: $leftMargin_width - calc($divider_width / 2);
 	margin-right: 720px - ($leftMargin_width + $gameGrid_width + (3 * calc($divider_width/2)) + $gameInfo_width);
 
-	&>img {
+	& > img {
 		width: 100%;
 	}
 
@@ -190,7 +196,8 @@ $gameInfo_width: d;
 	//background-image: url("game-arrows.svg");
 
 	$arm_length: 20%;
-	$full_clip_path: (1 0% $arm_length,
+	$full_clip_path: (
+		1 0% $arm_length,
 		2 $arm_length $arm_length,
 		3 $arm_length 0%,
 		4 (100%-$arm_length) 0%,
@@ -201,31 +208,31 @@ $gameInfo_width: d;
 		9 (100%-$arm_length) 100%,
 		10 $arm_length 100%,
 		11 $arm_length (100%-$arm_length),
-		12 0% (100%-$arm_length));
+		12 0% (100%-$arm_length)
+	);
 	$clip_path: ();
 
-	$top_ids: 3,
-	4;
-	$right_ids: 6,
-	7;
-	$bottom_ids: 9,
-	10;
-	$left_ids: 1,
-	12;
+	$top_ids: 3, 4;
+	$right_ids: 6, 7;
+	$bottom_ids: 9, 10;
+	$left_ids: 1, 12;
 
-	@each $index,
-	$v1,
-	$v2 in $full_clip_path {
+	@each $index, $v1, $v2 in $full_clip_path {
 		$clip_point: $v1 $v2;
 
-		@if not(($top ==false and index($top_ids, $index)) or ($bottom ==false and index($bottom_ids, $index)) or ($left ==false and index($left_ids, $index)) or ($right ==false and index($right_ids, $index))) {
+		@if not(
+			($top ==false and index($top_ids, $index)) or
+				($bottom ==false and index($bottom_ids, $index)) or
+				($left ==false and index($left_ids, $index)) or
+				($right ==false and index($right_ids, $index))
+		)
+		{
 			$clip_path: append($clip_path, $clip_point, "comma");
 		}
 	}
 
 	clip-path: polygon($clip_path);
 }
-
 
 // Arrow and select animation config
 $wait1: 3;
@@ -241,21 +248,20 @@ $selectFlashChangeCount: calc($selectFlashCount * 2) - 1;
 $arrowFlashCount: 3;
 $arrowFlashChangeCount: calc($arrowFlashCount * 2) - 1;
 
-$totalTime: $wait1 +$selectAppearTime +$selectFlashTime +$selectDisappear +$wait2 +$arrowFlashTime;
+$totalTime: $wait1 + $selectAppearTime + $selectFlashTime + $selectDisappear + $wait2 + $arrowFlashTime;
 
 $percentSelectAppear: calc(100 * $wait1 / $totalTime);
 $percentSelectFlash: calc(100 * ($wait1 + $selectAppearTime) / $totalTime);
 $selectSingleFlashLength: calc(100 * $selectFlashTime/($selectFlashChangeCount * $totalTime));
 $percentSelectDisappear: calc(100 * ($wait1 + $selectAppearTime + $selectFlashTime + $selectDisappear) / $totalTime);
 
-$percentArrowStart: calc(100 * ($wait1 + $selectAppearTime + $selectFlashTime + $selectDisappear + $wait2) / $totalTime);
+$percentArrowStart: calc(
+	100 * ($wait1 + $selectAppearTime + $selectFlashTime + $selectDisappear + $wait2) / $totalTime
+);
 $arrowSingleFlashLength: calc(100 * $arrowFlashTime/($arrowFlashChangeCount * $totalTime));
 
-
 @each $arrowCount in (0, 2, 3, 4) {
-
 	@keyframes outlineAnimation#{$arrowCount} {
-
 		0%,
 		100%,
 		#{$percentArrowStart - 1}%,
@@ -263,18 +269,16 @@ $arrowSingleFlashLength: calc(100 * $arrowFlashTime/($arrowFlashChangeCount * $t
 		#{$percentArrowStart + calc(3 * $arrowSingleFlashLength)}%,
 		#{$percentArrowStart + calc(5 * $arrowSingleFlashLength)}% {
 			filter: none;
-			background-image: url('game-arrows-#{$arrowCount}.svg') // previous amount of arrows
+			background-image: url("game-arrows-#{$arrowCount}.svg"); // previous amount of arrows
 		}
 
 		#{$percentArrowStart}%,
 		#{$percentArrowStart + calc(2 * $arrowSingleFlashLength)}%,
 		#{$percentArrowStart + calc(4 * $arrowSingleFlashLength)}% {
 			filter: $game_greyFilter;
-			background-image: url('game-arrows-0.svg')
+			background-image: url("game-arrows-0.svg");
 		}
 	}
-
-
 
 	%arrows-#{$arrowCount} {
 		background-image: url("game-arrows-#{$arrowCount}.svg");
@@ -288,16 +292,19 @@ $arrowSingleFlashLength: calc(100 * $arrowFlashTime/($arrowFlashChangeCount * $t
 	}
 }
 
-@each $arrowRotation in (-90, 0, 90, 180) {}
+@each $arrowRotation in (-90, 0, 90, 180) {
+}
 
 @mixin gameArrows($top: false, $right: false, $bottom: false, $left: false) {
-
-
 	$enabledDirections: ();
-	$dirs: ("top":$top, "right":$right, "bottom":$bottom, "left":$left);
+	$dirs: (
+		"top": $top,
+		"right": $right,
+		"bottom": $bottom,
+		"left": $left
+	);
 
-	@each $direction,
-	$enabled in $dirs {
+	@each $direction, $enabled in $dirs {
 		@if $enabled {
 			$enabledDirections: append($enabledDirections, $direction);
 		}
@@ -307,36 +314,33 @@ $arrowSingleFlashLength: calc(100 * $arrowFlashTime/($arrowFlashChangeCount * $t
 
 	@if $trueCount ==1 {
 		$trueCount: 4;
-
 	}
 
 	$rotateDeg: 0;
 	$dirGuide: nth($enabledDirections, 2);
 
 	@if $trueCount ==2 {
-		@if $dirGuide =="right" {
+		@if $dirGuide == "right" {
 			$rotateDeg: 90;
 		}
 
-		@if $dirGuide =="bottom" {
+		@if $dirGuide == "bottom" {
 			$rotateDeg: 180;
 		}
 
-		@if $dirGuide =="left" and nth($enabledDirections, 1)=="bottom" {
+		@if $dirGuide == "left" and nth($enabledDirections, 1) == "bottom" {
 			$rotateDeg: -90;
 		}
-	}
-
-	@else if $trueCount ==3 {
-		@if nth($enabledDirections, 3)=="bottom" {
+	} @else if $trueCount ==3 {
+		@if nth($enabledDirections, 3) == "bottom" {
 			$rotateDeg: 90;
 		}
 
-		@if nth($enabledDirections, 1)=="right" {
+		@if nth($enabledDirections, 1) == "right" {
 			$rotateDeg: 180;
 		}
 
-		@if nth($enabledDirections, 2)=="bottom" and nth($enabledDirections, 1)=="top" {
+		@if nth($enabledDirections, 2) == "bottom" and nth($enabledDirections, 1) == "top" {
 			$rotateDeg: -90;
 		}
 	}
@@ -344,166 +348,6 @@ $arrowSingleFlashLength: calc(100 * $arrowFlashTime/($arrowFlashChangeCount * $t
 	@extend %arrows-#{$trueCount};
 	@extend %arrows-rotate-#{$rotateDeg};
 	//@extend %arrows-#{$trueCount}-#{$rotateDeg};
-
-}
-
-
-
-.skyGames_game {
-	position: relative;
-	display: flex;
-	justify-content: space-around;
-	margin: 5%;
-
-
-	&.moving::after {
-		background-image: url(game-arrows-0.svg);
-	}
-
-	img {
-		position: absolute;
-	}
-
-	&::after {
-		content: "";
-	}
-
-
-	$gameWidth: calc($gameGrid_width/$gameGrid_colCount);
-	$gameHeight: calc($skyGamesMain_height/$gameGrid_rowCount);
-
-	&.left {
-
-		&::after {
-			translate: $gameWidth;
-		}
-	}
-
-	&.right {
-
-		&::after {
-			translate: - $gameWidth;
-		}
-	}
-
-	&.up {
-
-		&::after {
-			translate: 0 $gameHeight;
-		}
-	}
-
-	&.down {
-
-		&::after {
-			width: 84%;
-			height: 84%;
-			translate: 0 (- $gameHeight);
-		}
-	}
-
-	&:focus,
-	&:hover,
-	&:focus-visible {
-
-
-		@for $row from 1 through 3 {
-			@for $col from 1 through 3 {
-				$n: ($row - 1) * 3+$col;
-
-				&:nth-child(#{$n})::after {
-					@include gameArrows($top: $row !=1, $right: true, $bottom: $row !=3, $left: true);
-				}
-			}
-		}
-
-		/*
-		#{$selectSingleFlashLength}
-
-		\/\/\
-		*/
-
-		@keyframes selectAnimation {
-
-			//hidden
-			0%,
-			100% {
-				opacity: 0;
-				filter: none;
-			}
-
-			#{$percentSelectAppear - 1}%,
-			#{$percentSelectDisappear}% {
-				opacity: 0;
-			}
-
-			#{$percentSelectAppear}%,
-			#{$percentSelectDisappear - 1}% {
-				opacity: 1;
-			}
-
-
-			#{$percentSelectFlash - 1}%,
-			#{$percentSelectFlash + calc(1 * $selectSingleFlashLength)}%,
-			#{$percentSelectFlash + calc(3 * $selectSingleFlashLength)}%,
-			#{$percentSelectFlash + calc(5 * $selectSingleFlashLength)}% {
-				filter: none;
-			}
-
-			#{$percentSelectFlash}%,
-			#{$percentSelectFlash + calc(2 * $selectSingleFlashLength)}%,
-			#{$percentSelectFlash + calc(4 * $selectSingleFlashLength)}% {
-				filter: $game_greyFilter;
-			}
-		}
-
-
-
-
-		outline: none;
-
-
-		&::after,
-		&::before {
-			content: "";
-			translate: 0, 0;
-			transition: translate .5s;
-
-		}
-
-		&::after {
-			content: "";
-			position: absolute;
-			width: 130.66px;
-			height: 132.66px;
-			z-index: 1;
-			top: -14px;
-			left: -13px;
-			background-repeat: no-repeat;
-		}
-
-
-		&::before {
-			transform: translate(0, 0);
-			transition: transform 0.5s;
-			content: "SELECT";
-			padding: 0 10px;
-			font-size: 15px;
-			color: white;
-			font-weight: bold;
-			background-color: #f42f64;
-			background-image: linear-gradient(0deg, rgba(211, 52, 92, 1) 20%, transparent 35%);
-			border-radius: 0.5rem;
-
-			position: absolute;
-			top: -0.6em;
-
-			outline: white solid;
-			z-index: 2;
-
-			animation: selectAnimation #{$totalTime}s infinite;
-		}
-	}
 }
 
 .skyGames_gamesList {
@@ -517,7 +361,7 @@ $arrowSingleFlashLength: calc(100 * $arrowFlashTime/($arrowFlashChangeCount * $t
 	grid-template-columns: repeat($gameGrid_colCount, 1fr);
 	grid-template-rows: repeat($gameGrid_rowCount, 1fr);
 
-	>a {
+	> a {
 		position: relative;
 		margin: 6px;
 	}
@@ -526,6 +370,174 @@ $arrowSingleFlashLength: calc(100 * $arrowFlashTime/($arrowFlashChangeCount * $t
 		height: 100%;
 		width: 100%;
 		border-radius: 5px;
+	}
+
+	.skyGames_game {
+		position: relative;
+		display: flex;
+		justify-content: space-around;
+		margin: 5%;
+
+		&.moving::after {
+			background-image: url(game-arrows-0.svg);
+		}
+
+		img {
+			position: absolute;
+		}
+
+		&::after {
+			content: "";
+		}
+
+		$gameWidth: calc($gameGrid_width/$gameGrid_colCount);
+		$gameHeight: calc($skyGamesMain_height/$gameGrid_rowCount);
+
+		&.left {
+			&::after {
+				translate: $gameWidth;
+			}
+		}
+
+		&.right {
+			&::after {
+				translate: -$gameWidth;
+			}
+		}
+
+		&.up {
+			&::after {
+				translate: 0 $gameHeight;
+			}
+		}
+
+		&.down {
+			&::after {
+				width: 84%;
+				height: 84%;
+				translate: 0 (-$gameHeight);
+			}
+		}
+
+		&:focus,
+		&:hover,
+		&:focus-visible {
+			@for $row from 1 through 3 {
+				@for $col from 1 through 3 {
+					$n: ($row - 1) * 3 + $col;
+
+					&:nth-child(#{$n})::after {
+						@include gameArrows($top: $row !=1, $right: true, $bottom: $row !=3, $left: true);
+					}
+				}
+			}
+
+			/*
+				#{$selectSingleFlashLength}
+
+				\/\/\
+				*/
+
+			@keyframes selectAnimation {
+				//hidden
+				0%,
+				100% {
+					opacity: 0;
+					filter: none;
+				}
+
+				#{$percentSelectAppear - 1}%,
+				#{$percentSelectDisappear}% {
+					opacity: 0;
+				}
+
+				#{$percentSelectAppear}%,
+				#{$percentSelectDisappear - 1}% {
+					opacity: 1;
+				}
+
+				#{$percentSelectFlash - 1}%,
+				#{$percentSelectFlash + calc(1 * $selectSingleFlashLength)}%,
+				#{$percentSelectFlash + calc(3 * $selectSingleFlashLength)}%,
+				#{$percentSelectFlash + calc(5 * $selectSingleFlashLength)}% {
+					filter: none;
+				}
+
+				#{$percentSelectFlash}%,
+				#{$percentSelectFlash + calc(2 * $selectSingleFlashLength)}%,
+				#{$percentSelectFlash + calc(4 * $selectSingleFlashLength)}% {
+					filter: $game_greyFilter;
+				}
+			}
+
+			outline: none;
+
+			&::after,
+			&::before {
+				content: "";
+				translate: 0, 0;
+				transition: translate 0.5s;
+			}
+
+			&::after {
+				content: "";
+				position: absolute;
+				width: 130.66px;
+				height: 132.66px;
+				z-index: 1;
+				top: -14px;
+				left: -13px;
+				background-repeat: no-repeat;
+			}
+
+			&::before {
+				transform: translate(0, 0);
+				transition: transform 0.5s;
+				content: "SELECT";
+				padding: 0 10px;
+				font-size: 15px;
+				color: white;
+				font-weight: bold;
+				background-color: #f42f64;
+				background-image: linear-gradient(0deg, rgba(211, 52, 92, 1) 20%, transparent 35%);
+				border-radius: 0.5rem;
+
+				position: absolute;
+				top: -0.6em;
+
+				outline: white solid;
+				z-index: 2;
+
+				animation: selectAnimation #{$totalTime}s infinite;
+			}
+		}
+	}
+}
+
+.skyGames_allGames {
+	display: grid;
+	height: 100%;
+	grid-template-columns: repeat($allGames_colCount, 1fr);
+	grid-template-rows: repeat($allGames_rowCount, 1fr);
+	max-lines: 1;
+	white-space: nowrap;
+	.skyGames_game {
+		overflow: hidden;
+		text-overflow: clip;
+		height: 1em;
+		max-width: 10em;
+		color: gray;
+		text-decoration: none;
+		padding: 0.2rem;
+		border-radius: 0.3rem;
+
+		&:focus,
+		&:hover,
+		&:focus-visible {
+			outline: none;
+			color: white;
+			background-color: $skyGamesPink;
+		}
 	}
 }
 
@@ -545,19 +557,16 @@ back to start
 
 */
 
-
 @keyframes arrowMovement {
-
 	0%,
 	100% {
 		transform: translateX(0);
 	}
 
 	50% {
-		transform: translateX(-15px);
+		transform: translateX(-20px);
 	}
 }
-
 
 %animatedArrows {
 	animation: arrowMovement 0.5s 5;
@@ -569,7 +578,7 @@ $arrow_x: -20px;
 [class^="skyGamesArrow"] {
 	position: absolute;
 	top: 50%;
-	translate: 0% -50%;
+	translate: -5px -50%;
 	z-index: 10;
 }
 
@@ -586,8 +595,6 @@ $arrow_x: -20px;
 
 .skyGames_gameInfo {
 	.gameInfo_container {
-
-
 		box-shadow: $shadow;
 		// height: 332px;
 		// width: 233px;
@@ -617,7 +624,6 @@ $arrow_x: -20px;
 		border-bottom-right-radius: $round-border-radius;
 
 		&.loading {
-
 			.skyGames_infoImage {
 				opacity: 0;
 			}
@@ -648,7 +654,7 @@ $arrow_x: -20px;
 		}
 
 		.skyGames_infoImage {
-			transition: opacity .5s;
+			transition: opacity 0.5s;
 			//margin: 8px 6px;
 			width: 160px;
 			height: 126px;
@@ -675,14 +681,14 @@ $arrow_x: -20px;
 			}
 
 			.gameText_title {
-				transition: opacity .5s;
+				transition: opacity 0.5s;
 				color: #254c9e;
 				font-size: 130%;
 				flex: 1;
 			}
 
 			.gameText_blurb {
-				transition: opacity .5s;
+				transition: opacity 0.5s;
 				color: black;
 				font-size: 85%;
 				//position: absolute;
@@ -692,7 +698,7 @@ $arrow_x: -20px;
 		}
 
 		.infoEntry_gameCategory {
-			transition: opacity .5s;
+			transition: opacity 0.5s;
 			background-color: #255595;
 			color: white;
 			border-bottom-left-radius: $round-border-radius;
@@ -706,7 +712,6 @@ $arrow_x: -20px;
 }
 
 .skyGames_footer {
-
 	//Temp code so i can see it
 	// position: relative;
 	//-------------------------
@@ -763,11 +768,13 @@ $arrow_x: -20px;
 				margin-top: 4px;
 				border-radius: 7px;
 				box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
-				background: linear-gradient(180deg,
-						rgb(255 255 255 / 49%) 35%,
-						rgb(255 255 255 / 12%) 45%,
-						rgb(255 255 255 / 12%) 75%,
-						rgb(255 255 255 / 0%) 100%);
+				background: linear-gradient(
+					180deg,
+					rgb(255 255 255 / 49%) 35%,
+					rgb(255 255 255 / 12%) 45%,
+					rgb(255 255 255 / 12%) 75%,
+					rgb(255 255 255 / 0%) 100%
+				);
 			}
 		}
 

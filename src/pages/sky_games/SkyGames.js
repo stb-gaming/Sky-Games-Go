@@ -2,28 +2,54 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { Music, MusicContext } from '../../components/Music';
 import '../../scss/skyGames/main.scss';
-import SkyGamesLink from './components/SkyGamesLink.js';
 import SkyGamesLogo from './components/SkyGamesLogo';
 import createMenu from '../../utils/createMenu';
 import getParentLocation from '../../utils/getParentLocation';
 import Controls from './Controls';
 import Settings from './Settings';
-import games from '../../data/games.json';
 import SkyRemote from "../../userscripts/SkyRemote.user";
 import calculateLastNext from '../../utils/calculateLastNext';
 import TVGuide from '../opentv_epg/TVGuide';
 import BoxOffice from '../opentv_epg/BoxOffice';
 import Services from '../opentv_epg/Services';
 import Interactive from '../opentv_epg/Interactive';
+import games_local from '../../data/games.json';
+import { SkyGamesLink, SkyGamesNavigate } from './components/SkyGamesLink';
 const GRID_PAGE_LENGTH = 9;
 const ALL_PAGE_LENGTH = 24;
+const games_json = "https://stb-gaming.github.io/high-scores/games.json";
 
 function SkyGamesTab({ label, href = "#", selected }) {
 	return <SkyGamesLink to={href} className={(selected ? "active " : "") + "skyGamesTab"}>{label}</SkyGamesLink>;
 }
 
-function SkyGamesGame({ game, img = game.image || game.splash || game.menu || game.gameplay || "SKY Games/nogame.png", href = game.url || "#", alt = game.title || href, onHover }) {
-	return <SkyGamesLink to={href} className="skyGames_game" onFocus={onHover} onMouseEnter={onHover}><img src={"/assets/img/games/" + img} alt={alt}></img></SkyGamesLink>;
+function SkyGamesGame({ game, hideimg, img = game.image || game.splash || game.menu || game.gameplay || "SKY Games/nogame.png", href = game.url || "#", alt = game.title || href, onHover }) {
+	return <SkyGamesLink to={href} className="skyGames_game" onFocus={onHover} onMouseEnter={onHover}>
+		{img ?
+			<img src={"/assets/img/games/" + img} alt={alt} />
+			: alt}
+	</SkyGamesLink>;
+}
+
+async function getGames() {
+	try {
+
+		const response = await fetch(games_json, {
+			// mode: "cors",
+			// headers: {
+			// 	// 'Access-Control-Allow-Origin': 'sky-games.pages.dev',
+			// 	'Content-Type': 'application/json',
+			// 	'Accept': 'application/json'
+			// }
+		});
+
+		console.log("from high scores");
+		return await response.json();
+	} catch (error) {
+
+		console.log("from local");
+		return games_local;
+	}
 }
 
 const capitalise = text =>
@@ -78,6 +104,8 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 	list = Number(list) || list;
 	const [sortedGames, setSortedGames] = useState([]);
 	const [filteredGames, setFilteredGames] = useState([]);
+	const [lastList, setLastList] = useState(NaN);
+	const [currentList, setCurrentList] = useState(NaN);
 	const [menu] = useState(createMenu({ itemSelector: ".skyGames_game", animations: true, animationLength: 500 }));
 	const [bindsSetup, setBindsSetup] = useState(false);
 
@@ -92,6 +120,7 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 
 	useEffect(() => {
 		if (typeof list === "number") {
+			setCurrentList(list);
 			//list is page number
 			// All Games
 			let offset = (list - 1) * ALL_PAGE_LENGTH;
@@ -102,12 +131,17 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 			let filtered = sortedGames.filter(game => game.list === list);
 
 			if (list === "new") {
+				setCurrentList(0);
 				let newGameIndexes = sortObjArr(games, "archived", true).map((g, i) => i);
 				filtered = sortedGames.filter((game, i) => newGameIndexes.includes(i));
 			}
 			filtered = filtered.slice(0, GRID_PAGE_LENGTH);
+			if (list === "classics") {
+				setCurrentList(1);
+			}
 
 			if (list === "family") {
+				setCurrentList(2);
 				filtered.splice(7, 1, {
 					title: "All Games",
 					description: "All available games to play",
@@ -130,11 +164,13 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 
 
 	useEffect(() => {
-		let gameGrid = document.querySelector(".skyGames_gameGrid");
+		let gameGrid = document.querySelector(".skyGames_gameGrid") || document.querySelector(".skyGames_allGames");
 		if (!gameGrid) return;
 
-		menu.setPages([gameGrid]);
-	}, [filteredGames, menu]);
+		//console.log(lastList, currentList);
+
+		menu.setPages([gameGrid], currentList - lastList);
+	}, [filteredGames, menu, currentList, lastList]);
 
 
 	useEffect(() => {
@@ -151,7 +187,7 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 						document.querySelector(`.skyGamesArrow${arrow}`).click();
 					})),
 				SkyRemote.onReleaseButton("backup", () => {
-					navigate(getParentLocation(window.location.pathname));
+					SkyGamesNavigate(getParentLocation(window.location.pathname), navigate);
 				})
 			];
 
@@ -182,13 +218,16 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 		let tabs = ["new", "classics", "family"];
 
 		const { last, next } = calculateLastNext(list, tabs, Math.ceil(games.length / GRID_PAGE_LENGTH), 1);
-
+		const lastLink = SkyGames.url + "/" + last + (sort ? "/" + sort : ""),
+			nextLink = SkyGames.url + "/" + next + (sort ? "/" + sort : "");
+		menu.setVerticality(false);
 		menu.setOnPageChange(({ dp, pos }) => {
+			setLastList(currentList);
 			if (dp < 0) {//left
-				document.querySelector(".skyGamesArrowLeft").click();
+				SkyGamesNavigate(lastLink, navigate);
 			}
 			if (dp > 0) {//right
-				document.querySelector(".skyGamesArrowRight").click();
+				SkyGamesNavigate(nextLink, navigate);
 			}
 		});
 
@@ -209,10 +248,29 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 		</>;
 	}
 	else if (filteredGames.length <= ALL_PAGE_LENGTH) { // all games
+
+		const { last, next } = calculateLastNext(list, null, Math.ceil(games.length / ALL_PAGE_LENGTH), 1);
+		const lastLink = SkyGames.url + "/" + last + (sort ? "/" + sort : ""),
+			nextLink = SkyGames.url + "/" + next + (sort ? "/" + sort : "");
+		menu.setVerticality(true);
+
+		menu.setOnPageChange(({ dp, pos }) => {
+			setLastList(currentList);
+			if (dp < 0) {//left
+				SkyGamesNavigate(lastLink, navigate);
+			}
+			if (dp > 0) {//right
+				SkyGamesNavigate(nextLink, navigate);
+			}
+		});
+
 		return <>
 			<div className="skyGames_gamesList">
-				<div className="className">
+				<div className="skyGames_allGames">
 					{/* list of games here... */}
+					{filteredGames.map((game, i) => <SkyGamesGame img={null} key={"game_" + i} onHover={() => {
+						setSelectedGame(game);
+					}} game={game} />)}
 				</div>
 			</div>
 			<div className="skyGames_gameInfo">
@@ -286,6 +344,7 @@ const SkyGames = () => {
 	const params = useParams();
 	const navigate = useNavigate();
 	const { sort } = params;
+	const [games, setGames] = useState([]);
 	const [isPageLoaded, setIsPageLoaded] = useState(false);
 	const [bindsSetup, setBindsSetup] = useState(false);
 	const location = useLocation();
@@ -295,6 +354,9 @@ const SkyGames = () => {
 		const fakePageLoadTimeout = setTimeout(() => {
 			setIsPageLoaded(true);
 		}, 500);
+
+		getGames().then(setGames).catch(console.error);
+
 
 		return () => clearTimeout(fakePageLoadTimeout);
 	}, []);
@@ -394,13 +456,13 @@ const SkyGames = () => {
 		<div className="skyGamesHeader">
 			<SkyGamesLogo />
 			{["new", "classics", "family"].includes(list) ?
-				<div className="skyGamesTabs">
+				<div className="skyGamesTabs categoryGames">
 					<SkyGamesTab label="New Games" selected={list === undefined || list === "new"} href={SkyGames.url + "/new"} />
 					<SkyGamesTab label="Classics" selected={list === "classics"} href={SkyGames.url + "/classics"} />
 					<SkyGamesTab label="Family Fun" selected={list === "family"} href={SkyGames.url + "/family"} />
 					{/* <SkyGamesTab label="All" selected={list === "1"} href="/sky-games/1" /> */}
 				</div>
-				: <div className="skyGamesTabs"><SkyGamesTab label={pageTitle} selected={true} href="#" /></div>}
+				: <div className="skyGamesTabs allGames"><SkyGamesTab label={pageTitle} selected={true} href="#" /></div>}
 		</div>
 		<div className="skyGamesMain">
 			<div id="skyGames_fade" className={`${isPageLoaded ? "done" : ""}`} ref={whiteFade} />
