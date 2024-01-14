@@ -34,8 +34,6 @@ function SkyGamesGame({ game, hideimg, img = game.image || game.splash || game.m
 async function getGames() {
 	try {
 
-		console.log("hi");
-
 		const response = await fetch(games_json, {
 			// mode: "cors",
 			// headers: {
@@ -44,8 +42,12 @@ async function getGames() {
 			// 	'Accept': 'application/json'
 			// }
 		});
+
+		console.log("from high scores");
 		return await response.json();
 	} catch (error) {
+
+		console.log("from local");
 		return games_local;
 	}
 }
@@ -165,7 +167,7 @@ function SkyGamesGamesList({ list = "0", sort, games, isPageLoaded }) {
 		let gameGrid = document.querySelector(".skyGames_gameGrid") || document.querySelector(".skyGames_allGames");
 		if (!gameGrid) return;
 
-		console.log(lastList, currentList);
+		//console.log(lastList, currentList);
 
 		menu.setPages([gameGrid], currentList - lastList);
 	}, [filteredGames, menu, currentList, lastList]);
