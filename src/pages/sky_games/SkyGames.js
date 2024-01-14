@@ -452,13 +452,13 @@ const SkyGames = () => {
 		<div className="skyGamesHeader">
 			<SkyGamesLogo />
 			{["new", "classics", "family"].includes(list) ?
-				<div className="skyGamesTabs">
+				<div className="skyGamesTabs categoryGames">
 					<SkyGamesTab label="New Games" selected={list === undefined || list === "new"} href={SkyGames.url + "/new"} />
 					<SkyGamesTab label="Classics" selected={list === "classics"} href={SkyGames.url + "/classics"} />
 					<SkyGamesTab label="Family Fun" selected={list === "family"} href={SkyGames.url + "/family"} />
 					{/* <SkyGamesTab label="All" selected={list === "1"} href="/sky-games/1" /> */}
 				</div>
-				: <div className="skyGamesTabs"><SkyGamesTab label={pageTitle} selected={true} href="#" /></div>}
+				: <div className="skyGamesTabs allGames"><SkyGamesTab label={pageTitle} selected={true} href="#" /></div>}
 		</div>
 		<div className="skyGamesMain">
 			<div id="skyGames_fade" className={`${isPageLoaded ? "done" : ""}`} ref={whiteFade} />
