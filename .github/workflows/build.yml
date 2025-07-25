@@ -69,13 +69,13 @@ jobs:
         run: npm run userscripts
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Sky-Games-Go
           path: build
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: userscripts
           path: build/userscripts
@@ -95,7 +95,7 @@ jobs:
       - run: "mkdir static"
 
       - name: Download build artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Sky-Games-Go
           path: static
@@ -138,13 +138,13 @@ jobs:
       - run: "mkdir web userscripts"
 
       - name: Download web release artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Sky-Games-Go
           path: web
 
       - name: Download userscripts artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: userscripts
           path: userscripts
