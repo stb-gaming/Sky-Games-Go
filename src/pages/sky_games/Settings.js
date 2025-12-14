@@ -2,7 +2,6 @@ import { Music, MusicContext } from '../../components/Music';
 import '../../scss/skyGames/main.scss';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import SkyGamesLink from './components/SkyGamesLink.js';
 import SkyGamesLogo from './components/SkyGamesLogo';
 import SkyGames from './SkyGames';
 import Controls from './Controls';
@@ -11,6 +10,7 @@ import BoxOffice from '../opentv_epg/BoxOffice';
 import Services from '../opentv_epg/Services';
 import Interactive from '../opentv_epg/Interactive';
 import SkyRemote from '../../userscripts/SkyRemote.user';
+import { SkyGamesLink } from './components/SkyGamesLink';
 
 const capitalise = text =>
 	text.split(" ").map(word =>

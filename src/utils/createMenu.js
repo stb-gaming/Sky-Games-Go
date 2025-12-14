@@ -3,6 +3,7 @@
  *
  * @param {Object} options - The options for creating the menu.
  * @param {Array} options.pages - An array of DOM elements representing the pages of the menu.
+ * @param {Boolean} options.pageVerticality - if the page traversal goes up and down
  * @param {Function} [options.onFocus=(item) => {}] - Callback function triggered when an item is focused.
  * @param {string} [options.itemSelector="a"] - CSS selector to select individual items within the pages.
  * @param {boolean} [options.animations=false] - Boolean indicating whether animations are enabled for item transitions.
@@ -13,12 +14,14 @@
  */
 function createMenu({
 	pages,
+	pageVerticality,
 	onFocus = (item) => { },
 	focusClass,
 	itemSelector = "a",
 	animations = false,
 	animationLength = 0,
 	onPageChange = () => { },
+	forceDp,
 } = {}) {
 	let p, i, items = [], timeouts = [];
 
@@ -28,11 +31,11 @@ function createMenu({
 	 * @param {number} newPage - The index of the new page to navigate to.
 	 * @returns {void}
 	 */
-	function gotoPage(newPage) {
+	function gotoPage(newPage, dp = newPage - p) {
 		if (!pages[newPage]) {
 			if (onPageChange) {
 				onPageChange({
-					dp: newPage - p,
+					dp,
 					pos: getPos()
 				});
 			} else {
@@ -42,7 +45,6 @@ function createMenu({
 		}
 		if (pages[p]) pages[p].style.display = "none";
 		let lastPos = getPos();
-		let dp = newPage - p;
 		p = newPage;
 		pages[p].style.display = null;
 		items = getItems(p);
@@ -72,16 +74,30 @@ function createMenu({
 			item.tabIndex = (Number(y) * cols.length) + Number(x);
 		}
 		i = 0;
+		if (rows.length === 3 && cols.length === 3) {
+			i = 4;
+		}
+		const xy = pageVerticality ? "x" : "y";
+		const cr = pageVerticality ? cols : rows;
 		if (lastPos && dp) {
 			let r;
-			// eslint-disable-next-line eqeqeq
-			while (!r || r.length === 0) {
-				r = rows[lastPos.y];
-				lastPos.y--;
-			}
-			i = dp > 0 ? r[0] : r[r.length - 1];
+			do {
+				r = cr[lastPos[xy]];
+				lastPos[xy]--;
+			} while (!r || r.length === 0);
+			i = !!(Math.sign(dp) + 1) ? r[0] : r[r.length - 1];
+			console.log(r);
+
 		}
 		updateFocus();
+	}
+
+	/**
+	 *
+	 * @param {Boolean} vp - sets weather the pages traverse virtically
+	 */
+	function setVerticality(vp) {
+		pageVerticality = vp;
 	}
 
 	/**
@@ -90,11 +106,11 @@ function createMenu({
 	 * @param {Array} newPages - An array of DOM elements representing the new pages of the menu.
 	 * @returns {void}
 	 */
-	function setPages(newPages) {
+	function setPages(newPages, fdp = forceDp) {
 		pages = newPages;
 		if (!Array.isArray(pages)) pages = Array.from(pages);
 		pages.forEach(page => page.style.display = "none");
-		gotoPage(0);
+		gotoPage(0, fdp);
 	}
 
 	/**
@@ -146,9 +162,10 @@ function createMenu({
 		rels = rels.sort((a, b) => a.m - b.m).sort((a, b) => (dx ? a.mx - b.mx : dy ? a.my - b.my : a.m - b.m));
 
 		if (!rels.length) {
-			if (dx > 0) {
+			console.log({ dx, dy });
+			if (pageVerticality ? dy > 0 : dx > 0) {
 				nextPage();
-			} if (dx < 0) {
+			} if (pageVerticality ? dy < 0 : dx < 0) {
 				lastPage();
 			}
 			return;
@@ -355,6 +372,7 @@ function createMenu({
 		getPos,
 		getItem,
 		setOnPageChange,
+		setVerticality,
 		clearTimeouts
 	};
 }

@@ -24,3 +24,4 @@ yarn-error.log*
 
 # Syncthing (used for local development)
 .stignore
+result
